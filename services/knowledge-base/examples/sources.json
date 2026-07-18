@@ -1,0 +1,65 @@
+{
+  "notice": "这些只是待审核的官方入口，不代表已经抓取或覆盖。导入后默认停用。",
+  "sources": [
+    {
+      "name": "国务院国资委人事招聘",
+      "url": "https://www.sasac.gov.cn/n2588035/n2588325/n2588350/index.html",
+      "authority": "official",
+      "source_grade": "A",
+      "source_type": "html",
+      "tags": ["央企", "招聘公告", "国资委"],
+      "follow_links": true,
+      "max_documents": 50,
+      "allowed_hosts": ["www.sasac.gov.cn"],
+      "include_paths": ["/n2588035/n2588325/n2588350/"],
+      "exclude_paths": [],
+      "enabled": false
+    },
+    {
+      "name": "国家电网招聘",
+      "url": "https://zhaopin.sgcc.com.cn/",
+      "authority": "official",
+      "source_grade": "A",
+      "source_type": "auto",
+      "tags": ["央企", "国家电网", "校园招聘"],
+      "follow_links": true,
+      "max_documents": 50,
+      "allowed_hosts": ["zhaopin.sgcc.com.cn"],
+      "include_paths": ["/sgcchr/static/"],
+      "exclude_paths": [
+        "/sgcchr/static/login",
+        "/sgcchr/static/register",
+        "/sgcchr/static/personal"
+      ],
+      "enabled": false
+    },
+    {
+      "name": "中国石油招聘",
+      "url": "https://zhaopin.cnpc.com.cn/",
+      "authority": "official",
+      "source_grade": "A",
+      "source_type": "auto",
+      "tags": ["央企", "中国石油", "校园招聘"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["zhaopin.cnpc.com.cn"],
+      "include_paths": [],
+      "exclude_paths": [],
+      "enabled": false
+    },
+    {
+      "name": "中国石化招聘",
+      "url": "https://job.sinopec.com/",
+      "authority": "official",
+      "source_grade": "A",
+      "source_type": "auto",
+      "tags": ["央企", "中国石化", "校园招聘"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["job.sinopec.com"],
+      "include_paths": [],
+      "exclude_paths": [],
+      "enabled": false
+    }
+  ]
+}

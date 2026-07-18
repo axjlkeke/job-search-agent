@@ -1,0 +1,171 @@
+{
+  "version": "2026-07-17-v3",
+  "capturedAt": "2026-07-17",
+  "description": "公开官方招聘公告的真实变更样本。正文仅保留关系判定所需片段，运行时仍须重新核验原网页。",
+  "cases": [
+    {
+      "id": "china-broadcast-network-2026-deadline-extension",
+      "candidate": {
+        "sourceId": "nrta-recruitment",
+        "title": "中国广播电视网络集团有限公司关于延长2026年高校毕业生公开招聘报名时间的补充公告",
+        "url": "https://www.nrta.gov.cn/art/2026/5/18/art_113_73318.html",
+        "content": "经研究，中国广播电视网络集团有限公司2026年高校毕业生公开招聘报名时间延长至2026年5月25日24时。原公告中其他信息不变，此前已经报名人员继续有效，无需再次报名。",
+        "links": [
+          "https://www.nrta.gov.cn/art/2026/3/30/art_113_72974.html"
+        ]
+      },
+      "existing": {
+        "documentId": "nrta-original-2026",
+        "sourceId": "nrta-recruitment",
+        "title": "中国广播电视网络集团有限公司2026年高校毕业生公开招聘公告",
+        "url": "https://www.nrta.gov.cn/art/2026/3/30/art_113_72974.html"
+      },
+      "expected": {
+        "relationType": "delayed",
+        "changeScope": "unknown",
+        "resolutionMode": "reconcile",
+        "unresolved": false,
+        "targetExpected": true,
+        "targetBlocked": true,
+        "targetScore": 1.0,
+        "evidence": ["explicit_link"],
+        "crossRegisteredSource": false
+      }
+    },
+    {
+      "id": "national-bureau-statistics-2026-cross-domain-supplement",
+      "candidate": {
+        "sourceId": "stats-recruitment",
+        "title": "国家统计局在京直属事业单位2026年度公开招聘应届高校毕业生补充公告",
+        "url": "https://www.stats.gov.cn/xw/tjxw/tzgg/202604/t20260416_1963335.html",
+        "content": "原公告中部分岗位资格条件作出调整。以上岗位报名时间延长至2026年4月22日17：00，原公告中其他信息不变，此前已经报考相应岗位人员仍然有效，无需重新报名。",
+        "links": [
+          "https://www.mohrss.gov.cn/SYrlzyhshbzb/fwyd/SYkaoshizhaopin/zyhgjjgsydwgkzp/zpgg/202604/t20260402_571893.html"
+        ]
+      },
+      "existing": {
+        "documentId": "mohrss-original-2026",
+        "sourceId": "mohrss-recruitment",
+        "title": "国家统计局在京直属企事业单位2026年公开招聘应届毕业生公告",
+        "url": "https://www.mohrss.gov.cn/SYrlzyhshbzb/fwyd/SYkaoshizhaopin/zyhgjjgsydwgkzp/zpgg/202604/t20260402_571893.html"
+      },
+      "expected": {
+        "relationType": "delayed",
+        "changeScope": "partial",
+        "resolutionMode": "reconcile",
+        "unresolved": false,
+        "targetExpected": true,
+        "targetBlocked": true,
+        "targetScore": 1.0,
+        "evidence": ["explicit_link", "cross_registered_source"],
+        "crossRegisteredSource": true
+      }
+    },
+    {
+      "id": "jac-2026-whole-recruitment-termination",
+      "candidate": {
+        "sourceId": "jac-recruitment",
+        "title": "关于终止公开招聘工作人员的公告",
+        "url": "https://www.jac.com.cn/news/20260223/9277.html",
+        "content": "根据公开招聘工作人员公告，江汽集团控股（股份）公司党委组织部副部长岗位已完成报名、资格审查、能力素质测试程序。经综合评审，暂无符合要求的拟聘人选，决定终止本次公开招聘工作。",
+        "links": []
+      },
+      "existing": {
+        "documentId": "jac-original-2025",
+        "sourceId": "jac-recruitment",
+        "title": "安徽江淮汽车集团股份有限公司公开招聘工作人员公告",
+        "url": "https://www.jac.com.cn/news/20251224/6060.html"
+      },
+      "expected": {
+        "relationType": "withdrawn",
+        "changeScope": "whole",
+        "resolutionMode": "supersede",
+        "unresolved": true,
+        "targetExpected": false,
+        "evidence": [],
+        "crossRegisteredSource": false
+      }
+    },
+    {
+      "id": "jianning-2026-partial-position-cancellation",
+      "candidate": {
+        "sourceId": "jianning-recruitment",
+        "title": "关于2026年建宁县属国有企业招聘正式员工未达到规定开考比例岗位取消招聘计划的公告",
+        "url": "https://www.fjjn.gov.cn/zwgk/tzgg/gggs/202606/t20260608_2214404.htm",
+        "content": "根据2026年建宁县属国有企业公开招聘正式员工工作的整体安排，本次招聘报名及资格初审工作已结束。按照《2026年建宁县属国有企业公开招聘正式员工公告》相关规定，部分招聘岗位因报名人数未达到1:3的开考比例，现将本次取消招聘计划岗位公布如下：财务核算部职员，取消岗位招聘计划。",
+        "links": []
+      },
+      "existing": {
+        "documentId": "jianning-original-2026",
+        "sourceId": "jianning-recruitment",
+        "title": "2026年建宁县县属国有企业招聘正式职工公告",
+        "url": "https://www.fjjn.gov.cn/zwgk/tzgg/gggs/202601/t20260113_2183631.htm"
+      },
+      "expected": {
+        "relationType": "withdrawn",
+        "changeScope": "partial",
+        "resolutionMode": "reconcile",
+        "unresolved": true,
+        "targetExpected": true,
+        "targetBlocked": false,
+        "evidence": ["title_similarity", "shared_recruitment_year", "same_registered_source"],
+        "crossRegisteredSource": false
+      }
+    },
+    {
+      "id": "supreme-court-fifth-circuit-2020-recruitment-pause",
+      "candidate": {
+        "sourceId": "supreme-court-fifth-circuit",
+        "title": "最高人民法院第五巡回法庭 关于暂缓2020年年初招聘工作的公告",
+        "url": "https://www.court.gov.cn/xunhui5/xiangqing/219291.html",
+        "content": "为做好新型冠状病毒疫情防控工作，减少人员流动、聚集存在的疫情扩散风险，切实保障报考人员的身体健康和生命安全，最高人民法院第五巡回法庭经研究决定，暂缓2020年年初招聘各项工作（已在规定时间内向指定邮箱发送报名登记表的报名有效），后续工作安排待疫情结束后再行启动，恢复时间另行通知。",
+        "links": []
+      },
+      "existing": {
+        "documentId": "supreme-court-original-2020",
+        "sourceId": "supreme-court-fifth-circuit",
+        "title": "最高人民法院第五巡回法庭2020年招聘公告",
+        "url": "https://www.court.gov.cn/xunhui5/xiangqing/217321.html"
+      },
+      "expected": {
+        "relationType": "paused",
+        "changeScope": "unknown",
+        "resolutionMode": "reconcile",
+        "unresolved": false,
+        "targetExpected": true,
+        "targetBlocked": true,
+        "targetScore": 0.9,
+        "evidence": ["title_core_reference"],
+        "crossRegisteredSource": false
+      }
+    },
+    {
+      "id": "supreme-court-fifth-circuit-2020-complete-resume",
+      "candidate": {
+        "sourceId": "supreme-court-fifth-circuit",
+        "title": "最高人民法院第五巡回法庭 关于恢复2020年招聘的公告",
+        "url": "https://www.court.gov.cn/xunhui5/xiangqing/234371.html",
+        "content": "根据现阶段疫情防控形势及工作需要，最高人民法院第五巡回法庭决定恢复2020年招聘工作。现委托重庆市江北区人民法院，面向社会公开招聘聘用制人员13名（书记员4名，诉服中心工作人员2名，男性安保人员5名，女性安保人员2名）。现将有关招聘事项公告如下：一、招聘条件。聘用制书记员和诉服中心工作人员应具有大学本科及以上学历，安保人员应具有大专及以上学历。二、报名。报名人员填写《聘用制工作人员报名登记表》《个人健康申报表》，发至指定邮箱。报名时间为2020年6月8日至2020年6月22日。三、资格审查和考试。初审通过人员参加现场资格审查，考试分为初试和面试。四、体检和考察。因疫情原因，本次招聘中断时间较长，已报名的考生需要在本公告确定的期限内重新提交报名材料。",
+        "links": []
+      },
+      "existing": {
+        "documentId": "supreme-court-pause-2020",
+        "sourceId": "supreme-court-fifth-circuit",
+        "title": "最高人民法院第五巡回法庭 关于暂缓2020年年初招聘工作的公告",
+        "url": "https://www.court.gov.cn/xunhui5/xiangqing/219291.html"
+      },
+      "expected": {
+        "relationType": "resumed",
+        "changeScope": "unknown",
+        "resumeCompleteness": "complete",
+        "resolutionMode": "supersede",
+        "unresolved": false,
+        "targetExpected": true,
+        "targetBlocked": true,
+        "targetScore": 0.842,
+        "evidence": ["title_similarity", "shared_recruitment_year", "same_registered_source"],
+        "crossRegisteredSource": false
+      }
+    }
+  ]
+}

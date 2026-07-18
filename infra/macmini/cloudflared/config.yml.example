@@ -1,0 +1,10 @@
+# 这是示例，install-launch-agents.sh 会在本机根据 env.local 生成 config.yml。
+# 只公开前端根域名；Dify 8000、RAG 8001 和 Ollama 11434 都不在 ingress 中。
+tunnel: __TUNNEL_ID__
+credentials-file: __CREDENTIALS_FILE__
+
+ingress:
+  - hostname: __PUBLIC_HOSTNAME__
+    service: http://127.0.0.1:__APP_PORT__
+  - service: http_status:404
+

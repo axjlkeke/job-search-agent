@@ -1,0 +1,6 @@
+env.local
+__pycache__/
+*.py[cod]
+*.local
+*.generated.plist
+backup-output/

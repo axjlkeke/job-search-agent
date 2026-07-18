@@ -1,0 +1,135 @@
+.page {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.96), transparent 36%),
+    #f3f2ee;
+  color: #171717;
+}
+
+.card {
+  width: min(540px, 100%);
+  padding: 54px 46px 42px;
+  border: 1px solid #d7d6d0;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.mark {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #c9c8c2;
+  border-radius: 22px;
+  background: #111;
+}
+
+.mark span {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 900ms linear infinite;
+}
+
+.mark.success span {
+  width: 20px;
+  height: 11px;
+  border: 0;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-radius: 0;
+  transform: rotate(-45deg) translate(2px, -2px);
+  animation: none;
+}
+
+.mark.error {
+  background: #fff;
+}
+
+.mark.error span {
+  width: 18px;
+  height: 2px;
+  border: 0;
+  border-radius: 999px;
+  background: #111;
+  animation: none;
+  transform: rotate(45deg);
+}
+
+.mark.error span::after {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: inherit;
+  background: inherit;
+  transform: rotate(90deg);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #77736b;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card h1 {
+  margin: 0;
+  font-size: clamp(29px, 5vw, 42px);
+  line-height: 1.12;
+  letter-spacing: -0.05em;
+}
+
+.message {
+  min-height: 48px;
+  margin: 20px auto 0;
+  color: #5e5b55;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.rule {
+  height: 1px;
+  margin: 28px 0 22px;
+  background: #e7e5df;
+}
+
+.note {
+  margin: 0;
+  color: #8a867e;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.action {
+  min-height: 48px;
+  margin-top: 28px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 560px) {
+  .page { padding: 16px; }
+  .card { padding: 42px 24px 34px; border-radius: 22px; }
+}

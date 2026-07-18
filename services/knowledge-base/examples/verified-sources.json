@@ -1,0 +1,33 @@
+{
+  "notice": "2026-07-17 已核对公开官方域名与栏目路径。当前 Mac mini 对该站 HTTPS 连接异常，仅 HTTP 可达，因此按 B 级来源导入并保留正文 hash、版本和审核记录。",
+  "sources": [
+    {
+      "name": "国务院国资委人事招聘",
+      "url": "http://www.sasac.gov.cn/n2588035/n2588325/n2588350/index.html",
+      "authority": "official",
+      "source_grade": "B",
+      "source_type": "html",
+      "tags": ["央企", "招聘公告", "国资委"],
+      "follow_links": true,
+      "max_documents": 50,
+      "allowed_hosts": ["www.sasac.gov.cn"],
+      "include_paths": ["/n2588035/n2588325/n2588350/"],
+      "exclude_paths": [],
+      "enabled": true
+    },
+    {
+      "name": "国务院国资委中央企业名录",
+      "url": "http://www.sasac.gov.cn/n2588045/n27271785/n27271792/index.html",
+      "authority": "official",
+      "source_grade": "B",
+      "source_type": "html",
+      "tags": ["央企", "企业名录", "国资委"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["www.sasac.gov.cn"],
+      "include_paths": ["/n2588045/n27271785/n27271792/"],
+      "exclude_paths": [],
+      "enabled": true
+    }
+  ]
+}

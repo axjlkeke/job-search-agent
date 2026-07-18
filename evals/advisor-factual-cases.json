@@ -1,0 +1,344 @@
+{
+  "version": "2026-07-17-v6",
+  "description": "只使用公开官方资料的顾问事实级评测；覆盖校园与社会招聘硬门槛、公告时效、多招聘计划隔离、近名企业双向隔离、多维原文覆盖、OCR 完整正文恢复、实际引用绑定和无依据拒答。",
+  "cases": [
+    {
+      "id": "tianyi-2027-super-talent",
+      "message": "天翼云2027届超级优才招聘有哪些技术方向、工作城市和投递要求？请只根据资料回答，不确定的地方明确说不确定。",
+      "profileSummary": "bachelor，计算机科学与技术，2027届",
+      "targetSummary": "中国电信天翼云-研发工程师",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "计算机科学与技术",
+        "graduationYear": 2027
+      },
+      "target": {
+        "companies": ["中国电信天翼云"],
+        "jobTitles": ["研发工程师"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "open" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35574598/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": ["智算网络", "大数据", "北京", "1次投递", "1个意向"]
+    },
+    {
+      "id": "cgn-2027-experience-camp",
+      "message": "中广核聚核体验营面向哪些年级和学历？交通食宿如何安排？怎么报名？请只根据官方资料回答。",
+      "profileSummary": "bachelor，能源与动力工程，2027届",
+      "targetSummary": "中国广核集团-2027届提前批",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "能源与动力工程",
+        "graduationYear": 2027
+      },
+      "target": {
+        "companies": ["中国广核集团"],
+        "jobTitles": ["2027届提前批"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35442247/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": ["2027届-2028届", "本科、硕士、博士", "报名"]
+    },
+    {
+      "id": "sasac-2026-expired-hard-thresholds",
+      "message": "截至2026-07-17，国务院国资委委属事业单位2026年度公开招聘还可以报名吗？招聘对象、最低学历、每人能报几个岗位？请只根据公告逐项回答。",
+      "profileSummary": "bachelor，计算机科学与技术，2026届",
+      "targetSummary": "国务院国资委委属事业单位-2026年度公开招聘",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "计算机科学与技术",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["国务院国资委委属事业单位"],
+        "jobTitles": ["2026年度公开招聘"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35428690/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "2026年国内高校应届毕业生",
+        "本科及以上学历",
+        "2026年5月29日17:00",
+        "只能报考一个岗位",
+        "已截止"
+      ]
+    },
+    {
+      "id": "avic-huiyang-design-hard-thresholds",
+      "message": "航空工业惠阳2026年设计岗位的工作地点、学历、专业和简历投递格式是什么？请只根据官方资料回答。",
+      "profileSummary": "bachelor，机械设计制造及其自动化，2026届",
+      "targetSummary": "航空工业惠阳-设计员",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "机械设计制造及其自动化",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["航空工业惠阳"],
+        "jobTitles": ["设计员"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35610581/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "河北省保定市",
+        "博士研究生、硕士研究生、大学本科",
+        "机械设计制造及其自动化",
+        "姓名+院校+专业+学历",
+        "huiyangzp@126.com"
+      ]
+    },
+    {
+      "id": "china-telecom-two-programs-source-isolation",
+      "message": "对比中国电信天翼云2027届超级优才和中国电信TeleAI Top Talent 2027的人群、技术方向与投递方式，分别回答，不要混用。若某项只在一份公告中出现，要明确说明。",
+      "profileSummary": "master，人工智能，2027届",
+      "targetSummary": "中国电信天翼云-超级优才；中国电信TeleAI-Top Talent",
+      "profile": {
+        "degreeLevel": "master",
+        "major": "人工智能",
+        "graduationYear": 2027
+      },
+      "target": {
+        "companies": ["中国电信天翼云", "中国电信TeleAI"],
+        "jobTitles": ["超级优才", "Top Talent"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": [
+        "/c35574598/content.html",
+        "/c35454423/content.html"
+      ],
+      "minimumCitationCount": 2,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "超级优才",
+        "TeleAI Top Talent",
+        "1次投递",
+        "TeleAl.HR@Chinatelecom.cn",
+        "2027届应届毕业生及在校实习生"
+      ],
+      "requiredAnswerAnyOf": [
+        ["生成式智能传输技术", "具身智能", "人工智能基础设施"]
+      ],
+      "scopedClaimGuards": [
+        {
+          "subjectTerms": ["TeleAI", "TeleAl"],
+          "claimTerm": "1次投递",
+          "requiredQualifierTerms": [
+            "未说明",
+            "未提及",
+            "无法确认",
+            "没有明确",
+            "仅天翼云",
+            "天翼云公告"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casc-2027-early-batch-near-name-isolation",
+      "message": "航天科技集团2027校招提前批面向哪些毕业生、需求专业、工作地点和简历投递方式？请只根据官方资料回答，不要混入航天科工集团的信息。",
+      "profileSummary": "doctorate，人工智能，2027届",
+      "targetSummary": "中国航天科技集团-2027校招提前批",
+      "profile": {
+        "degreeLevel": "doctorate",
+        "major": "人工智能",
+        "graduationYear": 2027
+      },
+      "target": {
+        "companies": ["中国航天科技集团"],
+        "jobTitles": ["2027校招提前批"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35517299/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "2027届高校毕业生",
+        "2026届未就业高校毕业生",
+        "人工智能",
+        "北京",
+        "西安",
+        "www.spacetalent.com.cn"
+      ],
+      "forbiddenAnswerTerms": [
+        "航天科工",
+        "casicjob.iguopin.com"
+      ]
+    },
+    {
+      "id": "casic-2027-campus-near-name-reverse-isolation",
+      "message": "航天科工集团2027届校园招聘的招聘单位分布、福利和简历投递入口是什么？请只根据官方资料回答，不要混入航天科技集团的信息。",
+      "profileSummary": "master，计算机科学与技术，2027届",
+      "targetSummary": "中国航天科工集团-2027届校园招聘",
+      "profile": {
+        "degreeLevel": "master",
+        "major": "计算机科学与技术",
+        "graduationYear": 2027
+      },
+      "target": {
+        "companies": ["中国航天科工集团"],
+        "jobTitles": ["2027届校园招聘"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35503679/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "北京",
+        "湖北省",
+        "北京户口",
+        "六险两金",
+        "人才公寓",
+        "casicjob.iguopin.com"
+      ],
+      "forbiddenAnswerTerms": [
+        "航天科技",
+        "www.spacetalent.com.cn"
+      ]
+    },
+    {
+      "id": "csg-shared-2026-expired-social-thresholds",
+      "message": "截至2026-07-17，南网共享公司2026年第二批社会招聘还可以报名吗？最低学历、博士/硕士/本科毕业后的工作年限、每人可申报岗位数和系统外报名入口分别是什么？请只根据官方公告回答。",
+      "profileSummary": "bachelor，会计学，已有4年工作经验",
+      "targetSummary": "南网共享公司-2026年第二批社会招聘",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "会计学",
+        "graduationYear": 2022
+      },
+      "target": {
+        "companies": ["中国南方电网有限责任公司共享运营公司"],
+        "jobTitles": ["2026年第二批社会招聘"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35503637/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "大学本科及以上学历",
+        "博士研究生毕业后工作满1年",
+        "硕士研究生毕业后工作满2年",
+        "本科毕业后工作满3年",
+        "2026年7月6日17:00",
+        "zhaopin.csg.cn",
+        "仅限申报1个岗位",
+        "已截止"
+      ]
+    },
+    {
+      "id": "cctc-2026-campus-audience-major-benefits-process",
+      "message": "中国建科2026届春季校园招聘面向哪些人？计算机相关专业在哪些单位有岗位？有哪些福利和招聘流程？请只根据官方资料回答。",
+      "profileSummary": "bachelor，计算机科学与技术，2026届",
+      "targetSummary": "中国建设科技有限公司-2026届春季校园招聘",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "计算机科学与技术",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["中国建设科技有限公司"],
+        "jobTitles": ["2026届春季校园招聘"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35434518/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "2026届普通高校应届生",
+        "2025年至2026年回国",
+        "计算机、软件工程",
+        "集团总部",
+        "落户",
+        "企业年金",
+        "投递简历",
+        "笔试",
+        "面试",
+        "体检"
+      ]
+    },
+    {
+      "id": "china-great-wall-doctor-recruitment-recovered-evidence",
+      "message": "截至2026-07-17，中国长城2026年全球博士人才招聘面向哪些人、有哪些岗位城市和待遇、何时报名截止、怎么投递？请只根据官方资料回答。",
+      "profileSummary": "doctor，计算机科学与技术，2026届",
+      "targetSummary": "中国长城-全球博士人才招聘",
+      "profile": {
+        "degreeLevel": "doctor",
+        "major": "计算机科学与技术",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["中国长城"],
+        "jobTitles": ["全球博士人才招聘"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35432080/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "2026届应届博士人才",
+        "优秀往届博士人才",
+        "北京",
+        "深圳",
+        "六险二金",
+        "3年免租人才公寓或住房补贴",
+        "2026年7月31日17:00",
+        "中国长城-应聘岗位-姓名"
+      ]
+    },
+    {
+      "id": "unrelated-official-evidence-must-be-rejected",
+      "message": "火星轨道粮油集团2035届量子厨师岗位的学历门槛和报名截止日是什么？请只根据官方资料回答。",
+      "profileSummary": "bachelor，量子烹饪，2035届",
+      "targetSummary": "火星轨道粮油集团-量子厨师",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "量子烹饪",
+        "graduationYear": 2035
+      },
+      "target": {
+        "companies": ["火星轨道粮油集团"],
+        "jobTitles": ["量子厨师"]
+      },
+      "filters": { "validAt": "2026-07-17", "status": "open" },
+      "expectedStatus": 422,
+      "expectedAvailable": false,
+      "expectedErrorCode": "NO_GROUNDED_EVIDENCE"
+    }
+  ]
+}
