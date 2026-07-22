@@ -1,4 +1,9 @@
+import path from "node:path";
+
 const DEFAULT_ZHIDA_TRPC_URL = "https://www.zhidasihai.cn/api/trpc";
+const DEFAULT_DEEPSEEK_API_URL = "https://api.deepseek.com";
+const DEFAULT_DEEPSEEK_MODEL = "deepseek-v4-flash";
+const DEFAULT_DEEPSEEK_MAX_OUTPUT_TOKENS = 700;
 
 function readOptionalEnv(name: string): string | null {
   const value = process.env[name]?.trim();
@@ -29,6 +34,24 @@ function readBooleanEnv(name: string): boolean {
   return /^(?:1|true|yes|on)$/i.test(readOptionalEnv(name) ?? "");
 }
 
+function readIntegerEnv(
+  name: string,
+  fallback: number,
+  minimum: number,
+  maximum: number,
+): number {
+  const raw = readOptionalEnv(name);
+  if (raw === null) return fallback;
+  const value = Number(raw);
+  if (!Number.isSafeInteger(value)) return fallback;
+  return Math.min(maximum, Math.max(minimum, value));
+}
+
+function readModelName(name: string, fallback: string): string {
+  const value = readOptionalEnv(name);
+  return value && /^[A-Za-z0-9._-]{1,120}$/.test(value) ? value : fallback;
+}
+
 function readHttpUrl(name: string, fallback?: string): string | null {
   const raw = readOptionalEnv(name) ?? fallback;
   if (!raw) return null;
@@ -49,6 +72,11 @@ export type ServerIntegrationConfig = {
   ragApiKey: string | null;
   difyApiUrl: string | null;
   difyApiKey: string | null;
+  deepseekApiUrl: string | null;
+  deepseekApiKey: string | null;
+  deepseekModel: string;
+  deepseekMaxOutputTokens: number;
+  deepseekThinkingEnabled: boolean;
   advisorSessionSecret: string | null;
   advisorAnonymousPublicKbEnabled: boolean;
 };
@@ -58,6 +86,11 @@ export type ZhidaBridgeIntegrationConfig = {
   exchangeUrl: string | null;
   sessionSecret: string | null;
   audience: string;
+  configured: boolean;
+};
+
+export type WorkspaceIntegrationConfig = {
+  directory: string | null;
   configured: boolean;
 };
 
@@ -75,6 +108,19 @@ export function getServerIntegrationConfig(): ServerIntegrationConfig {
     difyApiKey:
       readSecretEnv("DIFY_API_KEY") ??
       readSecretEnv("AGENT_PLATFORM_API_KEY"),
+    deepseekApiUrl: readHttpUrl(
+      "DEEPSEEK_API_URL",
+      DEFAULT_DEEPSEEK_API_URL,
+    ),
+    deepseekApiKey: readSecretEnv("DEEPSEEK_API_KEY"),
+    deepseekModel: readModelName("DEEPSEEK_MODEL", DEFAULT_DEEPSEEK_MODEL),
+    deepseekMaxOutputTokens: readIntegerEnv(
+      "DEEPSEEK_MAX_OUTPUT_TOKENS",
+      DEFAULT_DEEPSEEK_MAX_OUTPUT_TOKENS,
+      256,
+      1_200,
+    ),
+    deepseekThinkingEnabled: readBooleanEnv("DEEPSEEK_THINKING_ENABLED"),
     advisorSessionSecret: readAdvisorSessionSecret(),
     advisorAnonymousPublicKbEnabled: readBooleanEnv(
       "ADVISOR_ALLOW_ANONYMOUS_PUBLIC_KB",
@@ -128,22 +174,44 @@ export function getZhidaBridgeIntegrationConfig(): ZhidaBridgeIntegrationConfig 
   };
 }
 
+/**
+ * Cross-device career-path state belongs to this Agent, not the main site.
+ * The feature remains fail-closed until an absolute private directory is
+ * explicitly configured on the Agent server.
+ */
+export function getWorkspaceIntegrationConfig(): WorkspaceIntegrationConfig {
+  const directory = readOptionalEnv("JOB_AGENT_WORKSPACE_DIR");
+  const configured = Boolean(directory && path.isAbsolute(directory));
+  return {
+    directory: configured ? directory : null,
+    configured,
+  };
+}
+
 export function getPublicIntegrationStatus(): {
   ragConfigured: boolean;
   difyConfigured: boolean;
+  aiConfigured: boolean;
   advisorProtected: boolean;
   advisorAccessEnabled: boolean;
   zhidaBridgeConfigured: boolean;
+  workspacePersistenceConfigured: boolean;
 } {
   const config = getServerIntegrationConfig();
   const bridge = getZhidaBridgeIntegrationConfig();
+  const workspace = getWorkspaceIntegrationConfig();
   return {
     ragConfigured: Boolean(config.ragApiUrl),
     difyConfigured: Boolean(config.difyApiUrl && config.difyApiKey),
+    aiConfigured: Boolean(
+      (config.deepseekApiUrl && config.deepseekApiKey) ||
+      (config.difyApiUrl && config.difyApiKey),
+    ),
     advisorProtected: Boolean(
       config.advisorSessionSecret && config.advisorSessionSecret.length >= 32,
     ),
     advisorAccessEnabled: config.advisorAnonymousPublicKbEnabled,
     zhidaBridgeConfigured: bridge.configured,
+    workspacePersistenceConfigured: workspace.configured,
   };
 }

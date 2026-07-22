@@ -1,0 +1,227 @@
+{
+  "version": "2026-07-22.v2",
+  "description": "决策模型 V1 真实只读灰度用例。只使用合成的学历、专业、届别、地域和能力状态，不包含姓名、学校或联系方式。",
+  "cases": [
+    {
+      "id": "electrical-bachelor-2028-default",
+      "label": "2028届电气本科·起步阶段",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "电气工程及其自动化",
+        "graduationYear": 2028,
+        "preferredCities": "全国",
+        "availableHoursPerWeek": 10,
+        "capabilityLevels": {
+          "resume": "missing",
+          "application": "missing",
+          "interview": "missing",
+          "project_evidence": "missing",
+          "internship": "missing",
+          "competition": "missing"
+        }
+      },
+      "expectations": {
+        "minimumCandidateCount": 20,
+        "minimumMarketTotal": 20,
+        "requiredSectorAnyOf": ["power-grid"],
+        "minimumProductBlockers": 3,
+        "readinessScoreMin": 0,
+        "readinessScoreMax": 10
+      }
+    },
+    {
+      "id": "electrical-associate-2028-default",
+      "label": "2028届电气专科·硬门槛风险",
+      "profile": {
+        "degreeLevel": "associate",
+        "major": "电气工程及其自动化",
+        "graduationYear": 2028,
+        "preferredCities": "全国",
+        "availableHoursPerWeek": 10,
+        "capabilityLevels": {
+          "resume": "missing",
+          "application": "missing",
+          "interview": "missing",
+          "project_evidence": "missing",
+          "internship": "missing",
+          "competition": "missing"
+        }
+      },
+      "expectations": {
+        "minimumCandidateCount": 10,
+        "minimumMarketTotal": 20,
+        "requiredSectorAnyOf": ["power-grid"],
+        "minimumHighRiskCandidates": 1,
+        "minimumProductBlockers": 3,
+        "readinessScoreMin": 0,
+        "readinessScoreMax": 10
+      }
+    },
+    {
+      "id": "hospitality-bachelor-2027-default",
+      "label": "2027届酒店管理本科·服务方向",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "酒店管理",
+        "graduationYear": 2027,
+        "preferredCities": "全国",
+        "availableHoursPerWeek": 10,
+        "capabilityLevels": {
+          "resume": "missing",
+          "application": "missing",
+          "interview": "missing",
+          "project_evidence": "missing",
+          "internship": "missing",
+          "competition": "missing"
+        }
+      },
+      "expectations": {
+        "minimumCandidateCount": 10,
+        "minimumMarketTotal": 20,
+        "requiredDirectionAnyOf": ["酒店与文旅运营", "客户服务与接待"],
+        "requiredSectorAnyOf": ["culture-tourism-service"],
+        "minimumProductBlockers": 3,
+        "readinessScoreMin": 0,
+        "readinessScoreMax": 10
+      }
+    },
+    {
+      "id": "computer-master-2027-developing",
+      "label": "2027届计算机硕士·已有基础",
+      "profile": {
+        "degreeLevel": "master",
+        "major": "计算机科学与技术",
+        "graduationYear": 2027,
+        "preferredCities": "北京、上海、深圳",
+        "availableHoursPerWeek": 15,
+        "capabilityLevels": {
+          "resume": "developing",
+          "application": "developing",
+          "interview": "developing",
+          "project_evidence": "developing",
+          "internship": "developing",
+          "competition": "developing"
+        }
+      },
+      "expectations": {
+        "minimumCandidateCount": 20,
+        "minimumMarketTotal": 100,
+        "requiredDirectionAnyOf": ["技术研发与数字化"],
+        "minimumProductBlockers": 3,
+        "readinessScoreMin": 45,
+        "readinessScoreMax": 65
+      }
+    },
+    {
+      "id": "accounting-bachelor-2027-developing",
+      "label": "2027届会计本科·财务方向",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "会计学",
+        "graduationYear": 2027,
+        "preferredCities": "全国",
+        "availableHoursPerWeek": 12,
+        "capabilityLevels": {
+          "resume": "developing",
+          "application": "developing",
+          "interview": "missing",
+          "project_evidence": "developing",
+          "internship": "missing",
+          "competition": "developing"
+        }
+      },
+      "expectations": {
+        "minimumCandidateCount": 20,
+        "minimumMarketTotal": 100,
+        "requiredDirectionAnyOf": ["财务金融与风控"],
+        "minimumProductBlockers": 3,
+        "readinessScoreMin": 20,
+        "readinessScoreMax": 50
+      }
+    },
+    {
+      "id": "law-bachelor-2027-default",
+      "label": "2027届法学本科·综合职能方向",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "法学",
+        "graduationYear": 2027,
+        "preferredCities": "全国",
+        "availableHoursPerWeek": 10,
+        "capabilityLevels": {
+          "resume": "missing",
+          "application": "missing",
+          "interview": "missing",
+          "project_evidence": "missing",
+          "internship": "missing",
+          "competition": "missing"
+        }
+      },
+      "expectations": {
+        "minimumCandidateCount": 10,
+        "minimumMarketTotal": 50,
+        "minimumProductBlockers": 3,
+        "readinessScoreMin": 0,
+        "readinessScoreMax": 10
+      }
+    },
+    {
+      "id": "tourism-vocational-2027-default",
+      "label": "2027届旅游管理高职·学历风险",
+      "profile": {
+        "degreeLevel": "vocational",
+        "major": "旅游管理",
+        "graduationYear": 2027,
+        "preferredCities": "全国",
+        "availableHoursPerWeek": 10,
+        "capabilityLevels": {
+          "resume": "missing",
+          "application": "missing",
+          "interview": "missing",
+          "project_evidence": "missing",
+          "internship": "missing",
+          "competition": "missing"
+        }
+      },
+      "expectations": {
+        "minimumCandidateCount": 10,
+        "minimumMarketTotal": 20,
+        "requiredDirectionAnyOf": ["酒店与文旅运营", "客户服务与接待"],
+        "requiredSectorAnyOf": ["culture-tourism-service"],
+        "minimumHighRiskCandidates": 1,
+        "minimumProductBlockers": 3,
+        "readinessScoreMin": 0,
+        "readinessScoreMax": 10
+      }
+    },
+    {
+      "id": "computer-master-2026-ready",
+      "label": "2026届计算机硕士·执行准备充分",
+      "profile": {
+        "degreeLevel": "master",
+        "major": "计算机科学与技术",
+        "graduationYear": 2026,
+        "preferredCities": "全国",
+        "availableHoursPerWeek": 20,
+        "capabilityLevels": {
+          "resume": "ready",
+          "application": "ready",
+          "interview": "ready",
+          "project_evidence": "ready",
+          "internship": "ready",
+          "competition": "ready"
+        }
+      },
+      "expectations": {
+        "minimumCandidateCount": 20,
+        "minimumMarketTotal": 100,
+        "requiredDirectionAnyOf": ["技术研发与数字化"],
+        "minimumGraduationPasses": 1,
+        "minimumPrimaryCandidates": 1,
+        "minimumProductBlockers": 0,
+        "readinessScoreMin": 95,
+        "readinessScoreMax": 100
+      }
+    }
+  ]
+}

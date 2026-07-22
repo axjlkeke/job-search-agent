@@ -34,6 +34,18 @@ const TASK_DAY: Record<CapabilityKey, StrategyTask["recommendedDay"]> = {
   competition: 6,
 };
 
+const CAPABILITY_ESTIMATED_MINUTES: Record<CapabilityKey, number> = {
+  target_research: 60,
+  resume: 120,
+  project_evidence: 150,
+  application: 90,
+  academic: 180,
+  qualification: 180,
+  interview: 120,
+  internship: 180,
+  competition: 180,
+};
+
 const DAY_FOCUS: Record<DailyActionPlan["day"], string> = {
   1: "核验硬门槛与本批次资格",
   2: "研究目标单位与岗位",
@@ -117,6 +129,7 @@ function createCapabilityTask(
     description: capabilityDescription(primary, jobIds),
     completionCriteria: mergedCriteria(requirements),
     priority: highestPriority(requirements),
+    estimatedMinutes: CAPABILITY_ESTIMATED_MINUTES[primary.key],
     recommendedDay,
     dueDate: addDays(generatedDay, recommendedDay - 1),
   };
@@ -143,6 +156,7 @@ function createEligibilityTask(job: JobOpening, generatedDay: string, branch: St
       ? "保存不满足项的公告依据，并增加至少1个当前可申请的替代岗位。"
       : "四项硬门槛均有结论和来源；未知项已完成人工核验。",
     priority: "high",
+    estimatedMinutes: 45,
     recommendedDay: 1,
     dueDate: generatedDay,
   };
@@ -159,6 +173,7 @@ function createResearchTask(job: JobOpening, generatedDay: string): StrategyTask
     description: `整理${job.title}的工作内容、单位偏好、时间节点与准备重点。`,
     completionCriteria: "形成一张包含岗位要求、截止时间、来源和下一动作的情报卡。",
     priority: "high",
+    estimatedMinutes: 60,
     recommendedDay: 2,
     dueDate: addDays(generatedDay, 1),
   };
@@ -174,6 +189,7 @@ function createReviewTask(jobIds: string[], generatedDay: string): StrategyTask 
     description: "检查资格变化、已完成成果、未完成原因和下一周优先级。",
     completionCriteria: "更新每个目标的状态，并明确下一周最重要的3项行动。",
     priority: "medium",
+    estimatedMinutes: 45,
     recommendedDay: 7,
     dueDate: addDays(generatedDay, 6),
   };
@@ -323,6 +339,23 @@ export function buildStrategyNetwork(input: BuildStrategyNetworkInput): Strategy
   const applicableJobIds = new Set(
     branches.filter((branch) => branch.eligibility.canApplyCurrentBatch).map((branch) => branch.jobId),
   );
+  const productTriggers = buildProductTriggers(
+    allTasks,
+    profile,
+    products,
+    applicableJobIds,
+    entitlements,
+  );
+  const totalEstimatedMinutes = allTasks.reduce(
+    (total, task) => total + task.estimatedMinutes,
+    0,
+  );
+  const weeklyCapacityMinutes = Number.isFinite(profile.availableHoursPerWeek)
+    ? Math.round(Math.max(1, Math.min(80, profile.availableHoursPerWeek ?? 0)) * 60)
+    : null;
+  const utilizationPercent = weeklyCapacityMinutes
+    ? Math.round((totalEstimatedMinutes / weeklyCapacityMinutes) * 100)
+    : null;
 
   return {
     id: `strategy:${stablePart(profile.id)}:${jobs.map((job) => stablePart(job.id)).sort().join("+")}`,
@@ -332,12 +365,19 @@ export function buildStrategyNetwork(input: BuildStrategyNetworkInput): Strategy
     sharedTasks,
     branches,
     sevenDayPlan,
-    productTriggers: buildProductTriggers(
-      allTasks,
-      profile,
-      products,
-      applicableJobIds,
-      entitlements,
-    ),
+    productTriggers,
+    costSummary: {
+      totalEstimatedMinutes,
+      weeklyCapacityMinutes,
+      utilizationPercent,
+      overflowMinutes: weeklyCapacityMinutes
+        ? Math.max(0, totalEstimatedMinutes - weeklyCapacityMinutes)
+        : 0,
+      capabilityGapCount: allTasks.filter((task) => Boolean(task.capability)).length,
+      targetSpecificTaskCount: allTasks.filter((task) => task.scope === "target").length,
+      optionalProductCount: productTriggers.filter((trigger) => trigger.status === "optional_offer").length,
+      ownedServiceCount: productTriggers.filter((trigger) => trigger.status === "owned_available").length,
+      cashCostStatus: "not_estimated",
+    },
   };
 }

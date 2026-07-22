@@ -116,6 +116,25 @@ function cleanInputList(value: unknown, maxItems = 10): string[] | undefined {
   return unique.length > 0 ? unique : undefined;
 }
 
+function cleanConversationHistory(
+  value: unknown,
+): NonNullable<AdvisorContext["history"]> | undefined {
+  if (!Array.isArray(value)) return undefined;
+  let remainingCharacters = 1_800;
+  const cleaned: NonNullable<AdvisorContext["history"]> = [];
+  for (const entry of value.slice(-4)) {
+    const record = asRecord(entry);
+    if (!record) continue;
+    const role = record.role;
+    if (role !== "user" && role !== "assistant") continue;
+    const content = cleanInputText(record.content, Math.min(600, remainingCharacters));
+    if (!content || remainingCharacters <= 0) continue;
+    remainingCharacters -= content.length;
+    cleaned.push({ role, content });
+  }
+  return cleaned.length > 0 ? cleaned : undefined;
+}
+
 function profileFromSummary(summary: string | undefined): RagRetrievalProfile {
   if (!summary) return {};
   for (const section of summary.split(/[；;]/)) {
@@ -282,6 +301,7 @@ export async function POST(request: Request): Promise<Response> {
   const context: AdvisorContext = {
     profileSummary,
     targetSummary,
+    history: cleanConversationHistory(body.history),
     ...retrievalContextFromBody(body, profileSummary, targetSummary),
   };
 
@@ -300,15 +320,17 @@ export async function POST(request: Request): Promise<Response> {
   }
   if (
     config.ragApiUrl &&
-    (!config.difyApiUrl ||
-      !config.difyApiKey ||
+    (!(
+      (config.deepseekApiUrl && config.deepseekApiKey) ||
+      (config.difyApiUrl && config.difyApiKey)
+    ) ||
       !config.advisorAnonymousPublicKbEnabled)
   ) {
     return errorResponse(
       new AdvisorIntegrationError(
         "ADVISOR_NOT_READY",
         config.advisorAnonymousPublicKbEnabled
-          ? "AI 顾问的编排服务尚未完整配置，当前保持关闭。"
+          ? "AI 顾问服务尚未完整配置，当前保持关闭。"
           : "AI 顾问尚未接入登录授权；仅公开知识库可显式开启匿名测试。",
         false,
       ),
@@ -375,7 +397,7 @@ export async function POST(request: Request): Promise<Response> {
     } catch (error) {
       if (
         error instanceof AdvisorIntegrationError &&
-        error.code === "DIFY_UNAVAILABLE" &&
+        (error.code === "DIFY_UNAVAILABLE" || error.code === "AI_UNAVAILABLE") &&
         !error.retryable
       ) {
         return Response.json(

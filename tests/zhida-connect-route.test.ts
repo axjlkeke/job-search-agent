@@ -34,8 +34,13 @@ function cookiePair(cookies: string[], name: string): string {
 
 function validSnapshot() {
   return {
-    schemaVersion: "2026-07-17.2",
+    schemaVersion: "2026-07-18.3",
     source: "zhida-main-site-readonly",
+    workspace: {
+      subject: `ws1_${"B".repeat(43)}`,
+      persistence: "agent-owned",
+      purpose: "career-path-state",
+    },
     profile: {
       education: {
         educationLevel: "本科",
@@ -114,10 +119,16 @@ test("一次性授权从发起、换取到读取和断开形成完整闭环", as
       connected: boolean;
       profile?: { school?: string };
       entitlements?: Array<{ code: string }>;
+      workspaceSubject?: string;
     };
     assert.equal(session.connected, true);
     assert.equal(session.profile?.school, "武汉大学");
     assert.deepEqual(session.entitlements?.map((item) => item.code), ["ai_resume_optimize"]);
+    assert.equal(session.workspaceSubject, undefined);
+    assert.equal(
+      JSON.stringify(session).includes(`ws1_${"B".repeat(43)}`),
+      false,
+    );
 
     const disconnectResponse = await disconnect(new Request("http://127.0.0.1:3000/api/zhida-connect/session", { method: "DELETE" }));
     assert.equal((await disconnectResponse.json() as { connected: boolean }).connected, false);

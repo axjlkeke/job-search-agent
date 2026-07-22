@@ -5,3 +5,7 @@ export * from "./strategy.ts";
 export * from "./catalog.ts";
 export * from "./live-job.ts";
 export * from "./intelligence.ts";
+export * from "./market-report.ts";
+export * from "./school-intelligence.ts";
+export * from "./decision-system.ts";
+export * from "./decision-model.ts";

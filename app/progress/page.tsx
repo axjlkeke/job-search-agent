@@ -34,44 +34,44 @@ const milestones = [
   {
     id: "04",
     title: "策略网络与 7 天行动",
-    detail: "合并共同能力节点，保留企业专属分支，产生可检查任务。",
+    detail: "合并共同能力节点，保留企业专属分支，并明确总时间、每周容量、超载、能力工作量、未知现金费用与每项任务的计划耗时。",
     state: "done",
     label: "已完成",
   },
   {
     id: "05",
     title: "官方证据决策接线",
-    detail: "策略页已接入独立只读情报服务；无 A/B 级核验证据时统一降级为待核验。",
+    detail: "策略页已接入独立只读情报服务；无 A/B 级核验证据时统一降级为待核验。本地待发布版还能区分官网实时核验、官网本次失败与历史证据快照。",
     state: "done",
     label: "已完成",
   },
   {
     id: "06",
     title: "本地质量基线",
-    detail: "66 项单元测试、5 项页面渲染、类型检查与生产构建已通过。",
+    detail: "主项目 86 项单元测试、5 项页面渲染；主站全仓 429 项测试；职业情报 61 项规则/安全/发布测试、2 项页面渲染；本地 189 项知识库测试、类型检查与生产构建已通过。",
     state: "done",
     label: "已完成",
   },
   {
     id: "07",
     title: "扩充官方证据与真实知识库",
-    detail: "职业情报已有 62 个核验岗位页、43 个去重证据快照；知识库保存 55 条文档，已分为 35 条可回答证据、20 条发现索引和 0 条残缺页；同图 OCR 已稳定复用，列表/残缺页、错误企业及航天科技/航天科工近名证据均在知识库出口阻断，校园/社会招聘顾问事实回归通过 11/11。",
+    detail: "职业情报已有 79 个核验岗位页、49 个去重证据快照；知识库保存 81 条文档，动态分为 61 条可回答证据、20 条发现索引和 0 条残缺页；国家电网、中国石油、中国石化、中国移动、中车长客、中国能建投资集团等高频企业官方公告已接入，Dify 73 个映射均完成对账且正文一致；1 条经人工核验的事实变化已安全批准，剩余 3 条失效入口告警继续保留；校园/社会招聘顾问真实回归通过 17/17。",
     state: "active",
     label: "进行中",
   },
   {
     id: "08",
     title: "主站档案与已购权益",
-    detail: "Agent 侧一次性码、PKCE、脱敏快照、加密会话、表单核对和权益优先触发已实现并通过本地闭环；主站授权端点仍待审批部署。",
+    detail: "双端一次性码、PKCE、脱敏快照、匿名工作区标识、加密会话、表单核对、权益优先触发和跨设备路径进度已通过本地闭环；主站授权端点与 Agent 状态目录仍待审批部署。",
     state: "active",
     label: "待主站联调",
   },
   {
     id: "09",
     title: "Mac mini 与正式公网版本",
-    detail: "已有 tokensoff.com 影子部署历史记录；当前最新主 Beta 尚未做正式公网复验。",
+    detail: "Stage O API 与包含匿名路径安全门禁的主前端包已锁成一个本地发布列车：顺序固定为 API 先走 18081/18080，主前端再走 3002/3000；两个内容哈希、批准变量和失败边界不可调换，尚未上传或执行。tokensoff.com 仍由 3001 影子前端提供，主 Beta 尚未切换公网。",
     state: "todo",
-    label: "待复验",
+    label: "待切主 Beta",
   },
 ] as const;
 
@@ -103,7 +103,7 @@ export default function ProgressPage() {
         <section className={styles.summary} aria-label="总体进度">
           <div className={styles.metric}>
             <span>当前阶段</span>
-            <strong>扩充事实覆盖，并准备主站安全联调</strong>
+            <strong>匿名路径发布列车已锁定，等待授权预演</strong>
           </div>
           <div className={styles.metric}>
             <span>已通过</span>
@@ -127,7 +127,7 @@ export default function ProgressPage() {
                 <p>BUILD LOG</p>
                 <h2 id="roadmap-title">上线路线</h2>
               </div>
-              <span>2026-07-17</span>
+              <span>2026-07-18</span>
             </div>
 
             <div className={styles.milestoneList}>
@@ -149,10 +149,12 @@ export default function ProgressPage() {
           <aside className={styles.sideColumn}>
             <section className={styles.nowPanel}>
               <p className={styles.panelLabel}>NOW BUILDING</p>
-              <h2>先把“待核验”变成有依据的路径</h2>
+              <h2>先证明 API 和主前端都能回退，再允许上线</h2>
               <p>
-                策略页已经能消费只读职业情报决策，真实 RAG 与扩展事实回归也已跑通。
-                下一步优先扩大高频央企、热门岗位和回归样本；没有官方证据时继续明确拒答或显示未知。
+                API 包锁定六个运行文件并准备在 18081 做真实只读烟测；主前端安全发布包
+                只包含构建产物和依赖锁，准备在 3002 检查核心页面、岗位搜索和决策隐私。
+                两个包现已锁入同一发布列车，顺序不能调换。当前均未上传或重启；
+                获得授权后先预演，失败自动恢复旧版或停在向后兼容状态。
               </p>
               <dl>
                 <div>
@@ -161,19 +163,27 @@ export default function ProgressPage() {
                 </div>
                 <div>
                   <dt>公网地址</dt>
-                  <dd>历史影子验证，当前未复验</dd>
+                  <dd>3001 影子在线，主 Beta 未切换</dd>
                 </div>
                 <div>
                   <dt>职业情报</dt>
-                  <dd>只读在线，62 个核验岗位页</dd>
+                  <dd>旧版只读在线；Stage M 发布包已生成、未上传</dd>
+                </div>
+                <div>
+                  <dt>主 Beta 前端</dt>
+                  <dd>运行产物发布包已生成；3002 候选预检、显式批准和自动回滚已就绪</dd>
+                </div>
+                <div>
+                  <dt>发布列车</dt>
+                  <dd>API → 前端顺序、双包哈希和批准变量已锁定；仅本地生成</dd>
                 </div>
                 <div>
                   <dt>真实知识库</dt>
-                  <dd>55 条已保存；35 条可回答，20 条索引，0 条残缺</dd>
+                  <dd>81 条已保存；61 条可回答，20 条索引，0 条残缺</dd>
                 </div>
                 <div>
                   <dt>顾问事实回归</dt>
-                  <dd>11 / 11，覆盖过期、硬门槛、来源隔离与证据恢复</dd>
+                  <dd>17 / 17，覆盖六家高频央企、多条件取证与来源隔离</dd>
                 </div>
                 <div>
                   <dt>登录与订单权益</dt>

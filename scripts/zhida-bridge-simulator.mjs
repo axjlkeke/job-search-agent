@@ -36,8 +36,13 @@ function safeLoopbackCallback(raw) {
 
 function simulatorSnapshot() {
   return {
-    schemaVersion: "2026-07-17.2",
+    schemaVersion: "2026-07-18.3",
     source: "zhida-main-site-readonly",
+    workspace: {
+      subject: `ws1_${"S".repeat(43)}`,
+      persistence: "agent-owned",
+      purpose: "career-path-state",
+    },
     profile: {
       education: {
         educationLevel: "本科",

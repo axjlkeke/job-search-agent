@@ -1,8 +1,15 @@
 from __future__ import annotations
 
 from app.database import KnowledgeDatabase
-from app.dify import DifyDocumentError, DifyDocumentIndexStatus
-from app.reconciliation import reconcile_dify_documents
+from app.dify import (
+    DifyDocumentError,
+    DifyDocumentIndexStatus,
+    DifyDocumentSyncReceipt,
+)
+from app.reconciliation import (
+    reconcile_dify_documents,
+    retry_failed_dify_documents,
+)
 
 from conftest import make_settings
 
@@ -106,3 +113,99 @@ def test_failed_status_or_status_request_never_becomes_synced(monkeypatch, tmp_p
     result = reconcile_dify_documents(database, make_settings(tmp_path, dify=True))
     assert result["status"] == "completed-with-errors"
     assert database.get_dify_mapping(document["document_id"])["status"] == "queued"
+
+
+def test_retry_failed_dify_document_creates_new_tracked_batch(
+    monkeypatch, tmp_path
+):
+    database, source, document = _queued_mapping(tmp_path)
+    database.save_dify_mapping(
+        local_document_id=document["document_id"],
+        remote_document_id="remote-1",
+        last_content_hash="content-v1",
+        last_batch_id="failed-batch",
+        status="error",
+        last_error="timed out",
+    )
+    database.queue_review(
+        source_id=source["id"],
+        document_id=document["document_id"],
+        kind="dify_indexing_failure",
+        message="timed out",
+    )
+    calls: list[dict[str, str]] = []
+
+    def fake_sync(*args, **kwargs):
+        calls.append(kwargs)
+        return DifyDocumentSyncReceipt(
+            remote_document_id="remote-1",
+            batch_id="retry-batch",
+        )
+
+    monkeypatch.setattr(
+        "app.reconciliation.sync_document_to_dify",
+        fake_sync,
+    )
+    result = retry_failed_dify_documents(
+        database,
+        make_settings(tmp_path, dify=True),
+    )
+    mapping = database.get_dify_mapping(document["document_id"])
+
+    assert result["status"] == "success"
+    assert result["queued"] == 1
+    assert calls[0]["remote_document_id"] == "remote-1"
+    assert mapping["status"] == "queued"
+    assert mapping["last_batch_id"] == "retry-batch"
+    assert database.stats()["pendingReviews"] == 1
+
+
+def test_retry_failed_dify_document_respects_retrieval_block(
+    monkeypatch, tmp_path
+):
+    database = KnowledgeDatabase(tmp_path / "kb.db")
+    database.initialize()
+    source = database.register_source(
+        name="官方来源",
+        url="https://official.example/jobs",
+    )
+    document = database.upsert_document(
+        source=source,
+        canonical_url="https://official.example/jobs/index.html",
+        title="招聘信息",
+        content="仅用于发现招聘详情页的栏目列表。",
+        content_hash="index-v1",
+        mime_type="text/html",
+        published_at=None,
+        metadata={
+            "documentRole": "discovery_index",
+            "retrievalEligible": False,
+        },
+    )
+    database.save_dify_mapping(
+        local_document_id=document["document_id"],
+        remote_document_id="remote-index",
+        last_content_hash="index-v1",
+        last_batch_id="failed-batch",
+        status="error",
+        last_error="timed out",
+    )
+    monkeypatch.setattr(
+        "app.reconciliation.sync_document_to_dify",
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            AssertionError("blocked document must not be retried")
+        ),
+    )
+
+    result = retry_failed_dify_documents(
+        database,
+        make_settings(tmp_path, dify=True),
+    )
+
+    assert result["status"] == "completed-with-skips"
+    assert result["queued"] == 0
+    assert result["skipped"] == 1
+    assert (
+        database.get_dify_mapping(document["document_id"])["status"]
+        == "error"
+    )

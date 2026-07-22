@@ -1,6 +1,9 @@
 const COOKIE_NAME = "job_agent_session";
 const SESSION_MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
 const RATE_WINDOW_MS = 60_000;
+const SESSION_REQUESTS_PER_WINDOW = 6;
+const SESSION_CONCURRENT_REQUESTS = 2;
+const IP_REQUESTS_PER_WINDOW = 20;
 
 type Bucket = {
   windowStartedAt: number;
@@ -152,7 +155,11 @@ export function beginAdvisorRequest(
   pruneBuckets(now);
   const session = currentBucket(`session:${sessionKey}`, now);
   const ip = currentBucket(ipKey, now);
-  if (session.count >= 10 || session.inFlight >= 2 || ip.count >= 30) return null;
+  if (
+    session.count >= SESSION_REQUESTS_PER_WINDOW ||
+    session.inFlight >= SESSION_CONCURRENT_REQUESTS ||
+    ip.count >= IP_REQUESTS_PER_WINDOW
+  ) return null;
 
   session.count += 1;
   session.inFlight += 1;

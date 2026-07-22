@@ -41,6 +41,7 @@ export async function GET(): Promise<Response> {
     {
       ragConfigured,
       difyConfigured,
+      aiConfigured,
       advisorProtected,
       advisorAccessEnabled,
       zhidaBridgeConfigured,
@@ -60,6 +61,7 @@ export async function GET(): Promise<Response> {
       intelligenceCounts: intelligenceStatus.counts,
       ragConfigured,
       difyConfigured,
+      aiConfigured,
       advisorProtected,
       advisorAccessEnabled,
       zhidaBridgeConfigured,

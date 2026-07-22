@@ -36,6 +36,11 @@ export type IntelligenceEvidence = {
   publishedAt?: string | null;
 };
 
+export type IntelligenceOfficialVerificationSummary = {
+  status: "live-verified" | "live-failed" | "stored-snapshot";
+  checkedAt: string | null;
+};
+
 export type IntelligenceDecisionResponse = {
   context: {
     job: {
@@ -62,6 +67,11 @@ export type IntelligenceDecisionResponse = {
         experienceRequirementRaw?: string | null;
       };
     };
+    decisionBoundary?: {
+      evidenceFreshnessStatus?: "live" | "live-check-failed";
+      liveVerificationStatus?: "verified" | "failed";
+      liveVerifiedAt?: string | null;
+    };
   };
   evaluation: {
     routeState: IntelligenceRouteState;
@@ -75,6 +85,7 @@ export type IntelligenceDecisionResponse = {
     profilePersisted: boolean;
     profileLogged: boolean;
     directIdentifiersAccepted?: boolean;
+    profileSentToOfficialRecruitmentSite?: false;
   };
 };
 
@@ -147,8 +158,67 @@ export function isIntelligenceDecisionResponse(
       value.privacy.directIdentifiersAccepted !== undefined
       && value.privacy.directIdentifiersAccepted !== false
     )
+    || (
+      value.privacy.profileSentToOfficialRecruitmentSite !== undefined
+      && value.privacy.profileSentToOfficialRecruitmentSite !== false
+    )
   ) {
     return false;
+  }
+
+  const boundary = value.context.decisionBoundary;
+  if (boundary !== undefined) {
+    if (!isRecord(boundary)) return false;
+    const freshness = boundary.evidenceFreshnessStatus;
+    const liveStatus = boundary.liveVerificationStatus;
+    const checkedAt = boundary.liveVerifiedAt;
+    const hasFreshness = freshness !== undefined;
+    const hasLiveStatus = liveStatus !== undefined;
+    if (hasFreshness !== hasLiveStatus) return false;
+    if (
+      freshness !== undefined
+      && freshness !== "live"
+      && freshness !== "live-check-failed"
+    ) {
+      return false;
+    }
+    if (
+      liveStatus !== undefined
+      && liveStatus !== "verified"
+      && liveStatus !== "failed"
+    ) {
+      return false;
+    }
+    if (
+      checkedAt !== undefined
+      && checkedAt !== null
+      && (
+        typeof checkedAt !== "string"
+        || Number.isNaN(new Date(checkedAt).getTime())
+      )
+    ) {
+      return false;
+    }
+    if (
+      liveStatus === "verified"
+      && (
+        freshness !== "live"
+        || !isRecord(value.context.officialEvidence)
+        || typeof checkedAt !== "string"
+      )
+    ) {
+      return false;
+    }
+    if (
+      liveStatus === "failed"
+      && (
+        freshness !== "live-check-failed"
+        || value.context.officialEvidence !== null
+        || typeof checkedAt !== "string"
+      )
+    ) {
+      return false;
+    }
   }
 
   const gatesValid = value.evaluation.gates.every((gate) =>
@@ -179,7 +249,64 @@ export function isIntelligenceDecisionResponse(
     ),
   );
 
+  const liveStatus = isRecord(boundary)
+    ? boundary.liveVerificationStatus
+    : undefined;
+  if (
+    liveStatus !== undefined
+    && value.privacy.profileSentToOfficialRecruitmentSite !== false
+  ) {
+    return false;
+  }
+  if (
+    liveStatus === "verified"
+    && !value.evaluation.evidence.some((item) =>
+      isRecord(item)
+      && (item.sourceGrade === "A" || item.sourceGrade === "B")
+      && item.verificationStatus === "verified"
+    )
+  ) {
+    return false;
+  }
+  if (
+    liveStatus === "failed"
+    && (
+      value.evaluation.routeState !== "prepare-and-verify"
+      || value.evaluation.evidence.length !== 0
+    )
+  ) {
+    return false;
+  }
+
   return gatesValid && actionsValid && evidenceValid;
+}
+
+export function officialVerificationSummaryFromIntelligenceDecision(
+  decision: IntelligenceDecisionResponse,
+): IntelligenceOfficialVerificationSummary {
+  const boundary = decision.context.decisionBoundary;
+  if (
+    boundary?.evidenceFreshnessStatus === "live"
+    && boundary.liveVerificationStatus === "verified"
+  ) {
+    return {
+      status: "live-verified",
+      checkedAt: boundary.liveVerifiedAt ?? null,
+    };
+  }
+  if (
+    boundary?.evidenceFreshnessStatus === "live-check-failed"
+    && boundary.liveVerificationStatus === "failed"
+  ) {
+    return {
+      status: "live-failed",
+      checkedAt: boundary.liveVerifiedAt ?? null,
+    };
+  }
+  return {
+    status: "stored-snapshot",
+    checkedAt: null,
+  };
 }
 
 export function intelligenceProfileForDecision(

@@ -804,7 +804,100 @@
 
 .strategyMetrics div:last-child { border-right: 0; }
 .strategyMetrics span { color: #7b7b7b; font-size: 9px; }
-.strategyMetrics strong { font-family: var(--font-geist-mono), monospace; font-size: 18px; }
+.strategyMetrics strong { font-family: var(--font-geist-mono), monospace; font-size: 18px; white-space: nowrap; }
+
+.pathCostPanel {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding: 24px;
+  border: 1px solid #d2d2d2;
+  border-radius: 14px;
+  background: #111111;
+  color: #ffffff;
+}
+
+.pathCostPanel > header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.pathCostPanel > header p {
+  margin: 0 0 6px;
+  color: #a8a8a8;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+
+.pathCostPanel > header h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 620;
+  letter-spacing: -0.025em;
+}
+
+.pathCostPanel > header > span {
+  color: #a8a8a8;
+  font-size: 11px;
+}
+
+.pathCostGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+}
+
+.pathCostGrid article {
+  min-width: 0;
+  padding: 18px;
+  border-right: 1px solid #333333;
+}
+
+.pathCostGrid article:first-child { padding-left: 0; }
+.pathCostGrid article:last-child { padding-right: 0; border-right: 0; }
+.pathCostGrid span { color: #9f9f9f; font-size: 11px; }
+.pathCostGrid strong { display: block; margin: 9px 0 6px; font-size: 22px; font-weight: 600; }
+.pathCostGrid p { margin: 0; color: #9b9b9b; font-size: 11px; line-height: 1.55; }
+
+.capacityMeter {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.65fr) minmax(280px, 1.35fr);
+  align-items: center;
+  gap: 18px;
+}
+
+.capacityMeter > div {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #353535;
+}
+
+.capacityMeter > div span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  border-radius: inherit;
+  background: #f1f1f1;
+}
+
+.capacityMeter[data-over-capacity="true"] > div span { background: #a6a6a6; }
+.capacityMeter p,
+.capacityUnknown { margin: 0; color: #b7b7b7; font-size: 11px; line-height: 1.6; }
+
+.pathCostPanel > footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  color: #7f7f7f;
+  font-size: 10px;
+  line-height: 1.55;
+}
 
 .networkCanvas {
   padding: 25px;
@@ -988,6 +1081,34 @@
   gap: 4px 10px;
 }
 
+.officialEvidencePanel small {
+  display: block;
+  color: #555550;
+  font-size: 8px;
+  line-height: 1.55;
+}
+
+.officialEvidencePanel[data-state="live-verified"] {
+  border-left-width: 4px;
+  background: linear-gradient(90deg, #e9e9e4 0%, #f5f5f2 72%);
+}
+
+.officialEvidencePanel[data-state="live-verified"] > header strong {
+  border-color: #171717;
+  background: #171717;
+  color: #ffffff;
+}
+
+.officialEvidencePanel[data-state="verification-failed"] {
+  border-left-color: #767671;
+  background: #f1f1ed;
+}
+
+.officialEvidencePanel[data-state="verification-failed"] > header strong {
+  border-style: dashed;
+  color: #4d4d49;
+}
+
 .officialEvidencePanel[data-state="loading"] {
   border-left-color: #8b8b86;
   background: #f7f7f5;
@@ -1090,6 +1211,7 @@
 .productGrid article > span { color: #d9d9d9; font-size: 8px; }
 .productGrid h3 { margin: 7px 0; font-size: 12px; }
 .productGrid p { min-height: 42px; margin: 0 0 11px; color: rgba(247, 247, 247, 0.62); font-size: 9px; line-height: 1.55; }
+.productGrid .productPrice { display: block; margin: -3px 0 10px; color: #f0f0f0; font-size: 10px; font-weight: 720; }
 .productGrid a { color: #dbdbdb; font-size: 9px; text-underline-offset: 3px; }
 
 .noMarketing {
@@ -1156,7 +1278,7 @@
 
 .taskRow {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-columns: 44px minmax(0, 1fr);
   gap: 13px;
   padding: 17px;
   border-bottom: 1px solid rgba(38, 38, 38, 0.09);
@@ -1165,8 +1287,8 @@
 .taskRow:last-child { border-bottom: 0; }
 
 .taskRow > button {
-  width: 29px;
-  height: 29px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   border: 1px solid #b5b5b5;
@@ -5199,7 +5321,8 @@
 }
 
 .strategyWorkspaceView .strategyMetrics strong {
-  font-size: 29px;
+  font-size: clamp(22px, 2.2vw, 29px);
+  white-space: nowrap;
 }
 
 .strategyWorkspaceView .networkCanvas {
@@ -5387,13 +5510,13 @@
 }
 
 .tasksWorkspaceView .taskRow {
-  grid-template-columns: 42px minmax(0, 1fr);
+  grid-template-columns: 50px minmax(0, 1fr);
   padding: 23px;
 }
 
 .tasksWorkspaceView .taskRow > button {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
 }
 
 .tasksWorkspaceView .taskRow > div > span {
@@ -5957,4 +6080,7542 @@
   .profileBridgeActions { padding-left: 0; justify-content: stretch; }
   .profileBridgeActions button { flex: 1 1 auto; }
   .profileBridgeError { margin-left: 0; }
+}
+
+@media (max-width: 900px) {
+  .pathCostGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pathCostGrid article:nth-child(2) { border-right: 0; }
+  .pathCostGrid article:nth-child(-n + 2) { border-bottom: 1px solid #333333; }
+  .pathCostGrid article:nth-child(3) { padding-left: 0; }
+  .capacityMeter { grid-template-columns: 1fr; gap: 10px; }
+}
+
+@media (max-width: 560px) {
+  .pathCostPanel { padding: 20px 18px; border-radius: 11px; }
+  .pathCostPanel > header,
+  .pathCostPanel > footer { align-items: flex-start; flex-direction: column; gap: 9px; }
+  .pathCostPanel > header h2 { font-size: 19px; line-height: 1.35; }
+  .pathCostGrid { grid-template-columns: 1fr; }
+  .pathCostGrid article,
+  .pathCostGrid article:first-child,
+  .pathCostGrid article:nth-child(3),
+  .pathCostGrid article:last-child {
+    padding: 15px 0;
+    border-right: 0;
+    border-bottom: 1px solid #333333;
+  }
+  .pathCostGrid article:last-child { border-bottom: 0; }
+  .pathCostGrid strong { font-size: 20px; }
+}
+
+/* Focused conversational workspace */
+.focusedShell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 256px minmax(0, 1fr);
+  background: #f7f7f5;
+  color: #20201f;
+}
+
+.focusedSidebar {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 14px;
+  border-right: 1px solid #e3e3df;
+  background: #f1f1ee;
+}
+
+.focusedBrand {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.focusedBrand:hover {
+  background: #e9e9e5;
+}
+
+.focusedBrand > span,
+.focusedMobileBrand > span {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #181817;
+  color: #fff;
+}
+
+.focusedBrand > div {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.focusedBrand strong {
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+
+.focusedBrand small {
+  color: #777772;
+  font-size: 11px;
+}
+
+.focusedNav {
+  display: grid;
+  gap: 5px;
+  margin-top: 23px;
+}
+
+.focusedNav button {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #5d5d59;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.focusedNav button:hover {
+  background: #e8e8e4;
+  color: #20201f;
+}
+
+.focusedNav button.focusedNavActive {
+  background: #deded9;
+  color: #171716;
+  font-weight: 650;
+}
+
+.focusedSidebarSpacer {
+  flex: 1;
+}
+
+.focusedDataStatus {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  margin: 0 7px 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid #ddddda;
+}
+
+.focusedDataStatus > i {
+  width: 7px;
+  height: 7px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: #aaa9a3;
+}
+
+.focusedDataStatus > i[data-ready="true"] {
+  background: #1c1c1b;
+}
+
+.focusedDataStatus > span,
+.focusedProfileSummary > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.focusedDataStatus strong,
+.focusedProfileSummary strong {
+  overflow: hidden;
+  color: #3d3d3a;
+  font-size: 11px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focusedDataStatus small,
+.focusedProfileSummary small {
+  overflow: hidden;
+  color: #85857f;
+  font-size: 10px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focusedProfileSummary {
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 11px;
+  background: #e8e8e4;
+}
+
+.focusedProfileSummary > span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d6d6d1;
+  border-radius: 9px;
+  background: #f7f7f4;
+  color: #555550;
+}
+
+.focusedWorkspace,
+.focusedMain,
+.focusedPane {
+  min-width: 0;
+  min-height: 100dvh;
+}
+
+.focusedPane[hidden] {
+  display: none;
+}
+
+.focusedMobileHeader {
+  display: none;
+}
+
+.focusedAdvisor {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.focusedAdvisorHeader {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 9px 24px;
+  border-bottom: 1px solid #ececea;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.focusedAdvisorHeader > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.focusedAdvisorHeader > div:first-child {
+  min-width: 0;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.focusedAdvisorHeader strong {
+  color: #20201f;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+
+.focusedAdvisorHeader span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #858580;
+  font-size: 10px;
+}
+
+.focusedAdvisorHeader span i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #aaa9a3;
+}
+
+.focusedAdvisorHeader span[data-ready="true"] i {
+  background: #20201f;
+}
+
+.focusedAdvisorHeader button {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+  border: 1px solid #dfdfdc;
+  border-radius: 9px;
+  background: #fff;
+  color: #4e4e4a;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 620;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.focusedAdvisorHeader button:hover:not(:disabled) {
+  border-color: #c7c7c2;
+  background: #f5f5f2;
+}
+
+.focusedAdvisorHeader button:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+.focusedAdvisorEmpty,
+.focusedAdvisorOffline {
+  width: min(560px, calc(100% - 40px));
+  margin: auto;
+  padding: 64px 0 100px;
+  text-align: center;
+}
+
+.focusedAdvisorMark {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 20px;
+  border: 1px solid #e3e3df;
+  border-radius: 16px;
+  background: #f4f4f1;
+  color: #343431;
+}
+
+.focusedAdvisorEmpty h1,
+.focusedAdvisorOffline h1 {
+  margin: 0;
+  color: #20201f;
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 630;
+  letter-spacing: -0.045em;
+}
+
+.focusedAdvisorEmpty p,
+.focusedAdvisorOffline p {
+  max-width: 500px;
+  margin: 14px auto 0;
+  color: #73736e;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.focusedAdvisorEmpty > button {
+  min-height: 46px;
+  margin-top: 26px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 11px;
+  background: #1d1d1c;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.focusedAdvisorOffline > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 25px;
+}
+
+.focusedAdvisorOffline > div span {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 11px;
+  border: 1px solid #dfdfdb;
+  border-radius: 999px;
+  background: #f7f7f4;
+  color: #888883;
+  font-size: 11px;
+}
+
+.focusedAdvisorOffline > div span[data-ready="true"] {
+  border-color: #c8c8c3;
+  color: #333330;
+}
+
+.focusedAdvisorThread.advisorThread,
+.focusedAdvisor .advisorViewport,
+.focusedAdvisor .advisorThreadContent {
+  min-height: calc(100dvh - 65px);
+}
+
+.focusedAdvisor .advisorThread {
+  background: #fff;
+}
+
+.focusedAdvisor .advisorThreadContent {
+  width: 100%;
+}
+
+.focusedAdvisor .advisorEmpty {
+  width: min(760px, calc(100% - 40px));
+  margin: auto auto 0;
+  padding: 80px 24px 28px;
+}
+
+.focusedAdvisor .advisorEmptyTitle {
+  color: #20201f;
+  font-size: clamp(27px, 3vw, 36px);
+  font-weight: 630;
+  letter-spacing: -0.05em;
+}
+
+.focusedAdvisor .advisorEmptyDescription {
+  max-width: 590px;
+  margin-top: 14px;
+  color: #767671;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.focusedAdvisor .advisorMessages {
+  width: min(880px, calc(100% - 44px));
+  margin: 0 auto;
+  padding: 38px 0 22px;
+  gap: 25px;
+}
+
+.focusedAdvisor .advisorMessage {
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 13px;
+}
+
+.focusedAdvisor .advisorMessageAvatar {
+  width: 36px;
+  height: 36px;
+  border-color: #e3e3df;
+  border-radius: 11px;
+  background: #f5f5f2;
+  color: #4f4f4b;
+}
+
+.focusedAdvisor .advisorMessageText {
+  max-width: min(720px, 92%);
+  padding: 12px 15px;
+  border-radius: 4px 14px 14px 14px;
+  background: #f4f4f1;
+  color: #292927;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.focusedAdvisor .advisorMessageUser {
+  grid-template-columns: minmax(0, 1fr) 38px;
+}
+
+.focusedAdvisor .advisorMessageUser .advisorMessageAvatar {
+  border-color: #20201f;
+  background: #20201f;
+}
+
+.focusedAdvisor .advisorMessageUser .advisorMessageText {
+  border-radius: 14px 4px 14px 14px;
+  background: #e9e9e5;
+}
+
+.focusedAdvisor .advisorCitations {
+  max-width: 720px;
+}
+
+.focusedAdvisor .advisorCitation {
+  border-color: #e1e1dd;
+  background: #fbfbfa;
+}
+
+.focusedAdvisor .advisorFooter {
+  margin-top: auto;
+  padding: 16px 24px 22px;
+  border-top: 1px solid rgba(236, 236, 233, 0.78);
+  background: rgba(255, 255, 255, 0.97);
+}
+
+.focusedAdvisor .advisorSuggestions {
+  width: min(820px, 100%);
+  margin: 0 auto 11px;
+}
+
+.focusedAdvisorTriggers {
+  width: min(820px, 100%);
+  margin: 0 auto 11px;
+  padding: 12px;
+  border: 1px solid #dededa;
+  border-radius: 14px;
+  background: #f8f8f5;
+}
+
+.focusedAdvisorTriggers > header,
+.focusedAdvisorTriggers > header span,
+.focusedAdvisorTriggers > div,
+.focusedAdvisorTriggers article {
+  display: flex;
+}
+
+.focusedAdvisorTriggers > header {
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.focusedAdvisorTriggers > header strong {
+  color: #272725;
+  font-size: 11px;
+}
+
+.focusedAdvisorTriggers > header span {
+  color: #777771;
+  font-size: 9px;
+}
+
+.focusedAdvisorTriggers > div {
+  gap: 8px;
+}
+
+.focusedAdvisorTriggers article {
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 11px;
+  border: 1px solid #e1e1dd;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.focusedAdvisorTriggers article > span {
+  color: #777771;
+  font-size: 8px;
+}
+
+.focusedAdvisorTriggers article > strong {
+  margin-top: 3px;
+  color: #282826;
+  font-size: 11px;
+}
+
+.focusedAdvisorTriggers article > small {
+  display: -webkit-box;
+  margin-top: 4px;
+  overflow: hidden;
+  color: #6d6d68;
+  font-size: 9px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.focusedAdvisorTriggers article > a {
+  margin-top: 8px;
+  color: #292927;
+  font-size: 9px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.focusedAdvisor .advisorSuggestion {
+  min-height: 40px;
+  padding: 0 14px;
+  border-color: #dfdfdb;
+  border-radius: 10px;
+  background: #fafaf8;
+  color: #575752;
+  font-size: 12px;
+}
+
+.focusedAdvisor .advisorComposer {
+  width: min(820px, 100%);
+  margin: 0 auto;
+  padding: 10px 10px 10px 14px;
+  border-color: #d7d7d2;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(35, 35, 32, 0.09);
+}
+
+.focusedAdvisor .advisorComposerInput {
+  min-height: 48px;
+  padding: 12px 8px;
+  color: #252523;
+  font-size: 15px;
+}
+
+.focusedAdvisor .advisorSendButton {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #20201f;
+}
+
+.focusedProfilePage {
+  width: min(920px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 70px 0 110px;
+}
+
+.focusedProfileHeading {
+  max-width: 650px;
+}
+
+.focusedProfileHeading > span {
+  color: #777772;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.focusedProfileHeading h1 {
+  margin: 12px 0 0;
+  color: #20201f;
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 630;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+}
+
+.focusedProfileHeading p {
+  margin: 18px 0 0;
+  color: #6f6f6a;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.focusedBridge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 34px;
+  padding: 16px 18px;
+  border: 1px solid #dededa;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.focusedBridge > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.focusedBridge > div:first-child {
+  min-width: 0;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.focusedBridge strong {
+  color: #2c2c2a;
+  font-size: 13px;
+}
+
+.focusedBridge span {
+  color: #7c7c77;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.focusedBridge button {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid #20201f;
+  border-radius: 9px;
+  background: #20201f;
+  color: #fff;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.focusedBridge button.focusedTextButton {
+  border-color: transparent;
+  background: transparent;
+  color: #666661;
+}
+
+.focusedBridge > p {
+  width: 100%;
+  margin: 0;
+  color: #8b2d2d;
+  font-size: 11px;
+}
+
+.focusedProfileForm {
+  margin-top: 47px;
+}
+
+.focusedFormSection {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 40px;
+  padding: 32px 0;
+  border-top: 1px solid #dededa;
+}
+
+.focusedFormSection > header {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: start;
+  gap: 11px;
+}
+
+.focusedFormSection > header > span {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #20201f;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 760;
+}
+
+.focusedFormSection h2,
+.focusedFormSection p {
+  margin: 0;
+}
+
+.focusedFormSection h2 {
+  color: #252523;
+  font-size: 17px;
+  letter-spacing: -0.025em;
+}
+
+.focusedFormSection p {
+  margin-top: 6px;
+  color: #82827c;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.focusedFormGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 19px 16px;
+}
+
+.focusedFormGrid label,
+.focusedCapabilityGrid label {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  color: #4a4a46;
+  font-size: 12px;
+  font-weight: 620;
+}
+
+.focusedFormGrid input,
+.focusedFormGrid select,
+.focusedCapabilityGrid select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 13px;
+  border: 1px solid #d9d9d4;
+  border-radius: 10px;
+  outline: 0;
+  background: #fff;
+  color: #272725;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.focusedFormGrid input:focus,
+.focusedFormGrid select:focus,
+.focusedCapabilityGrid select:focus {
+  border-color: #73736e;
+  box-shadow: 0 0 0 3px rgba(32, 32, 31, 0.08);
+}
+
+.focusedFormGrid input::placeholder {
+  color: #aaa9a3;
+}
+
+.focusedInputSuffix {
+  position: relative;
+}
+
+.focusedInputSuffix input {
+  padding-right: 52px;
+}
+
+.focusedInputSuffix > span {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  color: #8a8a84;
+  font-size: 11px;
+  font-weight: 500;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.focusedCapabilityDetails {
+  border-top: 1px solid #dededa;
+  border-bottom: 1px solid #dededa;
+}
+
+.focusedCapabilityDetails summary {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 2px;
+  color: #30302d;
+  cursor: pointer;
+  list-style: none;
+}
+
+.focusedCapabilityDetails summary::-webkit-details-marker {
+  display: none;
+}
+
+.focusedCapabilityDetails summary > span:first-child {
+  display: grid;
+  gap: 5px;
+}
+
+.focusedCapabilityDetails summary strong {
+  font-size: 14px;
+}
+
+.focusedCapabilityDetails summary small,
+.focusedCapabilityDetails summary > span:last-child {
+  color: #878781;
+  font-size: 11px;
+}
+
+.focusedCapabilityDetails[open] summary > span:last-child {
+  color: transparent;
+}
+
+.focusedCapabilityDetails[open] summary > span:last-child::after {
+  content: "收起";
+  color: #686863;
+}
+
+.focusedCapabilityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 0 0 28px;
+}
+
+.focusedFormError {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border-left: 3px solid #8b2d2d;
+  background: #f8f1f1;
+  color: #7f2929;
+  font-size: 12px;
+}
+
+.focusedFormFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 28px;
+}
+
+.focusedFormFooter > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.focusedFormFooter > div:first-child {
+  min-width: 0;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.focusedFormFooter strong {
+  color: #42423e;
+  font-size: 11px;
+}
+
+.focusedFormFooter span {
+  color: #888882;
+  font-size: 10px;
+}
+
+.focusedFormFooter button {
+  min-height: 46px;
+  padding: 0 17px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 680;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.focusedFormFooter .focusedClearButton {
+  border: 1px solid #d8d8d3;
+  background: transparent;
+  color: #777772;
+}
+
+.focusedFormFooter .focusedReportButton {
+  border: 1px solid #bdbdb7;
+  background: #fff;
+  color: #2d2d2a;
+}
+
+.focusedFormFooter .focusedSaveButton {
+  border: 1px solid #20201f;
+  background: #20201f;
+  color: #fff;
+}
+
+/* Profile-generated direction selection */
+.directionPicker {
+  min-height: 100dvh;
+  padding: 28px 30px 36px;
+  background: #f7f7f5;
+  color: #171716;
+}
+
+.directionPickerHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #cecec9;
+}
+
+.directionPickerHeader > div:first-child {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.directionPickerHeader > div:first-child > span {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #1d1d1c;
+  color: #fff;
+}
+
+.directionPickerHeader small,
+.directionPickerHeader h1,
+.directionPickerHeader p {
+  margin: 0;
+}
+
+.directionPickerHeader small {
+  color: #666661;
+  font-size: 10px;
+  font-weight: 660;
+}
+
+.directionPickerHeader h1 {
+  margin-top: 4px;
+  font-size: clamp(30px, 3.6vw, 48px);
+  font-weight: 730;
+  letter-spacing: -0.055em;
+  line-height: 1.03;
+}
+
+.directionPickerHeader p {
+  margin-top: 8px;
+  color: #62625d;
+  font-size: 12px;
+}
+
+.directionPickerHeader > button {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 1px solid #c7c7c2;
+  border-radius: 9px;
+  background: #fff;
+  color: #2b2b29;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.directionPickerSource {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 13px;
+  margin-top: 18px;
+  padding: 12px 14px;
+  border: 1px solid #d7d7d2;
+  background: #eeeeeb;
+}
+
+.directionPickerSource span {
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: #20201f;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 690;
+}
+
+.directionPickerSource strong {
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.directionPickerSource small {
+  color: #686863;
+  font-size: 9px;
+}
+
+.directionSteps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 18px 0 0;
+  padding: 0;
+  border: 1px solid #d5d5d0;
+  list-style: none;
+}
+
+.directionSteps li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 2px 10px;
+  padding: 13px 15px;
+  color: #8a8a84;
+  background: #f0f0ed;
+}
+
+.directionSteps li + li {
+  border-left: 1px solid #d5d5d0;
+}
+
+.directionSteps li[data-current="true"] {
+  color: #fff;
+  background: #1d1d1c;
+}
+
+.directionSteps li[data-complete="true"] {
+  color: #232321;
+  background: #e4e4e0;
+}
+
+.directionSteps li > span {
+  grid-row: 1 / 3;
+  font-size: 10px;
+  font-weight: 720;
+}
+
+.directionSteps strong {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.directionSteps small {
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 520;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.directionPathSummary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 9px 12px;
+  border: 1px solid #d6d6d1;
+  background: #fff;
+  color: #656560;
+  font-size: 10px;
+}
+
+.directionPathSummary > span {
+  font-weight: 650;
+}
+
+.directionPathSummary button {
+  min-height: 44px;
+  padding: 0 9px;
+  border: 1px solid #cecec8;
+  border-radius: 6px;
+  background: #f1f1ee;
+  color: #222220;
+  font: inherit;
+  font-weight: 680;
+  cursor: pointer;
+}
+
+.directionPathSummary strong {
+  min-width: 0;
+  overflow: hidden;
+  color: #1c1c1a;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.directionTrackGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.directionTrackCard {
+  min-width: 0;
+  min-height: 270px;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 17px;
+  border: 1px solid #cacac5;
+  border-radius: 5px;
+  background: #fbfbfa;
+  color: #1d1d1b;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+
+.directionTrackCard:hover {
+  border-color: #565652;
+  box-shadow: 0 10px 28px rgba(24, 24, 22, 0.08);
+  transform: translateY(-2px);
+}
+
+.directionTrackCard header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #dfdfdb;
+}
+
+.directionTrackCard header span,
+.directionTrackCard header small {
+  color: #696964;
+  font-size: 8px;
+  font-weight: 670;
+}
+
+.directionTrackCard header small {
+  padding: 4px 6px;
+  border: 1px solid #d0d0cb;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.directionTrackCard > strong {
+  margin-top: 26px;
+  font-size: clamp(24px, 2.2vw, 34px);
+  font-weight: 740;
+  letter-spacing: -0.045em;
+}
+
+.directionTrackCard > i {
+  margin-top: 4px;
+  color: #777772;
+  font-size: 10px;
+  font-style: normal;
+}
+
+.directionTrackCard > p {
+  margin: 16px 0 0;
+  color: #656560;
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.directionTrackCard footer {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+  color: #343431;
+  font-size: 10px;
+  font-weight: 680;
+}
+
+.directionLevelNote {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-left: 3px solid #1c1c1b;
+  background: #ededeb;
+}
+
+.directionLevelNote strong {
+  flex: 0 0 auto;
+  font-size: 12px;
+}
+
+.directionLevelNote span {
+  color: #696964;
+  font-size: 10px;
+}
+
+.directionSubtrackGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.directionSubtrackCard {
+  min-width: 0;
+  min-height: 116px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto 18px;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid #cdcdc8;
+  border-radius: 5px;
+  background: #fbfbfa;
+  color: #1d1d1b;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+
+.directionSubtrackCard:hover {
+  border-color: #5d5d58;
+  transform: translateY(-1px);
+}
+
+.directionSubtrackCard > span {
+  color: #8a8a84;
+  font-size: 9px;
+  font-weight: 720;
+}
+
+.directionSubtrackCard > div {
+  min-width: 0;
+}
+
+.directionSubtrackCard strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 710;
+}
+
+.directionSubtrackCard p {
+  margin: 7px 0 0;
+  color: #6a6a65;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.directionSubtrackCard small {
+  padding: 5px 7px;
+  border: 1px solid #d2d2cd;
+  border-radius: 999px;
+  color: #6a6a65;
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.directionJobGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.directionJobCard {
+  min-width: 0;
+  min-height: 260px;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid #cacac5;
+  border-radius: 5px;
+  background: #fbfbfa;
+  color: #1d1d1b;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.directionJobCard:hover {
+  border-color: #555551;
+}
+
+.directionJobCard[data-selected="true"] {
+  border-color: #181817;
+  box-shadow: 0 0 0 2px #181817;
+  background: #fff;
+}
+
+.directionJobCard > header,
+.directionJobCard > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+}
+
+.directionJobCard > header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddddda;
+  color: #696964;
+  font-size: 8px;
+}
+
+.directionJobCard > header small {
+  padding: 4px 7px;
+  border: 1px solid #d0d0cb;
+  border-radius: 999px;
+}
+
+.directionJobCard h2 {
+  margin: 20px 0 0;
+  font-size: 22px;
+  font-weight: 730;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.directionJobCard h3 {
+  margin: 8px 0 0;
+  color: #555550;
+  font-size: 11px;
+  font-weight: 620;
+  line-height: 1.5;
+}
+
+.directionJobCard > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.directionJobCard > div span {
+  padding: 4px 7px;
+  border: 1px solid #d6d6d1;
+  border-radius: 999px;
+  color: #62625d;
+  font-size: 8px;
+}
+
+.directionJobCard > p {
+  display: -webkit-box;
+  margin: 14px 0 0;
+  overflow: hidden;
+  color: #62625d;
+  font-size: 9px;
+  line-height: 1.6;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.directionJobCard > .directionJobDecision {
+  display: block;
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-left: 2px solid #272725;
+  background: #f1f1ed;
+  color: #363633;
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1.45;
+  -webkit-line-clamp: unset;
+}
+
+.directionJobCard[data-tier="sprint"] > .directionJobDecision {
+  border-left-color: #777770;
+  background: #ecece8;
+}
+
+.directionJobCard[data-tier="steady"] > .directionJobDecision {
+  border-left-color: #aaa9a1;
+  background: #f7f7f4;
+}
+
+.directionJobCard > footer {
+  min-height: 44px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid #deded9;
+  font-size: 9px;
+}
+
+.directionJobCard > footer strong {
+  margin-left: auto;
+  font-size: 10px;
+}
+
+.directionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.directionCard {
+  min-width: 0;
+  min-height: 390px;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 18px;
+  border: 1px solid #c9c9c4;
+  border-radius: 4px;
+  background: #fbfbfa;
+  color: #1c1c1a;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+
+.directionCard:hover {
+  border-color: #70706b;
+  transform: translateY(-2px);
+}
+
+.directionCard[data-selected="true"] {
+  border-color: #171716;
+  box-shadow: 0 0 0 2px #171716;
+  background: #fff;
+}
+
+.directionCard > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #ddddda;
+}
+
+.directionCard > header span,
+.directionCard > header small {
+  color: #5f5f5a;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.directionCard > header small {
+  padding: 4px 7px;
+  border: 1px solid #cfcfca;
+  border-radius: 999px;
+  background: #f1f1ee;
+}
+
+.directionCard h2 {
+  margin: 22px 0 0;
+  font-size: clamp(24px, 2.3vw, 34px);
+  font-weight: 720;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.directionCard > p {
+  min-height: 42px;
+  margin: 11px 0 0;
+  color: #666661;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.directionCard dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 20px 0 0;
+  border-top: 1px solid #d9d9d5;
+  border-bottom: 1px solid #d9d9d5;
+}
+
+.directionCard dl > div {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+  padding: 13px 8px;
+  border-right: 1px solid #d9d9d5;
+}
+
+.directionCard dl > div:first-child {
+  padding-left: 0;
+}
+
+.directionCard dl > div:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.directionCard dt {
+  color: #72726d;
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+.directionCard dd {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 720;
+}
+
+.directionEvidence {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 7px 10px;
+  margin-top: 17px;
+  font-size: 9px;
+}
+
+.directionEvidence span {
+  color: #777772;
+}
+
+.directionEvidence p {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: #343431;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.directionSelectMark {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 18px;
+  color: #373734;
+  font-size: 11px;
+  font-weight: 680;
+}
+
+.directionCard[data-selected="true"] .directionSelectMark {
+  color: #111;
+}
+
+.directionPickerFooter {
+  position: sticky;
+  z-index: 4;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 18px;
+  padding: 14px 0 calc(14px + env(safe-area-inset-bottom));
+  border-top: 1px solid #cfcfca;
+  background: rgba(247, 247, 245, 0.96);
+  backdrop-filter: blur(14px);
+}
+
+.directionPickerFooter > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.directionPickerFooter small,
+.directionPickerFooter span {
+  color: #71716c;
+  font-size: 9px;
+}
+
+.directionPickerFooter strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.directionPickerFooter > button,
+.directionPickerState button {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 19px;
+  border: 1px solid #191918;
+  border-radius: 9px;
+  background: #191918;
+  color: #fff;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 680;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.directionPickerFooter > button:disabled {
+  border-color: #c9c9c4;
+  background: #deded9;
+  color: #888882;
+  cursor: not-allowed;
+}
+
+.directionPickerState {
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 11px;
+  color: #5d5d58;
+  text-align: center;
+}
+
+.directionPickerState strong {
+  color: #20201f;
+  font-size: 19px;
+}
+
+.directionPickerState span {
+  max-width: 520px;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+/* Profile-generated market report */
+.marketReport {
+  min-height: 100dvh;
+  padding: 20px 30px 28px;
+  background: #fbfbfa;
+  color: #171716;
+}
+
+.marketReportHeader {
+  min-height: 66px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #cfcfca;
+}
+
+.marketReportHeader h1,
+.marketReportHeader p,
+.marketReportHeader small {
+  margin: 0;
+}
+
+.marketReportHeader h1 {
+  font-size: clamp(25px, 2.3vw, 33px);
+  font-weight: 710;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+}
+
+.marketReportHeader p {
+  margin-top: 7px;
+  color: #555550;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.marketReportMeta {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 8px 16px;
+  color: #3c3c38;
+  font-size: 11px;
+  text-align: right;
+}
+
+.marketReportMeta > span + span {
+  padding-left: 16px;
+  border-left: 1px solid #bcbcb7;
+}
+
+.marketReportMeta small {
+  grid-column: 1 / -1;
+  color: #6d6d67;
+  font-size: 10px;
+}
+
+.marketReportDisclaimer {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-bottom: 1px solid #e4e4df;
+  background: #f1f1ed;
+  color: #686862;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.marketReportState {
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: 48px 24px;
+  border-bottom: 1px solid #d4d4cf;
+  color: #585853;
+  text-align: center;
+}
+
+.marketReportState strong {
+  color: #20201f;
+  font-size: 18px;
+}
+
+.marketReportState span {
+  max-width: 520px;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.marketReportState button {
+  min-height: 40px;
+  margin-top: 8px;
+  padding: 0 20px;
+  border: 1px solid #20201f;
+  border-radius: 6px;
+  background: #20201f;
+  color: #fff;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.marketReportConclusion {
+  padding: 25px 0 22px;
+  border-bottom: 1px solid #d4d4cf;
+}
+
+.marketReportConclusion h2 {
+  max-width: 1000px;
+  margin: 0;
+  font-size: clamp(25px, 3vw, 37px);
+  font-weight: 720;
+  letter-spacing: -0.045em;
+  line-height: 1.38;
+}
+
+.marketReportOverview {
+  display: grid;
+  grid-template-columns: 0.85fr 1.8fr 0.75fr;
+  border-bottom: 1px solid #d4d4cf;
+}
+
+.marketReportOverview > article {
+  min-width: 0;
+  padding: 15px 24px 16px 0;
+}
+
+.marketReportOverview > article + article {
+  padding-left: 24px;
+  border-left: 1px solid #d4d4cf;
+}
+
+.marketSectionIndex {
+  display: block;
+  margin-bottom: 13px;
+  color: #353532;
+  font-size: 10px;
+  font-weight: 670;
+  letter-spacing: 0.02em;
+}
+
+.marketPosition > strong,
+.marketBiggestLever > strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.marketPositionTrack {
+  position: relative;
+  height: 9px;
+  margin-top: 17px;
+  border-radius: 2px;
+  background: #d8d8d3;
+  overflow: visible;
+}
+
+.marketPositionTrack::before {
+  position: absolute;
+  inset: 0 auto 0 27%;
+  width: 47%;
+  background: #868681;
+  content: "";
+}
+
+.marketPositionTrack::after {
+  position: absolute;
+  inset: 0 auto 0 49%;
+  width: 19%;
+  background: #575753;
+  content: "";
+}
+
+.marketPositionTrack i {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #111;
+  box-shadow: 0 0 0 1px #111;
+  transform: translate(-50%, -50%);
+}
+
+.marketPositionTrack[data-unavailable="true"] {
+  border: 1px dashed #a9a9a3;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #eeeeeb 0,
+      #eeeeeb 6px,
+      #e3e3df 6px,
+      #e3e3df 12px
+    );
+}
+
+.marketPositionTrack[data-unavailable="true"]::before,
+.marketPositionTrack[data-unavailable="true"]::after {
+  display: none;
+}
+
+.marketPositionLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  color: #5f5f5a;
+  font-size: 10px;
+}
+
+.marketPosition p,
+.marketOpportunityPool > p,
+.marketBiggestLever p,
+.marketBiggestLever small {
+  margin: 13px 0 0;
+  color: #65655f;
+  font-size: 10px;
+}
+
+.marketPortfolio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.marketPortfolio > article {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #d2d2cd;
+  border-radius: 8px;
+  background: #f9f9f7;
+}
+
+.marketPortfolio > article[data-tier="primary"] {
+  border-color: #1d1d1b;
+  background: #fff;
+  box-shadow: inset 3px 0 0 #1d1d1b;
+}
+
+.marketPortfolio > article[data-tier="sprint"] {
+  background: #f2f2ef;
+}
+
+.marketPortfolio > article[data-tier="steady"] {
+  background: #f6f6f2;
+}
+
+.marketPortfolio header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddddda;
+}
+
+.marketPortfolio header span {
+  color: #1e1e1c;
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.marketPortfolio header small {
+  max-width: 142px;
+  color: #73736d;
+  font-size: 8px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.marketPortfolio ol {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marketPortfolio li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid #e3e3df;
+}
+
+.marketPortfolio li:last-child {
+  border-bottom: 0;
+}
+
+.marketPortfolio li div,
+.marketPortfolio li strong,
+.marketPortfolio li span {
+  min-width: 0;
+}
+
+.marketPortfolio li strong,
+.marketPortfolio li span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.marketPortfolio li strong {
+  color: #242422;
+  font-size: 10px;
+}
+
+.marketPortfolio li span,
+.marketPortfolio li small,
+.marketPortfolio > article > p {
+  color: #70706a;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.marketPortfolio li small {
+  max-width: 122px;
+  text-align: right;
+}
+
+.marketPortfolio > article > p {
+  margin: 14px 0 0;
+}
+
+.marketPortfolioRule {
+  min-height: 34px;
+  margin: 12px 0 4px !important;
+  color: #4c4c47 !important;
+  font-size: 9px !important;
+}
+
+.marketPortfolio li em {
+  display: block;
+  margin-top: 6px;
+  color: #4b4b46;
+  font-size: 8px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.marketPortfolioEmpty {
+  min-height: 0;
+  padding: 14px;
+  border-radius: 8px;
+  background: #efefeb;
+  color: #55554f !important;
+}
+
+.marketPortfolioAudit {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0 4px;
+  color: #6d6d67;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.marketLayerTracks {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  border: 1px solid #cfcfca;
+  background: #f8f8f6;
+}
+
+.marketLayerTracks > section {
+  min-width: 0;
+  padding: 12px;
+}
+
+.marketLayerTracks > section + section {
+  border-left: 1px solid #cfcfca;
+  background: #fff;
+}
+
+.marketLayerTracks header {
+  display: grid;
+  gap: 3px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #dededa;
+}
+
+.marketLayerTracks header strong {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.marketLayerTracks header small {
+  color: #74746e;
+  font-size: 9px;
+}
+
+.marketScopeTrack ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marketScopeTrack li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  min-height: 49px;
+  border-bottom: 1px solid #e2e2de;
+}
+
+.marketScopeTrack li:last-child {
+  border-bottom: 0;
+}
+
+.marketScopeTrack li div,
+.marketDecisionStats > div {
+  display: grid;
+  gap: 2px;
+}
+
+.marketScopeTrack li span,
+.marketDecisionStats span {
+  color: #2f2f2c;
+  font-size: 10px;
+  font-weight: 640;
+}
+
+.marketScopeTrack li small,
+.marketDecisionStats small {
+  color: #777771;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.marketScopeTrack li > strong {
+  font-size: 22px;
+  font-weight: 730;
+  letter-spacing: -0.04em;
+}
+
+.marketDecisionStats {
+  display: grid;
+}
+
+.marketDecisionStats > div {
+  position: relative;
+  min-height: 49px;
+  justify-content: center;
+  padding: 6px 66px 6px 0;
+  border-bottom: 1px solid #e2e2de;
+}
+
+.marketDecisionStats > div:last-child {
+  border-bottom: 0;
+}
+
+.marketDecisionStats strong {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  font-size: 22px;
+  font-weight: 730;
+  letter-spacing: -0.04em;
+  transform: translateY(-50%);
+}
+
+.marketDecisionStats > div[data-pending="true"] strong {
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.marketTrackNote {
+  padding-left: 10px;
+  border-left: 2px solid #222220;
+  line-height: 1.55;
+}
+
+.marketOpportunityBand {
+  height: 25px;
+  display: flex;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.marketOpportunityBand span {
+  display: block;
+  border-right: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.marketBandEligible {
+  width: 37%;
+  background: #111;
+}
+
+.marketBandReview {
+  width: 18%;
+  background: #777773;
+}
+
+.marketBandPotential {
+  width: 34%;
+  background: #cacac6;
+}
+
+.marketBandRisk {
+  width: 11%;
+  border-right: 0 !important;
+  background: #cf2020;
+}
+
+.marketOpportunityStats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 8px;
+}
+
+.marketOpportunityStats > div {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 0 8px;
+  border-right: 1px solid #d7d7d2;
+}
+
+.marketOpportunityStats > div:last-child {
+  border-right: 0;
+}
+
+.marketOpportunityStats span,
+.marketOpportunityStats small {
+  color: #53534e;
+  font-size: 9px;
+}
+
+.marketOpportunityStats strong {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.marketOpportunityStats > div[data-risk="true"] span,
+.marketOpportunityStats > div[data-risk="true"] strong {
+  color: #cf2020;
+}
+
+.marketBiggestLever strong {
+  font-size: 25px;
+}
+
+.marketBiggestLever p {
+  margin-top: 15px;
+  color: #242422;
+  font-size: 11px;
+}
+
+.marketBiggestLever small {
+  display: block;
+  margin-top: 12px;
+  color: #333330;
+  font-size: 10px;
+}
+
+.marketReportAnalysis {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  border-bottom: 1px solid #d4d4cf;
+}
+
+.marketHeatmap {
+  min-width: 0;
+  padding: 16px 26px 14px 0;
+}
+
+.marketHeatmap header,
+.marketLevers header,
+.marketOpportunityCompare header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.marketHeatmap h3,
+.marketLevers h3,
+.marketOpportunityCompare h3,
+.marketActions h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 690;
+  letter-spacing: -0.015em;
+}
+
+.marketHeatmap h3 span,
+.marketOpportunityCompare h3 span {
+  color: #73736d;
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.marketHeatLegend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #74746f;
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.marketHeatLegend i {
+  width: 10px;
+  height: 10px;
+  display: block;
+  background: #e5e5e1;
+}
+
+.marketHeatLegend i[data-level="2"] {
+  background: #c7c7c3;
+}
+
+.marketHeatLegend i[data-level="3"] {
+  background: #a2a29d;
+}
+
+.marketHeatLegend i[data-level="4"] {
+  background: #747470;
+}
+
+.marketHeatLegend i[data-level="5"] {
+  background: #353532;
+}
+
+.marketHeatmapScroll,
+.marketActionsScroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.marketHeatmap table {
+  width: 100%;
+  min-width: 520px;
+  margin-top: 12px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 10px;
+}
+
+.marketHeatmap th,
+.marketHeatmap td {
+  height: 31px;
+  border: 1px solid #d4d4cf;
+  text-align: center;
+}
+
+.marketHeatmap thead th {
+  background: #f7f7f5;
+  color: #383835;
+  font-size: 9px;
+  font-weight: 620;
+}
+
+.marketHeatmap thead th:first-child,
+.marketHeatmap tbody th {
+  width: 65px;
+}
+
+.marketHeatmap tbody th {
+  background: #fbfbfa;
+  color: #3e3e3a;
+  font-weight: 600;
+}
+
+.marketHeatmap td {
+  color: #282826;
+  background: #e9e9e6;
+}
+
+.marketHeatmap td[data-level="2"] {
+  background: #d9d9d6;
+}
+
+.marketHeatmap td[data-level="3"] {
+  background: #c7c7c3;
+}
+
+.marketHeatmap td[data-level="4"] {
+  background: #9b9b97;
+  color: #fff;
+}
+
+.marketHeatmap td[data-level="5"] {
+  background: #4b4b48;
+  color: #fff;
+}
+
+.marketHeatmap td[data-highlight="true"] {
+  outline: 2px solid #1c1c1b;
+  outline-offset: -3px;
+}
+
+.marketBestMatch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  color: #6b6b66;
+  font-size: 8px;
+}
+
+.marketBestMatch i {
+  width: 14px;
+  height: 12px;
+  border: 1px solid #242422;
+  background: #fff;
+}
+
+.marketReportEmpty {
+  min-height: 190px;
+  display: grid;
+  place-items: center;
+  margin: 12px 0 0;
+  border: 1px dashed #cdcdc8;
+  color: #6b6b66;
+  font-size: 10px;
+  text-align: center;
+}
+
+.marketRightAnalysis {
+  min-width: 0;
+  padding: 16px 0 14px 24px;
+  border-left: 1px solid #d4d4cf;
+}
+
+.marketLevers {
+  padding-bottom: 11px;
+  border-bottom: 1px solid #dededa;
+}
+
+.marketLevers header > span {
+  color: #777771;
+  font-size: 9px;
+}
+
+.marketLevers > div {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.marketLeverRow {
+  display: grid;
+  grid-template-columns: 88px 74px minmax(72px, 1fr) 34px;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+}
+
+.marketLeverRow strong {
+  font-size: 10px;
+  font-weight: 640;
+}
+
+.marketLeverRow > span {
+  color: #343431;
+}
+
+.marketLeverRow > i {
+  height: 12px;
+  display: block;
+  background: #ededeb;
+}
+
+.marketLeverRow > i b {
+  height: 100%;
+  display: block;
+  background: #2c2c2a;
+}
+
+.marketLeverRow:nth-child(2) > i b {
+  background: #646460;
+}
+
+.marketLeverRow:nth-child(3) > i b {
+  background: #888883;
+}
+
+.marketLeverRow:nth-child(4) > i b {
+  background: #aaa9a4;
+}
+
+.marketLeverRow:nth-child(5) > i b {
+  background: #c1c1bc;
+}
+
+.marketLeverRow small {
+  color: #5d5d58;
+  text-align: right;
+}
+
+.marketOpportunityCompare {
+  padding-top: 11px;
+}
+
+.marketOpportunityCompare header > div {
+  display: flex;
+  gap: 11px;
+  color: #65655f;
+  font-size: 8px;
+}
+
+.marketOpportunityCompare header > div span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.marketOpportunityCompare header i {
+  width: 8px;
+  height: 8px;
+  display: block;
+}
+
+.marketOpportunityCompare i[data-kind="eligible"],
+.marketCompareBar span[data-kind="eligible"] {
+  background: #161615;
+}
+
+.marketOpportunityCompare i[data-kind="review"],
+.marketCompareBar span[data-kind="review"] {
+  background: #858580;
+}
+
+.marketCompareBar span[data-kind="light"] {
+  background: #b7b7b2;
+}
+
+.marketSampleMeta {
+  color: #6b6b65;
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.marketOpportunityCompare i[data-kind="risk"],
+.marketCompareBar span[data-kind="risk"] {
+  background: #cf2020;
+}
+
+.marketCompareRow {
+  display: grid;
+  grid-template-columns: 88px minmax(140px, 1fr) 52px;
+  align-items: center;
+  gap: 9px;
+  margin-top: 10px;
+  font-size: 9px;
+}
+
+.marketCompareRow > strong {
+  font-size: 9px;
+  font-weight: 620;
+}
+
+.marketCompareRow > small {
+  color: #454541;
+  text-align: right;
+}
+
+.marketCompareBar {
+  height: 20px;
+  display: flex;
+}
+
+.marketCompareBar span {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.marketActions {
+  padding: 14px 0 0;
+}
+
+.marketActions table {
+  width: 100%;
+  min-width: 760px;
+  margin-top: 8px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 9px;
+}
+
+.marketActions th,
+.marketActions td {
+  height: 36px;
+  padding: 0 10px;
+  border-bottom: 1px solid #dededa;
+  text-align: left;
+}
+
+.marketActions th {
+  color: #4d4d48;
+  font-size: 8px;
+  font-weight: 570;
+}
+
+.marketActions th:first-child,
+.marketActions td:first-child {
+  width: 28%;
+}
+
+.marketActions th:nth-child(2),
+.marketActions td:nth-child(2) {
+  width: 17%;
+}
+
+.marketActions th:nth-child(3),
+.marketActions td:nth-child(3) {
+  width: 32%;
+}
+
+.marketActions th:last-child,
+.marketActions td:last-child {
+  width: 23%;
+}
+
+.marketActions td:first-child {
+  white-space: nowrap;
+}
+
+.marketActions td:first-child > i {
+  width: 19px;
+  height: 19px;
+  display: inline-grid;
+  place-items: center;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: #181817;
+  color: #fff;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.marketActions td:first-child > strong {
+  font-size: 10px;
+  font-weight: 620;
+  vertical-align: middle;
+}
+
+.marketActions td:first-child > span {
+  display: inline-block;
+  margin-left: 9px;
+  padding: 3px 6px;
+  border: 1px solid #cecec9;
+  border-radius: 3px;
+  color: #666660;
+  font-size: 7px;
+  white-space: nowrap;
+}
+
+.marketReportCaveats {
+  display: grid;
+  gap: 4px;
+  padding-top: 12px;
+  color: #6d6d67;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.marketReportCaveats p {
+  margin: 0;
+}
+
+.marketReportCaveats p::before {
+  margin-right: 6px;
+  content: "—";
+}
+
+.marketReportFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+  padding-top: 18px;
+}
+
+.marketReportFooter button {
+  min-height: 47px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 26px;
+  border: 1px solid #1c1c1b;
+  border-radius: 6px;
+  background: #fff;
+  color: #20201f;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 660;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.marketReportFooter button:hover {
+  background: #f0f0ed;
+}
+
+.marketReportFooter button:last-child {
+  min-width: 180px;
+  background: #171716;
+  color: #fff;
+}
+
+.marketReportFooter button:last-child:hover {
+  background: #343431;
+}
+
+/* Market report V2: concise, source-led and action-led */
+.marketReport {
+  padding: 24px 30px 32px;
+  background: #f3f3f0;
+}
+
+.marketReportHeader {
+  position: relative;
+  min-height: 180px;
+  align-items: flex-end;
+  padding: 28px;
+  border: 0;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.14), transparent 28%),
+    linear-gradient(135deg, #101010 0%, #232321 100%);
+  color: #fff;
+  box-shadow: 0 18px 46px rgba(20, 20, 18, 0.12);
+  overflow: hidden;
+}
+
+.marketReportHeader::after {
+  position: absolute;
+  inset: 0 0 0 52%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(90deg, transparent, #000);
+  content: "";
+  pointer-events: none;
+}
+
+.marketReportIdentity,
+.marketReportMeta {
+  position: relative;
+  z-index: 1;
+}
+
+.marketReportIdentity > span {
+  display: inline-flex;
+  margin-bottom: 18px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+}
+
+.marketReportHeader h1 {
+  color: #fff;
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 720;
+  letter-spacing: -0.055em;
+}
+
+.marketReportHeader p {
+  margin-top: 11px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 14px;
+}
+
+.marketReportMeta {
+  width: min(330px, 38%);
+  grid-template-columns: 1fr;
+  gap: 8px;
+  text-align: left;
+}
+
+.marketReportMeta > span,
+.marketReportMeta > strong {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+}
+
+.marketReportMeta > span + span {
+  padding-left: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.marketReportMeta > strong {
+  color: #fff;
+  font-weight: 680;
+}
+
+.marketReportConclusion {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(480px, 1.35fr);
+  gap: 28px;
+  margin-top: 18px;
+  padding: 26px;
+  border: 1px solid #deded9;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.marketReportConclusion > div:first-child {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.marketReportConclusion > div:first-child > span {
+  color: #71716a;
+  font-size: 11px;
+  font-weight: 680;
+  letter-spacing: 0.05em;
+}
+
+.marketReportConclusion h2 {
+  margin-top: 12px;
+  font-size: clamp(27px, 3vw, 40px);
+  line-height: 1.18;
+}
+
+.marketReportConclusion p {
+  margin: 14px 0 0;
+  color: #6c6c66;
+  font-size: 11px;
+}
+
+.marketQuickStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid #deded9;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.marketQuickStats article {
+  min-width: 0;
+  min-height: 116px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 16px;
+  background: #f8f8f5;
+}
+
+.marketQuickStats article + article {
+  border-left: 1px solid #deded9;
+}
+
+.marketQuickStats small,
+.marketQuickStats span {
+  color: #6e6e68;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.marketQuickStats strong {
+  margin: 9px 0 4px;
+  font-size: 30px;
+  font-weight: 740;
+  letter-spacing: -0.05em;
+}
+
+.schoolIntelligence,
+.schoolIntelligenceUnavailable {
+  margin-top: 18px;
+  border: 1px solid #d8d8d3;
+  border-radius: 20px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.schoolIntelligenceHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.34fr);
+  gap: 32px;
+  align-items: end;
+  padding: 26px;
+  border-bottom: 1px solid #deded9;
+  background: #fff;
+}
+
+.schoolIntelligenceHeader > div:first-child > span,
+.schoolResourceCard header span,
+.schoolOutcomeCard header span,
+.schoolDecisionCard > span,
+.schoolIntelligenceUnavailable span {
+  color: #6c6c66;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.schoolIntelligenceHeader h2 {
+  max-width: 760px;
+  margin: 10px 0 0;
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-weight: 730;
+  letter-spacing: -0.05em;
+  line-height: 1.15;
+}
+
+.schoolIntelligenceHeader p {
+  max-width: 760px;
+  margin: 12px 0 0;
+  color: #61615c;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.schoolIntelligenceHeader > div:last-child {
+  display: grid;
+  gap: 7px;
+  padding: 18px;
+  border: 1px solid #cfcfca;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.schoolIntelligenceHeader > div:last-child strong {
+  font-size: 22px;
+  letter-spacing: -0.04em;
+}
+
+.schoolIntelligenceHeader > div:last-child span,
+.schoolIntelligenceHeader > div:last-child small {
+  color: #686862;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.schoolSignalGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid #deded9;
+}
+
+.schoolSignalGrid article {
+  min-width: 0;
+  min-height: 108px;
+  padding: 21px;
+  background: #fbfbf9;
+}
+
+.schoolSignalGrid article + article {
+  border-left: 1px solid #deded9;
+}
+
+.schoolSignalGrid article:nth-child(2) {
+  background: #f4f4f0;
+}
+
+.schoolSignalGrid article:nth-child(3) {
+  background: #ededE8;
+}
+
+.schoolSignalGrid span {
+  color: #71716b;
+  font-size: 10px;
+  font-weight: 680;
+}
+
+.schoolSignalGrid strong {
+  display: block;
+  margin-top: 13px;
+  font-size: clamp(18px, 2vw, 25px);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.schoolTrainingProfile,
+.schoolRecruitmentAccess,
+.schoolCareerEvidence {
+  border-bottom: 1px solid #deded9;
+}
+
+.schoolTrainingProfile {
+  padding: 26px;
+  background: #1d1d1c;
+  color: #fff;
+}
+
+.schoolTrainingProfile > header,
+.schoolSectionHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.schoolTrainingProfile > header span,
+.schoolSectionHeader span {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.schoolTrainingProfile h3,
+.schoolSectionHeader h3 {
+  margin: 7px 0 0;
+  font-size: 22px;
+  letter-spacing: -0.035em;
+}
+
+.schoolTrainingProfile > header small {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 10px;
+}
+
+.schoolTrainingMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.schoolTrainingMetrics > div {
+  display: grid;
+  gap: 5px;
+  min-height: 92px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.schoolTrainingMetrics strong {
+  font-size: 29px;
+  letter-spacing: -0.045em;
+}
+
+.schoolTrainingMetrics span {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 10px;
+}
+
+.schoolDirectionTracks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.schoolDirectionTracks article {
+  display: grid;
+  grid-template-columns: 31px minmax(0, 1fr);
+  gap: 11px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.schoolDirectionTracks i {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #1d1d1c;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 750;
+}
+
+.schoolDirectionTracks article > div {
+  display: grid;
+  gap: 6px;
+}
+
+.schoolDirectionTracks strong {
+  font-size: 12px;
+}
+
+.schoolDirectionTracks span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.schoolDirectionTracks small {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.schoolDirectionTracks em {
+  margin-top: 3px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 9px;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.schoolTrainingNote {
+  margin: 16px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.schoolRecruitmentAccess,
+.schoolCareerEvidence {
+  padding: 24px;
+  background: #fbfbf9;
+}
+
+.schoolSectionHeader span {
+  color: #74746e;
+}
+
+.schoolSectionHeader small {
+  color: #777771;
+  font-size: 9px;
+}
+
+.schoolRecruitmentGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.schoolRecruitmentGrid article {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 11px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #d9d9d4;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.schoolRecruitmentGrid article > i {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #1d1d1c;
+  color: #fff;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 750;
+}
+
+.schoolRecruitmentGrid article > div {
+  display: grid;
+  gap: 5px;
+}
+
+.schoolRecruitmentGrid span {
+  color: #72726c;
+  font-size: 8px;
+}
+
+.schoolRecruitmentGrid strong {
+  font-size: 12px;
+}
+
+.schoolRecruitmentGrid p,
+.schoolRecruitmentGrid em {
+  margin: 0;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.schoolRecruitmentGrid p {
+  color: #60605b;
+}
+
+.schoolRecruitmentGrid em {
+  padding-top: 6px;
+  border-top: 1px solid #e5e5e1;
+  color: #252523;
+  font-style: normal;
+  font-weight: 680;
+}
+
+.schoolRecruitmentNote,
+.schoolCareerEvidenceNote {
+  margin: 14px 0 0;
+  color: #70706a;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.schoolCareerEvidence {
+  background: #efefeb;
+}
+
+.schoolCareerEvidenceGrid {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.7fr) minmax(0, 1.3fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.schoolCareerValueCard,
+.schoolCareerGapCard {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #d8d8d3;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.schoolCareerValueCard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.schoolCareerValueCard > div {
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  min-height: 92px;
+  padding: 13px;
+  border-radius: 10px;
+  background: #f0f0ec;
+}
+
+.schoolCareerValueCard strong {
+  font-size: 24px;
+  letter-spacing: -0.045em;
+}
+
+.schoolCareerValueCard span {
+  color: #666660;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.schoolCareerGapCard > strong {
+  font-size: 12px;
+}
+
+.schoolCareerGapCard ol {
+  display: grid;
+  gap: 8px;
+  margin: 13px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.schoolCareerGapCard li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  color: #555550;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.schoolCareerGapCard li i {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #222220;
+  color: #fff;
+  font-size: 8px;
+  font-style: normal;
+}
+
+.schoolCareerActions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.schoolCareerActions span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #d7d7d2;
+  border-radius: 10px;
+  background: #fff;
+  color: #4f4f4a;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.schoolCareerActions i {
+  flex: 0 0 auto;
+  color: #1f1f1d;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 760;
+}
+
+.schoolIntelligenceBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr) minmax(250px, 0.72fr);
+  gap: 14px;
+  padding: 18px;
+  background: #f4f4f0;
+}
+
+.schoolIntelligenceBody > article {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #d9d9d4;
+  border-radius: 15px;
+  background: #fff;
+}
+
+.schoolResourceCard header,
+.schoolOutcomeCard header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e1e1dd;
+}
+
+.schoolResourceCard h3,
+.schoolOutcomeCard h3,
+.schoolDecisionCard h3,
+.schoolEvidenceDetails h3 {
+  margin: 6px 0 0;
+  font-size: 16px;
+  letter-spacing: -0.025em;
+}
+
+.schoolResourceCard header small,
+.schoolOutcomeCard header small {
+  color: #74746e;
+  font-size: 9px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.schoolResourceCard ol,
+.schoolDecisionCard ol,
+.schoolDecisionCard ul,
+.schoolEvidenceDetails ol,
+.schoolEvidenceDetails ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.schoolResourceCard li {
+  display: grid;
+  grid-template-columns: 31px minmax(0, 1fr);
+  gap: 11px;
+  padding: 13px 0;
+  border-bottom: 1px solid #e5e5e1;
+}
+
+.schoolResourceCard li:last-child {
+  border-bottom: 0;
+}
+
+.schoolResourceCard li > i,
+.schoolDecisionCard ol i {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #1d1d1c;
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.schoolResourceCard li > div {
+  display: grid;
+  gap: 4px;
+}
+
+.schoolResourceCard li strong {
+  font-size: 12px;
+}
+
+.schoolResourceCard li span,
+.schoolResourceCard li em {
+  color: #6d6d67;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.schoolResourceCard li em {
+  margin-top: 3px;
+  color: #292927;
+  font-style: normal;
+  font-weight: 650;
+}
+
+.schoolOutcomeRows {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.schoolOutcomeRows > div {
+  display: grid;
+  grid-template-columns: 62px minmax(72px, 1fr) 48px;
+  align-items: center;
+  gap: 9px;
+}
+
+.schoolOutcomeRows span,
+.schoolOutcomeRows strong {
+  font-size: 9px;
+}
+
+.schoolOutcomeRows i {
+  height: 8px;
+  display: block;
+  border-radius: 999px;
+  background: #e7e7e3;
+  overflow: hidden;
+}
+
+.schoolOutcomeRows b {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: #252523;
+  transform-origin: left;
+}
+
+.schoolOutcomeCard > p,
+.schoolMajorOutcome small {
+  margin: 13px 0 0;
+  color: #71716b;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.schoolMajorOutcome {
+  position: relative;
+  margin-top: 17px;
+  padding: 15px;
+  border-radius: 12px;
+  background: #efefeb;
+}
+
+.schoolMajorOutcome > span {
+  color: #666660;
+  font-size: 9px;
+}
+
+.schoolMajorOutcome > strong {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  font-size: 15px;
+}
+
+.schoolMajorOutcome dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin: 13px 0 0;
+}
+
+.schoolMajorOutcome dl div {
+  display: grid;
+  gap: 3px;
+}
+
+.schoolMajorOutcome dt {
+  color: #75756f;
+  font-size: 8px;
+}
+
+.schoolMajorOutcome dd {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 720;
+}
+
+.schoolEmployerExamples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.schoolEmployerExamples > small {
+  width: 100%;
+  color: #74746e;
+  font-size: 8px;
+}
+
+.schoolEmployerExamples > span {
+  padding: 7px 9px;
+  border: 1px solid #deded9;
+  border-radius: 999px;
+  color: #5f5f59;
+  font-size: 8px;
+}
+
+.schoolDecisionCard {
+  border-color: #1c1c1b !important;
+  background: #1c1c1b !important;
+  color: #fff;
+}
+
+.schoolDecisionCard > span {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.schoolDecisionCard h3 {
+  margin-top: 11px;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.schoolDecisionCard ul {
+  display: grid;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.schoolDecisionCard ul li {
+  padding-left: 13px;
+  border-left: 2px solid rgba(255, 255, 255, 0.24);
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.schoolDecisionCard ol {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.schoolDecisionCard ol li {
+  display: grid;
+  grid-template-columns: 31px minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.schoolDecisionCard ol i {
+  background: #fff;
+  color: #1c1c1b;
+}
+
+.schoolDecisionCard ol span {
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.schoolEvidenceDetails {
+  border-top: 1px solid #deded9;
+  background: #fbfbf9;
+}
+
+.schoolEvidenceDetails summary {
+  padding: 15px 20px;
+  color: #555550;
+  font-size: 10px;
+  font-weight: 680;
+  cursor: pointer;
+}
+
+.schoolEvidenceDetails > div {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 22px;
+  padding: 0 20px 20px;
+}
+
+.schoolEvidenceDetails ol,
+.schoolEvidenceDetails ul {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.schoolEvidenceDetails li {
+  color: #666660;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.schoolEvidenceDetails a {
+  display: block;
+  color: #1f1f1d;
+  font-weight: 650;
+}
+
+.schoolEvidenceDetails li span {
+  display: block;
+  margin-top: 2px;
+}
+
+.schoolIntelligenceUnavailable {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+}
+
+.schoolIntelligenceUnavailable h2 {
+  margin: 8px 0 0;
+  font-size: 22px;
+}
+
+.schoolIntelligenceUnavailable p,
+.schoolIntelligenceUnavailable small {
+  color: #696963;
+  font-size: 10px;
+}
+
+.schoolIntelligenceUnavailable p {
+  margin: 8px 0 0;
+}
+
+.marketReportOverview {
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  gap: 18px;
+  margin-top: 18px;
+  border: 0;
+}
+
+.marketReportOverview > article,
+.marketReportOverview > article + article {
+  padding: 24px;
+  border: 1px solid #deded9;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.marketReportOverview > article + article {
+  border-left: 1px solid #deded9;
+}
+
+.marketMilestones header,
+.marketMilestones li,
+.marketBiggestLever li {
+  display: flex;
+  align-items: center;
+}
+
+.marketMilestones header {
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.marketMilestones header small {
+  color: #777771;
+  font-size: 10px;
+}
+
+.marketSectionIndex {
+  margin: 0;
+  color: #30302d;
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.marketMilestones ol,
+.marketBiggestLever ol,
+.marketLevers ol {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marketMilestones ol {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.marketMilestones ol::before {
+  position: absolute;
+  top: 19px;
+  right: 9%;
+  left: 9%;
+  height: 1px;
+  background: #cfcfca;
+  content: "";
+}
+
+.marketMilestones li {
+  position: relative;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.marketMilestones li > i {
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #bdbdb7;
+  border-radius: 50%;
+  background: #fff;
+  color: #555550;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.marketMilestones li[data-status="current"] > i {
+  border-color: #181817;
+  background: #181817;
+  color: #fff;
+}
+
+.marketMilestones time {
+  margin-top: 4px;
+  color: #6d6d67;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.marketMilestones li > div {
+  display: grid;
+  gap: 4px;
+}
+
+.marketMilestones li strong {
+  font-size: 13px;
+}
+
+.marketMilestones li span {
+  color: #6f6f69;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.marketBiggestLever {
+  border-color: #1a1a19 !important;
+  background: #1a1a19 !important;
+  color: #fff;
+}
+
+.marketBiggestLever .marketSectionIndex {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.marketBiggestLever > strong {
+  margin-top: 18px;
+  color: #fff;
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.18;
+}
+
+.marketBiggestLever ol {
+  display: grid;
+  gap: 9px;
+}
+
+.marketBiggestLever li {
+  gap: 10px;
+  min-height: 38px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.marketBiggestLever li i {
+  min-width: 32px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.marketBiggestLever li span {
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.marketPortfolio {
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.marketPortfolio > article {
+  min-height: 0;
+  padding: 20px;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.marketPortfolio > article[data-tier="primary"] {
+  border-color: #1c1c1b;
+  box-shadow: inset 4px 0 0 #1c1c1b, 0 12px 30px rgba(20, 20, 18, 0.06);
+}
+
+.marketPortfolio > article[data-tier="steady"],
+.marketPortfolio > article[data-tier="sprint"] {
+  background: #f9f9f6;
+}
+
+.marketPortfolio header span {
+  font-size: 17px;
+}
+
+.marketPortfolio header small {
+  max-width: none;
+  font-size: 10px;
+}
+
+.marketPortfolio li {
+  padding: 14px 0;
+}
+
+.marketPortfolio li strong {
+  font-size: 13px;
+}
+
+.marketPortfolio li span,
+.marketPortfolio li small,
+.marketPortfolio > article > p {
+  font-size: 11px;
+}
+
+.marketPortfolioRule,
+.marketPortfolio li em,
+.marketPortfolioAudit {
+  font-size: 11px !important;
+}
+
+.marketReportAnalysis {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 18px;
+  border: 0;
+}
+
+.marketHeatmap,
+.marketRightAnalysis {
+  padding: 22px;
+  border: 1px solid #deded9;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.marketRightAnalysis {
+  border-left: 1px solid #deded9;
+}
+
+.marketHeatmap header > div:first-child,
+.marketLevers header > div {
+  display: grid;
+  gap: 5px;
+}
+
+.marketHeatmap header > div:first-child > span,
+.marketLevers header span {
+  color: #74746e;
+  font-size: 10px;
+}
+
+.marketHeatmap h3,
+.marketLevers h3,
+.marketOpportunityCompare h3 {
+  font-size: 15px;
+}
+
+.marketHeatmapSwitch {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid #d5d5d0;
+  border-radius: 10px;
+  background: #f3f3f0;
+}
+
+.marketHeatmapSwitch button {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #666660;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.marketHeatmapSwitch button[aria-pressed="true"] {
+  background: #1c1c1b;
+  color: #fff;
+}
+
+.marketHeatmap table {
+  margin-top: 18px;
+  font-size: 11px;
+}
+
+.marketHeatmap th,
+.marketHeatmap td {
+  height: 38px;
+}
+
+.marketLevers {
+  padding-bottom: 18px;
+}
+
+.marketLevers ol {
+  display: grid;
+  gap: 10px;
+}
+
+.marketLevers li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  padding: 12px;
+  border: 1px solid #e0e0dc;
+  border-radius: 11px;
+  background: #fafaf8;
+}
+
+.marketLevers li > i {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #1c1c1b;
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.marketLevers li > div {
+  display: grid;
+  gap: 4px;
+}
+
+.marketLevers li strong {
+  font-size: 12px;
+}
+
+.marketLevers li span {
+  color: #6f6f69;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.marketLevers li small {
+  color: #30302d;
+  font-size: 10px;
+  font-weight: 680;
+}
+
+.marketOpportunityCompare {
+  padding-top: 18px;
+}
+
+.marketEvidenceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.marketEvidenceGrid > div {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #efefeb;
+}
+
+.marketEvidenceGrid strong {
+  font-size: 21px;
+}
+
+.marketEvidenceGrid span,
+.marketOpportunityCompare > p {
+  color: #6c6c66;
+  font-size: 9px;
+}
+
+.marketOpportunityCompare > p {
+  margin: 10px 0 0;
+}
+
+.marketReportCaveats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 14px;
+  font-size: 9px;
+}
+
+.marketReportCaveats p {
+  padding: 10px 12px;
+  border: 1px solid #dfdfda;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.marketReportCaveats p::before {
+  content: "";
+}
+
+.marketReportFooter {
+  padding-top: 16px;
+}
+
+.marketReportFooter button {
+  min-height: 48px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.focusedBrand:focus-visible,
+.focusedNav button:focus-visible,
+.focusedAdvisorHeader button:focus-visible,
+.focusedAdvisorEmpty button:focus-visible,
+.focusedBridge button:focus-visible,
+.focusedFormFooter button:focus-visible,
+.focusedMobileHeader button:focus-visible,
+.directionPickerHeader > button:focus-visible,
+.directionPathSummary button:focus-visible,
+.directionTrackCard:focus-visible,
+.directionSubtrackCard:focus-visible,
+.directionJobCard:focus-visible,
+.directionCard:focus-visible,
+.directionPickerFooter > button:focus-visible,
+.directionPickerState button:focus-visible,
+.marketReportFooter button:focus-visible {
+  outline: 3px solid rgba(32, 32, 31, 0.2);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1080px) {
+  .focusedShell {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .focusedProfilePage {
+    width: min(860px, calc(100% - 48px));
+  }
+
+  .focusedFormSection {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .directionTrackGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .directionSubtrackGrid,
+  .directionJobGrid,
+  .directionGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketReport {
+    padding-inline: 24px;
+  }
+
+  .marketReportConclusion {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolSignalGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .schoolSignalGrid article:nth-child(4) {
+    border-top: 1px solid #deded9;
+  }
+
+  .schoolIntelligenceBody {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schoolRecruitmentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schoolCareerEvidenceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolDecisionCard {
+    grid-column: 1 / -1;
+  }
+
+  .marketMilestones ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .marketMilestones ol::before {
+    display: none;
+  }
+
+  .marketReportOverview {
+    grid-template-columns: 1fr;
+  }
+
+  .marketReportOverview > article {
+    padding: 24px;
+  }
+
+  .marketReportOverview > article + article {
+    padding: 24px;
+    border: 1px solid #deded9;
+  }
+
+  .marketReportAnalysis {
+    grid-template-columns: 1fr;
+  }
+
+  .marketPortfolio {
+    grid-template-columns: 1fr;
+  }
+
+  .marketHeatmap {
+    padding: 22px;
+  }
+
+  .marketRightAnalysis {
+    padding: 22px;
+    border: 1px solid #deded9;
+  }
+}
+
+@media (max-width: 760px) {
+  .focusedShell {
+    display: block;
+  }
+
+  .focusedSidebar {
+    display: none;
+  }
+
+  .focusedWorkspace,
+  .focusedMain,
+  .focusedPane {
+    min-height: 100dvh;
+  }
+
+  .focusedMobileHeader {
+    position: sticky;
+    z-index: 20;
+    top: 0;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 14px;
+    border-bottom: 1px solid #e4e4e0;
+    background: rgba(247, 247, 245, 0.96);
+    backdrop-filter: blur(14px);
+  }
+
+  .focusedMobileBrand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #20201f;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .focusedMobileBrand > span {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+    border-radius: 9px;
+  }
+
+  .focusedMobileBrand strong {
+    font-size: 13px;
+  }
+
+  .focusedMobileHeader nav {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px;
+    border-radius: 10px;
+    background: #e9e9e5;
+  }
+
+  .focusedMobileHeader nav button {
+    min-height: 34px;
+    padding: 0 11px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #6f6f69;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 620;
+    cursor: pointer;
+  }
+
+  .focusedMobileHeader nav button[aria-current="page"] {
+    background: #fff;
+    color: #20201f;
+    box-shadow: 0 1px 3px rgba(31, 31, 29, 0.08);
+  }
+
+  .focusedAdvisor {
+    min-height: calc(100dvh - 60px);
+  }
+
+  .focusedAdvisorHeader {
+    min-height: 56px;
+    padding: 8px 16px;
+  }
+
+  .focusedAdvisorHeader > div:last-child button:first-child {
+    display: none;
+  }
+
+  .focusedAdvisorHeader button {
+    min-height: 36px;
+    padding: 0 10px;
+  }
+
+  .focusedAdvisorHeader button svg {
+    display: none;
+  }
+
+  .focusedAdvisorThread.advisorThread,
+  .focusedAdvisor .advisorViewport,
+  .focusedAdvisor .advisorThreadContent {
+    min-height: calc(100dvh - 117px);
+  }
+
+  .focusedAdvisor .advisorEmpty {
+    width: calc(100% - 28px);
+    padding: 58px 8px 22px;
+  }
+
+  .focusedAdvisor .advisorEmptyTitle {
+    font-size: 27px;
+    line-height: 1.18;
+  }
+
+  .focusedAdvisor .advisorEmptyDescription {
+    font-size: 13px;
+  }
+
+  .focusedAdvisor .advisorMessages {
+    width: calc(100% - 28px);
+    padding-top: 26px;
+  }
+
+  .focusedAdvisor .advisorMessage {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .focusedAdvisor .advisorMessageUser {
+    grid-template-columns: minmax(0, 1fr) 32px;
+  }
+
+  .focusedAdvisor .advisorMessageAvatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+  }
+
+  .focusedAdvisor .advisorMessageText {
+    max-width: 96%;
+    padding: 11px 13px;
+    font-size: 14px;
+  }
+
+  .focusedAdvisor .advisorFooter {
+    padding: 12px 14px calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .focusedAdvisor .advisorSuggestions {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .focusedAdvisorTriggers > div {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .focusedAdvisor .advisorSuggestion {
+    flex: 0 0 auto;
+  }
+
+  .focusedAdvisorEmpty,
+  .focusedAdvisorOffline {
+    padding-bottom: 80px;
+  }
+
+  .focusedProfilePage {
+    width: calc(100% - 36px);
+    padding: 42px 0 90px;
+  }
+
+  .focusedProfileHeading h1 {
+    font-size: 37px;
+  }
+
+  .focusedProfileHeading p {
+    font-size: 14px;
+  }
+
+  .focusedBridge {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .focusedFormSection {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 28px 0;
+  }
+
+  .focusedCapabilityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .focusedFormFooter {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .focusedFormFooter > div:last-child {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .focusedFormFooter .focusedSaveButton {
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .directionPicker {
+    min-height: calc(100dvh - 60px);
+    padding: 24px 18px 92px;
+  }
+
+  .directionPickerHeader {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .directionPickerHeader > button {
+    width: 100%;
+  }
+
+  .directionSteps li {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .directionSteps li > span {
+    grid-row: auto;
+  }
+
+  .directionSteps small {
+    display: none;
+  }
+
+  .directionPathSummary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .directionTrackGrid,
+  .directionSubtrackGrid,
+  .directionJobGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .directionTrackCard {
+    min-height: 230px;
+  }
+
+  .directionSubtrackCard {
+    grid-template-columns: 24px minmax(0, 1fr) auto 18px;
+  }
+
+  .directionLevelNote {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .directionPickerSource {
+    align-items: flex-start;
+    grid-template-columns: 1fr;
+  }
+
+  .directionPickerSource strong {
+    white-space: normal;
+  }
+
+  .directionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .directionCard {
+    min-height: auto;
+  }
+
+  .directionPickerFooter {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .directionPickerFooter > button {
+    width: 100%;
+  }
+
+  .marketReport {
+    min-height: calc(100dvh - 60px);
+    padding: 24px 18px 92px;
+  }
+
+  .marketReportHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+    min-height: 0;
+    padding: 22px;
+  }
+
+  .marketReportMeta {
+    width: 100%;
+    text-align: left;
+  }
+
+  .marketQuickStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schoolIntelligenceHeader,
+  .schoolIntelligenceBody,
+  .schoolEvidenceDetails > div {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolTrainingMetrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schoolDirectionTracks,
+  .schoolRecruitmentGrid,
+  .schoolCareerActions {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolTrainingProfile,
+  .schoolRecruitmentAccess,
+  .schoolCareerEvidence {
+    padding: 20px;
+  }
+
+  .schoolIntelligenceHeader {
+    align-items: stretch;
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .schoolDecisionCard {
+    grid-column: auto;
+  }
+
+  .schoolIntelligenceUnavailable {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .marketQuickStats article:nth-child(3) {
+    border-top: 1px solid #deded9;
+    border-left: 0;
+  }
+
+  .marketQuickStats article:nth-child(4) {
+    border-top: 1px solid #deded9;
+  }
+
+  .marketReportConclusion h2 br {
+    display: none;
+  }
+
+  .marketReportOverview {
+    grid-template-columns: 1fr;
+  }
+
+  .marketLayerTracks {
+    grid-template-columns: 1fr;
+  }
+
+  .marketLayerTracks > section + section {
+    border-top: 1px solid #cfcfca;
+    border-left: 0;
+  }
+
+  .marketReportOverview > article {
+    padding: 20px;
+  }
+
+  .marketReportOverview > article + article {
+    padding: 20px;
+    border: 1px solid #deded9;
+  }
+
+  .marketReportAnalysis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .marketHeatmap header,
+  .marketLevers header,
+  .marketOpportunityCompare header {
+    align-items: flex-start;
+  }
+
+  .marketHeatmap header {
+    flex-direction: column;
+  }
+
+  .marketReportCaveats {
+    grid-template-columns: 1fr;
+  }
+
+  .marketLeverRow {
+    grid-template-columns: 78px 67px minmax(62px, 1fr) 31px;
+    gap: 5px;
+  }
+
+  .marketCompareRow {
+    grid-template-columns: 72px minmax(120px, 1fr) 46px;
+  }
+
+  .marketReportFooter {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .marketReportFooter button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .focusedMobileBrand strong {
+    display: none;
+  }
+
+  .focusedFormGrid,
+  .focusedCapabilityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .focusedProfileHeading h1 {
+    font-size: 34px;
+  }
+
+  .focusedAdvisorHeader > div:first-child span {
+    display: none;
+  }
+
+  .directionPicker {
+    padding-inline: 14px;
+  }
+
+  .directionPickerHeader h1 {
+    font-size: 29px;
+  }
+
+  .directionSteps li {
+    padding: 10px 8px;
+  }
+
+  .directionSteps strong {
+    font-size: 10px;
+  }
+
+  .directionSubtrackCard {
+    grid-template-columns: 22px minmax(0, 1fr) 18px;
+  }
+
+  .directionSubtrackCard small {
+    grid-column: 2 / 4;
+    justify-self: start;
+  }
+
+  .directionTrackCard > strong {
+    font-size: 28px;
+  }
+
+  .directionJobCard h2 {
+    font-size: 21px;
+  }
+
+  .directionCard dl div {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .marketReport {
+    padding-inline: 14px;
+  }
+
+  .marketReportConclusion,
+  .marketReportOverview > article,
+  .marketHeatmap,
+  .marketRightAnalysis,
+  .marketPortfolio > article {
+    padding: 18px;
+  }
+
+  .marketReportHeader h1 {
+    font-size: 34px;
+  }
+
+  .marketQuickStats article {
+    min-height: 96px;
+    padding: 12px;
+  }
+
+  .schoolSignalGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolSignalGrid article + article,
+  .schoolSignalGrid article:nth-child(3),
+  .schoolSignalGrid article:nth-child(4) {
+    border-top: 1px solid #deded9;
+    border-left: 0;
+  }
+
+  .schoolSignalGrid article {
+    min-height: 0;
+  }
+
+  .schoolIntelligenceBody {
+    padding: 12px;
+  }
+
+  .schoolTrainingProfile,
+  .schoolRecruitmentAccess,
+  .schoolCareerEvidence {
+    padding: 16px;
+  }
+
+  .schoolTrainingMetrics,
+  .schoolCareerValueCard {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolTrainingMetrics > div {
+    min-height: 76px;
+  }
+
+  .schoolMajorOutcome dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketMilestones ol {
+    grid-template-columns: 1fr;
+  }
+
+  .marketMilestones li {
+    display: grid;
+    grid-template-columns: 38px 72px minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .marketMilestones time {
+    margin: 0;
+  }
+
+  .marketEvidenceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .marketReportConclusion h2 {
+    font-size: 25px;
+  }
+
+  .marketOpportunityStats > div {
+    padding-inline: 3px;
+  }
+
+  .marketOpportunityStats strong {
+    font-size: 19px;
+  }
+
+  .marketOpportunityCompare header > div {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focusedNav button,
+  .focusedAdvisorHeader button,
+  .focusedFormGrid input,
+  .focusedFormGrid select,
+  .focusedCapabilityGrid select,
+  .directionTrackCard,
+  .directionSubtrackCard,
+  .directionJobCard,
+  .directionCard,
+  .directionPickerHeader > button,
+  .directionPickerFooter > button,
+  .directionPickerState button,
+  .marketReportFooter button {
+    transition: none;
+  }
+}
+
+/* Route planner: timeline and recruitment-line views */
+.routePlanner {
+  min-height: 100dvh;
+  padding: 22px clamp(18px, 2.4vw, 38px) 42px;
+  color: #151515;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.96), transparent 34%),
+    linear-gradient(#f8f8f5, #f1f1ed);
+}
+
+.routePlannerHeader {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.85fr) minmax(360px, 1.35fr) auto;
+  align-items: center;
+  gap: 26px;
+  max-width: 1540px;
+  margin: 0 auto 18px;
+}
+
+.routePlannerOrigin {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.routePlannerOrigin > button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d2d2cd;
+  border-radius: 12px;
+  background: #fff;
+  color: #1d1d1d;
+  cursor: pointer;
+}
+
+.routePlannerOrigin > div {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.routePlannerOrigin small,
+.routePlannerOrigin span {
+  color: #7b7b75;
+  font-size: 12px;
+}
+
+.routePlannerOrigin strong {
+  overflow: hidden;
+  color: #232323;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.routePlannerHeading {
+  min-width: 0;
+}
+
+.routePlannerHeading > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #5e5e59;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.routePlannerHeading h1,
+.routePlannerHeading p {
+  margin: 0;
+}
+
+.routePlannerHeading h1 {
+  margin-top: 5px;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: clamp(30px, 3vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.routePlannerHeading p {
+  margin-top: 7px;
+  color: #6d6d67;
+  font-size: 14px;
+}
+
+.routeModeSwitch {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(112px, 1fr));
+  padding: 3px;
+  border: 1px solid #cfcfca;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.routeModeSwitch button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #666660;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 150ms ease, background 150ms ease, transform 150ms ease;
+}
+
+.routeModeSwitch button[data-active="true"] {
+  background: #111;
+  color: #fff;
+}
+
+.routeModeSwitch button:active {
+  transform: scale(0.98);
+}
+
+.routePlannerNotice {
+  max-width: 1540px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 auto 18px;
+  padding: 9px 12px;
+  border: 1px solid #d9d9d4;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.74);
+  color: #61615c;
+  font-size: 12px;
+}
+
+.routePlannerNotice span {
+  min-width: 0;
+  flex: 1;
+}
+
+.routePlannerNotice strong {
+  flex: 0 0 auto;
+  color: #1d1d1d;
+  font-size: 12px;
+}
+
+.routeDecisionSystem {
+  max-width: 1540px;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 2.28fr);
+  gap: 0;
+  margin: 0 auto 18px;
+  overflow: hidden;
+  border: 1px solid #cfcfca;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(35, 35, 31, 0.06);
+}
+
+.routeDecisionSystem > header {
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  padding: 20px;
+  border-right: 1px solid #d7d7d2;
+  background: #111;
+  color: #fff;
+}
+
+.routeDecisionSystem > header small {
+  color: #a8a8a2;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.routeDecisionSystem > header strong {
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.routeDecisionSystem > header span {
+  color: #d3d3cd;
+  font-size: 11px;
+}
+
+.routeDecisionSystem > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.routeDecisionSystem article {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 18px;
+}
+
+.routeDecisionSystem article + article {
+  border-left: 1px solid #deded9;
+}
+
+.routeDecisionSystem article > span {
+  color: #73736d;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.routeDecisionSystem article > strong {
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+}
+
+.routeDecisionSystem article > p {
+  margin: 0;
+  color: #70706a;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.routeDecisionSystem article[data-status="pending"],
+.routeDecisionSystem article[data-status="provisional"],
+.routeDecisionSystem article[data-status="structure-only"] {
+  background: repeating-linear-gradient(
+    -45deg,
+    #fff,
+    #fff 8px,
+    #f5f5f1 8px,
+    #f5f5f1 10px
+  );
+}
+
+.routeTimelineVersion {
+  max-width: 1540px;
+  min-height: 700px;
+  display: grid;
+  grid-template-columns: minmax(235px, 270px) minmax(680px, 1fr) 126px;
+  gap: 18px;
+  margin: 0 auto;
+}
+
+.routeTimelineRail {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.routeCurrentAction {
+  padding: 24px;
+  border-radius: 15px;
+  background: #101010;
+  color: #fff;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.15);
+}
+
+.routeCurrentAction header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #d1d1cb;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.routeCurrentAction h2,
+.routeCurrentAction p {
+  margin: 0;
+}
+
+.routeCurrentAction h2 {
+  margin-top: 22px;
+  font-size: clamp(22px, 2vw, 31px);
+  line-height: 1.2;
+}
+
+.routeCurrentAction p {
+  margin-top: 12px;
+  color: #bdbdb7;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.routeCurrentAction > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid #3a3a38;
+  color: #e3e3df;
+  font-size: 12px;
+}
+
+.routeCurrentAction > button {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+  border: 0;
+  border-radius: 9px;
+  background: #fff;
+  color: #111;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.routeCurrentAction[data-compact="true"] {
+  width: min(100%, 360px);
+  padding: 22px;
+}
+
+.routeCurrentAction[data-compact="true"] h2 {
+  margin-top: 14px;
+  font-size: 25px;
+}
+
+.routeCurrentAction[data-compact="true"] p {
+  display: none;
+}
+
+.routeCampaignOverview {
+  padding: 18px;
+  border: 1px solid #d4d4cf;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.routeCampaignOverview > small,
+.routeCampaignOverview > strong,
+.routeCampaignOverview > span {
+  display: block;
+}
+
+.routeCampaignOverview > small {
+  color: #73736e;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.routeCampaignOverview > strong {
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+.routeCampaignOverview > span {
+  margin-top: 4px;
+  color: #7a7a74;
+  font-size: 12px;
+}
+
+.routeCampaignOverview > div {
+  display: grid;
+  gap: 2px;
+  margin-top: 14px;
+  border-top: 1px solid #e0e0db;
+}
+
+.routeCampaignOverview button {
+  min-height: 42px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid #ecece8;
+  background: transparent;
+  color: #6f6f69;
+  text-align: left;
+  cursor: pointer;
+}
+
+.routeCampaignOverview button[data-active="true"] {
+  color: #111;
+  font-weight: 800;
+}
+
+.routeCalendarBoard {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #cdcdc8;
+  border-radius: 16px;
+  background-color: #fff;
+  background-image:
+    linear-gradient(rgba(23, 23, 23, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 23, 23, 0.045) 1px, transparent 1px);
+  background-size: 100% 46px, 5.555% 100%;
+  box-shadow: 0 18px 45px rgba(40, 40, 35, 0.07);
+}
+
+.routeCalendarAxis {
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: 150px repeat(4, 1fr);
+  align-items: end;
+  border-bottom: 1px solid #1e1e1e;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.routeCalendarAxis > span {
+  padding: 0 10px 15px;
+  color: #4f4f4b;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.routeTodayMarker {
+  width: 82px;
+  align-self: end;
+  justify-self: start;
+  display: grid;
+  gap: 2px;
+  margin-left: 12px;
+  padding: 8px 10px;
+  border-radius: 8px 8px 0 0;
+  background: #111;
+  color: #fff;
+  text-align: center;
+}
+
+.routeTodayMarker span {
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.routeTodayMarker strong {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.routeSharedLane,
+.routeLaneRow {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+}
+
+.routeSharedLane {
+  min-height: 126px;
+  border-bottom: 1px solid #d8d8d3;
+}
+
+.routeLaneLabel {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px;
+  border-right: 1px solid #d8d8d3;
+  background: rgba(250, 250, 247, 0.9);
+}
+
+.routeLaneLabel > span {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.routeLaneLabel strong,
+.routeLaneLabel small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.routeLaneLabel strong {
+  font-size: 13px;
+}
+
+.routeLaneLabel small {
+  color: #85857f;
+  font-size: 10px;
+}
+
+.routeSharedTrack {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(72px, 1fr));
+  align-items: center;
+  gap: 5px;
+  padding: 18px 12px;
+}
+
+.routeSharedTrack article {
+  min-height: 72px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  padding: 9px;
+  border: 1px dashed #777771;
+  border-radius: 7px;
+  background: rgba(247, 247, 244, 0.9);
+  text-align: center;
+}
+
+.routeSharedTrack strong {
+  font-size: 11px;
+}
+
+.routeSharedTrack span {
+  color: #777771;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.routeLaneRows {
+  min-height: 420px;
+}
+
+.routeLaneRow {
+  min-height: 138px;
+  border-bottom: 1px solid #d8d8d3;
+}
+
+.routeLaneTrack {
+  position: relative;
+  min-width: 0;
+  min-height: 138px;
+}
+
+.routeLaneTrack::before {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: #151515;
+  content: "";
+}
+
+.routeLaneTrack article {
+  --route-left: 10%;
+  --route-width: 14%;
+  position: absolute;
+  z-index: 1;
+  top: 32px;
+  left: var(--route-left);
+  width: var(--route-width);
+  min-width: 112px;
+  min-height: 72px;
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid #1b1b1b;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.05);
+}
+
+.routeLaneTrack article[data-status="example"] {
+  border-style: dashed;
+  background: repeating-linear-gradient(
+    -45deg,
+    #fff,
+    #fff 7px,
+    #f4f4f0 7px,
+    #f4f4f0 9px
+  );
+}
+
+.routeLaneTrack article[data-status="pending"] {
+  border-style: dotted;
+  background: #f7f7f4;
+}
+
+.routeLaneTrack article strong,
+.routeLaneTrack article span,
+.routeLaneTrack article small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.routeLaneTrack article strong {
+  font-size: 11px;
+}
+
+.routeLaneTrack article span,
+.routeLaneTrack article small {
+  color: #74746e;
+  font-size: 9px;
+}
+
+.routeCalendarBoard > footer {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.routeCalendarBoard > footer p {
+  max-width: 440px;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0;
+  color: #777771;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.routeLegend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.routeLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #666660;
+  font-size: 10px;
+}
+
+.routeLegend i {
+  width: 24px;
+  height: 13px;
+  border: 1px solid #1c1c1c;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.routeLegend span[data-status="example"] i {
+  border-style: dashed;
+  background: repeating-linear-gradient(
+    -45deg,
+    #fff,
+    #fff 4px,
+    #ededE8 4px,
+    #ededE8 6px
+  );
+}
+
+.routeLegend span[data-status="pending"] i {
+  border-style: dotted;
+  background: #f1f1ed;
+}
+
+.routeCalendarPhoto {
+  min-height: 700px;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.42)),
+    url("/route-planner/power-control-room.png") center / cover no-repeat;
+  filter: grayscale(1);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+.routeRecruitmentVersion {
+  max-width: 1540px;
+  margin: 0 auto;
+}
+
+.routeScrollTrack {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #cecec9;
+  border-radius: 16px;
+  background: #fafaf7;
+  box-shadow: 0 22px 50px rgba(33, 33, 29, 0.08);
+}
+
+.routeScrollTrack::before {
+  position: absolute;
+  z-index: 2;
+  top: 50px;
+  bottom: 50px;
+  left: 120px;
+  width: 3px;
+  background: #141414;
+  content: "";
+}
+
+.routeChapter {
+  position: relative;
+  min-height: 190px;
+  display: grid;
+  grid-template-columns: 86px 290px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding: 28px 32px;
+  border-bottom: 1px solid #cacac5;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.routeChapter:last-child {
+  border-bottom: 0;
+}
+
+.routeChapter[data-chapter="1"] {
+  min-height: 230px;
+  background:
+    linear-gradient(90deg, rgba(250, 250, 247, 1) 0 58%, rgba(250, 250, 247, 0.25) 82%),
+    url("/route-planner/power-grid-panorama.png") right center / 55% 100% no-repeat;
+}
+
+.routeChapter[data-chapter="3"] {
+  background:
+    linear-gradient(90deg, rgba(250, 250, 247, 1) 0 66%, rgba(250, 250, 247, 0.4)),
+    url("/route-planner/power-control-room.png") right 42% / 34% auto no-repeat;
+}
+
+.routeChapterNumber {
+  position: relative;
+  z-index: 3;
+  color: #d8d8d3;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 70px;
+  line-height: 1;
+  text-align: center;
+}
+
+.routeChapter header {
+  position: relative;
+  z-index: 3;
+}
+
+.routeChapter header h2,
+.routeChapter header p {
+  margin: 0;
+}
+
+.routeChapter header h2 {
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.2;
+}
+
+.routeChapter header p {
+  margin-top: 8px;
+  color: #6f6f69;
+  font-size: 12px;
+}
+
+.routeMilestoneStrip,
+.routeDecisionStrip {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.routeMilestoneStrip::before,
+.routeDecisionStrip::before,
+.routeOpportunityLine::before {
+  position: absolute;
+  z-index: -1;
+  top: 22px;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: #151515;
+  content: "";
+}
+
+.routeMilestoneStrip article,
+.routeDecisionStrip article {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.routeMilestoneStrip i,
+.routeDecisionStrip i {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #151515;
+  border-radius: 50%;
+  background: #fafaf7;
+  color: #111;
+}
+
+.routeMilestoneStrip strong,
+.routeDecisionStrip strong {
+  font-size: 12px;
+}
+
+.routeMilestoneStrip span,
+.routeDecisionStrip span {
+  color: #767670;
+  font-size: 10px;
+}
+
+.routeOpportunityLine {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  align-items: start;
+  gap: 14px;
+}
+
+.routeOpportunityLine button {
+  min-height: 92px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid #9c9c96;
+  border-radius: 9px;
+  background: #fff;
+  color: #1c1c1c;
+  text-align: left;
+  cursor: pointer;
+}
+
+.routeOpportunityLine button[data-status="example"] {
+  border-style: dashed;
+}
+
+.routeOpportunityLine button[data-status="pending"] {
+  border-style: dotted;
+  background: #f5f5f1;
+}
+
+.routeOpportunityLine button[aria-expanded="true"] {
+  border-color: #111;
+  box-shadow: 0 0 0 2px #111;
+}
+
+.routeOpportunityLine button span,
+.routeOpportunityLine button small {
+  color: #73736d;
+  font-size: 10px;
+}
+
+.routeOpportunityLine button strong {
+  font-size: 13px;
+}
+
+.routeStrategyCard {
+  position: relative;
+  z-index: 5;
+  grid-column: 2;
+  align-self: start;
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid #bdbdb7;
+  border-radius: 11px;
+  background: #fff;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.11);
+}
+
+.routeStrategyCard header {
+  display: grid;
+  gap: 3px;
+  padding: 13px 15px;
+  border-bottom: 1px solid #deded9;
+}
+
+.routeStrategyCard header span {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.routeStrategyCard header small {
+  color: #73736e;
+  font-size: 10px;
+}
+
+.routeStrategyCard > div {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e1e1dc;
+  color: #63635e;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.routeStrategyCard > div span {
+  display: grid;
+  gap: 2px;
+}
+
+.routeStrategyCard > div strong {
+  color: #1d1d1d;
+}
+
+.routeStrategyCard > button {
+  min-height: 44px;
+  margin: 12px;
+  border: 0;
+  border-radius: 7px;
+  background: #111;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.routeRecruitmentFooter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 370px);
+  align-items: center;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+.routeRecruitmentFooter > p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  color: #666660;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.directionDecisionPreview {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid #c9c9c3;
+  border-left: 4px solid #111;
+  border-radius: 8px;
+  background: #f8f8f5;
+  text-align: left;
+}
+
+.directionDecisionPreview small {
+  color: #74746e;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.directionDecisionPreview strong {
+  color: #181817;
+  font-size: 14px;
+}
+
+.directionDecisionPreview span {
+  color: #6b6b65;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.directionPendingActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.directionPendingActions button:last-child {
+  border: 1px solid #bcbcb6;
+  background: #fff;
+  color: #343430;
+}
+
+.routePlanner button:focus-visible,
+.directionPendingActions button:focus-visible {
+  outline: 3px solid rgba(17, 17, 17, 0.25);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1240px) {
+  .routePlannerHeader {
+    grid-template-columns: minmax(220px, 0.7fr) minmax(320px, 1.3fr) auto;
+    gap: 18px;
+  }
+
+  .routeTimelineVersion {
+    grid-template-columns: minmax(220px, 250px) minmax(0, 1fr);
+  }
+
+  .routeCalendarPhoto {
+    display: none;
+  }
+
+  .routeSharedTrack {
+    grid-template-columns: repeat(3, minmax(96px, 1fr));
+  }
+
+  .routeChapter {
+    grid-template-columns: 70px 240px minmax(0, 1fr);
+    padding-inline: 20px;
+  }
+
+  .routeScrollTrack::before {
+    left: 90px;
+  }
+}
+
+@media (max-width: 960px) {
+  .routePlanner {
+    padding: 18px 18px 34px;
+  }
+
+  .routePlannerHeader {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .routePlannerHeading {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .routeDecisionSystem {
+    grid-template-columns: 1fr;
+  }
+
+  .routeDecisionSystem > header {
+    border-right: 0;
+    border-bottom: 1px solid #d7d7d2;
+  }
+
+  .routeTimelineVersion {
+    display: block;
+  }
+
+  .routeTimelineRail {
+    grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
+    margin-bottom: 16px;
+  }
+
+  .routeCurrentAction h2 {
+    font-size: 25px;
+  }
+
+  .routeCalendarBoard {
+    min-height: 620px;
+  }
+
+  .routeChapter {
+    grid-template-columns: 64px 210px minmax(0, 1fr);
+  }
+
+  .routeChapterNumber {
+    font-size: 54px;
+  }
+
+  .routeMilestoneStrip,
+  .routeDecisionStrip {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+  }
+
+  .routeRecruitmentFooter {
+    grid-template-columns: 1fr;
+  }
+
+  .routeCurrentAction[data-compact="true"] {
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .routePlanner {
+    padding: 14px 12px 96px;
+  }
+
+  .routePlannerHeader {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .routePlannerOrigin {
+    order: 1;
+  }
+
+  .routePlannerHeading {
+    order: 2;
+  }
+
+  .routeModeSwitch {
+    order: 3;
+    width: 100%;
+  }
+
+  .routePlannerHeading h1 {
+    font-size: 31px;
+  }
+
+  .routePlannerNotice {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .routePlannerNotice strong {
+    width: 100%;
+    padding-left: 24px;
+  }
+
+  .routeDecisionSystem > div {
+    grid-template-columns: 1fr;
+  }
+
+  .routeDecisionSystem article + article {
+    border-top: 1px solid #deded9;
+    border-left: 0;
+  }
+
+  .routeDecisionSystem article {
+    padding: 16px;
+  }
+
+  .routeTimelineRail {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .routeCampaignOverview {
+    order: 2;
+  }
+
+  .routeCalendarAxis {
+    display: none;
+  }
+
+  .routeSharedLane,
+  .routeLaneRow {
+    display: block;
+  }
+
+  .routeLaneLabel {
+    min-height: 60px;
+    border-right: 0;
+    border-bottom: 1px solid #deded9;
+  }
+
+  .routeSharedTrack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .routeLaneRows {
+    min-height: 0;
+  }
+
+  .routeLaneRow {
+    min-height: 0;
+  }
+
+  .routeLaneTrack {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .routeLaneTrack::before {
+    display: none;
+  }
+
+  .routeLaneTrack article {
+    position: static;
+    width: auto;
+    min-width: 0;
+    min-height: 86px;
+  }
+
+  .routeCalendarBoard > footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .routeLegend {
+    flex-wrap: wrap;
+  }
+
+  .routeScrollTrack::before {
+    left: 32px;
+  }
+
+  .routeChapter {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: start;
+    gap: 10px;
+    padding: 24px 14px;
+  }
+
+  .routeChapter[data-chapter="1"],
+  .routeChapter[data-chapter="3"] {
+    background-image: none;
+  }
+
+  .routeChapterNumber {
+    z-index: 3;
+    grid-row: 1 / span 4;
+    font-size: 33px;
+  }
+
+  .routeChapter > header,
+  .routeMilestoneStrip,
+  .routeOpportunityLine,
+  .routeStrategyCard,
+  .routeDecisionStrip {
+    grid-column: 2;
+  }
+
+  .routeChapter > header h2 {
+    font-size: 22px;
+  }
+
+  .routeMilestoneStrip,
+  .routeDecisionStrip,
+  .routeOpportunityLine {
+    grid-template-columns: 1fr;
+    margin-top: 14px;
+  }
+
+  .routeMilestoneStrip::before,
+  .routeDecisionStrip::before,
+  .routeOpportunityLine::before {
+    display: none;
+  }
+
+  .routeMilestoneStrip article,
+  .routeDecisionStrip article {
+    min-height: 58px;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: center;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .routeMilestoneStrip article span,
+  .routeDecisionStrip article span {
+    grid-column: 2;
+  }
+
+  .routeStrategyCard {
+    margin-top: 14px;
+  }
+
+  .routeRecruitmentFooter {
+    gap: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .routeModeSwitch button,
+  .routePlanner button {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}
+
+/* Market report V4: qualification -> action -> direction -> evidence */
+.marketQuickStats article {
+  position: relative;
+}
+
+.marketQuickStats article:not(:last-child)::after {
+  display: none;
+}
+
+.marketQualification,
+.marketDirectionDecision {
+  margin-top: 18px;
+  padding: 24px;
+  border: 1px solid #deded9;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.marketQualification > header,
+.marketDirectionDecision > header,
+.marketPortfolioHeading,
+.schoolRecruitmentWatch > header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.marketQualification > header span,
+.marketDirectionDecision > header span,
+.schoolRecruitmentWatch > header span {
+  color: #6c6c66;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.marketQualification h2,
+.marketDirectionDecision h2,
+.marketPortfolioHeading h2,
+.schoolRecruitmentWatch h3 {
+  margin: 6px 0 0;
+  color: #1b1b1a;
+  font-size: 23px;
+  font-weight: 720;
+  letter-spacing: -0.035em;
+}
+
+.marketQualification > header small,
+.marketPortfolioHeading > small,
+.schoolRecruitmentWatch > header small {
+  color: #6c6c66;
+  font-size: 12px;
+}
+
+.marketQualificationGroups {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.marketQualificationGroups > section {
+  min-width: 0;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f5f5f2;
+}
+
+.marketQualificationGroups h3 {
+  margin: 0 0 12px;
+  color: #40403c;
+  font-size: 13px;
+}
+
+.marketQualificationGroups > section > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.marketQualificationGroups article {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 12px 12px 12px 16px;
+  border: 1px solid #dfdfda;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.marketQualificationGroups article::before {
+  position: absolute;
+  inset: 10px auto 10px 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: #1c1c1b;
+  content: "";
+}
+
+.marketQualificationGroups article[data-status="missing"]::before {
+  background: #a8a8a2;
+}
+
+.marketQualificationGroups article[data-status="developing"]::before {
+  background: #666661;
+}
+
+.marketQualificationGroups article span,
+.marketQualificationGroups article small {
+  color: #74746e;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.marketQualificationGroups article strong {
+  overflow: hidden;
+  color: #20201f;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.marketReportOverview {
+  grid-template-columns: minmax(300px, 0.7fr) minmax(0, 1.3fr);
+}
+
+.marketBiggestLever {
+  order: 1;
+}
+
+.marketMilestones {
+  order: 2;
+}
+
+.schoolRecruitmentWatch {
+  padding: 22px 24px;
+  border-top: 1px solid #deded9;
+  background: #f8f8f5;
+}
+
+.schoolRecruitmentWatch > div {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.schoolRecruitmentWatch > div::before {
+  position: absolute;
+  top: 10px;
+  right: 7%;
+  left: 7%;
+  height: 1px;
+  background: #c9c9c4;
+  content: "";
+}
+
+.schoolRecruitmentWatch article {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+  padding-top: 25px;
+}
+
+.schoolRecruitmentWatch article > i {
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  left: 0;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #f8f8f5;
+  border-radius: 50%;
+  background: #1c1c1b;
+  box-shadow: 0 0 0 1px #1c1c1b;
+}
+
+.schoolRecruitmentWatch article span,
+.schoolRecruitmentWatch article small,
+.schoolRecruitmentWatch article em {
+  color: #70706a;
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.4;
+}
+
+.schoolRecruitmentWatch article strong {
+  overflow: hidden;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.schoolRecruitmentWatch article em {
+  width: fit-content;
+  padding: 4px 7px;
+  border: 1px solid #d1d1cc;
+  border-radius: 999px;
+  background: #fff;
+  color: #444440;
+}
+
+.schoolDeepDetails {
+  border-top: 1px solid #deded9;
+}
+
+.schoolDeepDetails > summary {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 24px;
+  color: #2b2b29;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+.schoolDeepDetails > summary small {
+  color: #777771;
+  font-size: 11px;
+  font-weight: 550;
+}
+
+.schoolDeepDetails[open] > summary {
+  border-bottom: 1px solid #deded9;
+  background: #fafaf8;
+}
+
+.schoolDeepContent {
+  background: #fff;
+}
+
+.marketDirectionDecision > header button {
+  min-height: 44px;
+}
+
+.marketDirectionDecision > header button,
+.marketPortfolio li button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid #1c1c1b;
+  border-radius: 10px;
+  background: #1c1c1b;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 680;
+  cursor: pointer;
+}
+
+.marketDirectionDecision > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.marketDirectionDecision article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 11px;
+  padding: 14px;
+  border: 1px solid #deded9;
+  border-radius: 12px;
+  background: #f8f8f5;
+}
+
+.marketDirectionDecision article > i {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #1c1c1b;
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.marketDirectionDecision article > div {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.marketDirectionDecision article strong {
+  font-size: 14px;
+}
+
+.marketDirectionDecision article span,
+.marketDirectionDecision article small,
+.marketDirectionDecision > p {
+  color: #6e6e68;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.marketDirectionDecision article small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.marketDirectionDecision > p {
+  margin: 14px 0 0;
+}
+
+.marketOpportunityStages {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  margin-top: 16px !important;
+  border: 1px solid #deded9;
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+.marketOpportunityStages > span {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 7px;
+  padding: 10px;
+  color: #30302d;
+  font-size: 11px;
+  font-weight: 680;
+}
+
+.marketOpportunityStages > span + span {
+  border-left: 1px solid #deded9;
+}
+
+.marketOpportunityStages i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1c1c1b;
+}
+
+.marketOpportunityStages > span:nth-child(2) i,
+.marketOpportunityStages > span:nth-child(3) i,
+.marketOpportunityStages > span:nth-child(4) i {
+  border: 1px solid #8a8a84;
+  background: #fff;
+}
+
+.marketOpportunityStages small {
+  grid-column: 2;
+  color: #74746e;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.marketPortfolioHeading {
+  grid-column: 1 / -1;
+  padding: 4px 2px 2px;
+}
+
+.marketPortfolioHeading > div > span {
+  color: #6c6c66;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.marketPortfolio > article {
+  align-self: stretch;
+}
+
+.marketPortfolio li {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+.marketPortfolio li > div,
+.marketCandidateTopline {
+  min-width: 0;
+}
+
+.marketCandidateTopline {
+  display: flex !important;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.marketCandidateTopline strong {
+  white-space: normal !important;
+}
+
+.marketCandidateTopline b {
+  flex: 0 0 auto;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #1c1c1b;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.marketCandidateTopline b[data-stage="needs-verification"] {
+  border: 1px solid #c9c9c4;
+  background: #efefeb;
+  color: #40403c;
+}
+
+.marketCandidateFacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin: 12px 0 0;
+}
+
+.marketCandidateFacts > div {
+  min-width: 0;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f1f1ed;
+}
+
+.marketCandidateFacts dt,
+.marketCandidateFacts dd {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.marketCandidateFacts dt {
+  color: #777771;
+}
+
+.marketCandidateFacts dd {
+  overflow: hidden;
+  margin-top: 3px;
+  color: #2e2e2b;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.marketCandidateGates {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.marketCandidateGates span {
+  display: inline-flex !important;
+  padding: 4px 7px;
+  border: 1px solid #d6d6d1;
+  border-radius: 999px;
+  background: #fff;
+  color: #4c4c47 !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+}
+
+.marketCandidateGates span[data-outcome="pass"]::before {
+  margin-right: 4px;
+  content: "●";
+}
+
+.marketCandidateGates span:not([data-outcome="pass"])::before {
+  margin-right: 4px;
+  color: #90908a;
+  content: "○";
+}
+
+.marketPortfolio li p,
+.marketPortfolio li > div > small {
+  display: block;
+  margin: 7px 0 0;
+  color: #6c6c66;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.marketPortfolio li button {
+  width: 100%;
+  margin-top: 12px;
+  border-color: #d0d0cb;
+  background: #fff;
+  color: #2a2a28;
+}
+
+.marketLevers li > div dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+}
+
+.marketLevers li > div dl > div {
+  display: flex;
+  gap: 4px;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #eeeeea;
+  font-size: 10px;
+}
+
+.marketLevers li dt,
+.marketLevers li dd {
+  margin: 0;
+}
+
+.marketLevers li dt {
+  color: #777771;
+}
+
+.marketLevers li dd {
+  color: #333330;
+  font-weight: 650;
+}
+
+.marketLevers li em {
+  display: block;
+  margin-top: 7px;
+  color: #555550;
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.marketReportCaveats,
+.marketPortfolioAudit,
+.marketEvidenceGrid span,
+.marketOpportunityCompare > p,
+.schoolEvidenceDetails li,
+.schoolDecisionCard ul li,
+.schoolDecisionCard ol span {
+  font-size: 11px;
+}
+
+@media (max-width: 1080px) {
+  .marketQualificationGroups,
+  .marketReportOverview {
+    grid-template-columns: 1fr;
+  }
+
+  .marketDirectionDecision > div,
+  .schoolRecruitmentWatch > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketOpportunityStages {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .marketOpportunityStages > span:nth-child(3) {
+    border-top: 1px solid #deded9;
+    border-left: 0;
+  }
+
+  .marketOpportunityStages > span:nth-child(4) {
+    border-top: 1px solid #deded9;
+  }
+
+  .schoolRecruitmentWatch > div::before {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .marketQuickStats article:nth-child(2)::after {
+    display: none;
+  }
+
+  .marketQualification,
+  .marketDirectionDecision {
+    padding: 20px;
+  }
+
+  .marketQualification > header,
+  .marketDirectionDecision > header,
+  .marketPortfolioHeading,
+  .schoolRecruitmentWatch > header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .marketDirectionDecision > header button {
+    width: 100%;
+  }
+
+  .marketQualificationGroups > section > div,
+  .marketDirectionDecision > div,
+  .schoolRecruitmentWatch > div {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolDeepDetails > summary {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding-block: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .marketQuickStats article:not(:last-child)::after {
+    display: none;
+  }
+
+  .marketQualification,
+  .marketDirectionDecision {
+    padding: 18px;
+  }
+
+  .marketQualificationGroups > section {
+    padding: 12px;
+  }
+
+  .marketCandidateFacts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Report legibility: no decision-bearing copy below 11px. */
+.marketQuickStats small,
+.marketQuickStats span,
+.marketMilestones header small,
+.marketMilestones time,
+.marketMilestones li span,
+.marketBiggestLever li i,
+.marketOpportunityStages small,
+.marketCandidateTopline b,
+.marketCandidateFacts dt,
+.marketCandidateFacts dd,
+.marketCandidateGates span,
+.marketLevers li > div dl > div {
+  font-size: 11px !important;
+}
+
+.schoolDeepDetails .schoolDirectionTracks span,
+.schoolDeepDetails .schoolDirectionTracks small,
+.schoolDeepDetails .schoolDirectionTracks em,
+.schoolDeepDetails .schoolTrainingNote,
+.schoolDeepDetails .schoolSectionHeader small,
+.schoolDeepDetails .schoolRecruitmentGrid span,
+.schoolDeepDetails .schoolRecruitmentGrid p,
+.schoolDeepDetails .schoolRecruitmentGrid em,
+.schoolDeepDetails .schoolRecruitmentNote,
+.schoolDeepDetails .schoolCareerEvidenceNote {
+  font-size: 11px !important;
+}
+
+.schoolIntelligence :where(p, span, small, em, li, dt, dd, summary, i) {
+  font-size: 11px !important;
+}
+
+.schoolOutcomeRows strong,
+.schoolEmployerExamples strong,
+.marketPortfolio header small,
+.marketHeatmap header > div:first-child > span,
+.marketHeatmapSwitch button,
+.marketHeatmap th,
+.marketBestMatch,
+.marketLevers header span,
+.marketLevers li span,
+.marketLevers li small,
+.marketEvidenceGrid span,
+.marketOpportunityCompare > p,
+.marketReportCaveats {
+  font-size: 11px !important;
+}
+
+/* Market report consultation layer: observe first, decide after leaving the report. */
+.marketStudentAssessment,
+.marketEmploymentConditions {
+  margin-top: 18px;
+  padding: 24px;
+  border: 1px solid #deded9;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.marketStudentAssessment > header,
+.marketEmploymentConditions > header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.marketStudentAssessment > header span,
+.marketEmploymentConditions > header span {
+  color: #6c6c66;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.marketStudentAssessment > header h2,
+.marketEmploymentConditions > header h2 {
+  margin: 6px 0 0;
+  font-size: 23px;
+  letter-spacing: -0.035em;
+}
+
+.marketStudentAssessment > header small,
+.marketEmploymentConditions > header small,
+.marketEmploymentConditions > header p {
+  color: #6c6c66;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.marketEmploymentConditions > header p {
+  margin: 7px 0 0;
+}
+
+.marketAssessmentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(240px, 0.8fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.marketAssessmentGrid > article,
+.marketAssessmentGrid > aside {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #deded9;
+  border-radius: 14px;
+  background: #f7f7f4;
+}
+
+.marketAssessmentGrid > article > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #deded9;
+}
+
+.marketAssessmentGrid > article > header span {
+  font-size: 14px;
+  font-weight: 720;
+}
+
+.marketAssessmentGrid > article > header small {
+  color: #74746e;
+  font-size: 11px;
+}
+
+.marketAssessmentGrid ol {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marketAssessmentGrid li {
+  display: grid;
+  grid-template-columns: 29px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.marketAssessmentGrid li > i {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #1c1c1b;
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 720;
+}
+
+.marketAssessmentGrid li > div {
+  display: grid;
+  gap: 4px;
+}
+
+.marketAssessmentGrid li strong {
+  font-size: 13px;
+}
+
+.marketAssessmentGrid li span,
+.marketAssessmentGrid li small {
+  color: #5f5f59;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.marketAssessmentGrid li small {
+  color: #7a7a74;
+}
+
+.marketAssessmentGrid > article[data-kind="constraint"] li > i {
+  border: 1px solid #bdbdb7;
+  background: #fff;
+  color: #343431;
+}
+
+.marketAssessmentGrid > aside {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  border-color: #1c1c1b;
+  background: #1c1c1b;
+  color: #fff;
+}
+
+.marketAssessmentGrid > aside span,
+.marketAssessmentGrid > aside small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 11px;
+}
+
+.marketAssessmentGrid > aside strong {
+  margin: 12px 0 20px;
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+
+.marketConditionGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.marketConditionGrid > article {
+  grid-column: span 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border: 1px solid #dcdcd7;
+  border-radius: 14px;
+  background: #f8f8f5;
+}
+
+.marketConditionGrid > article:nth-child(4),
+.marketConditionGrid > article:nth-child(5) {
+  grid-column: span 3;
+}
+
+.marketConditionGrid > article[data-status="unavailable"] {
+  background: #f2f2ef;
+}
+
+.marketConditionGrid article > header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.marketConditionGrid article > header > i {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #1c1c1b;
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 720;
+}
+
+.marketConditionGrid article[data-status="unavailable"] > header > i {
+  border: 1px solid #bdbdb7;
+  background: #fff;
+  color: #444440;
+}
+
+.marketConditionGrid article > header > div {
+  display: grid;
+  gap: 2px;
+}
+
+.marketConditionGrid article > header span {
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.marketConditionGrid article > header small {
+  color: #777771;
+  font-size: 10px;
+}
+
+.marketConditionGrid article > strong {
+  margin-top: 18px;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+}
+
+.marketConditionGrid article > p {
+  min-height: 34px;
+  margin: 8px 0 0;
+  color: #62625d;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.marketConditionSignals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 13px;
+}
+
+.marketConditionSignals span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid #d5d5d0;
+  border-radius: 999px;
+  background: #fff;
+  color: #555550;
+  font-size: 10px;
+}
+
+.marketConditionSignals b {
+  color: #1f1f1d;
+  font-size: 10px;
+}
+
+.marketConditionGrid article > footer {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.marketConditionGrid article > footer > span {
+  display: block;
+  padding-top: 13px;
+  border-top: 1px solid #dcdcd7;
+  color: #30302d;
+  font-size: 10px;
+  font-weight: 720;
+}
+
+.marketConditionGrid article > footer p,
+.marketConditionGrid article > footer small {
+  margin: 6px 0 0;
+  color: #5f5f59;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.marketConditionGrid article > footer small {
+  display: block;
+  color: #7a7a74;
+  font-size: 10px;
+}
+
+.marketConditionBoundary {
+  margin: 14px 0 0;
+  padding: 11px 13px;
+  border-left: 3px solid #1c1c1b;
+  background: #f2f2ef;
+  color: #595954;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.marketDirectionDecision > header > small,
+.marketRoleSamples > header small {
+  color: #6c6c66;
+  font-size: 12px;
+}
+
+.marketRoleSamples {
+  margin-top: 18px;
+  padding: 24px;
+  border: 1px solid #deded9;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.marketRoleSamples > header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.marketRoleSamples > header span,
+.marketReportBoundary > span {
+  color: #6c6c66;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.marketRoleSamples h2 {
+  margin: 6px 0 0;
+  font-size: 23px;
+  letter-spacing: -0.035em;
+}
+
+.marketRoleSamples > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.marketRoleSamples article {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #deded9;
+  border-radius: 13px;
+  background: #f8f8f5;
+}
+
+.marketRoleSamples article > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.marketRoleSamples article > header strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.marketRoleSamples article > header small {
+  flex: 0 0 auto;
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: #ebebe7;
+  color: #555550;
+  font-size: 11px;
+}
+
+.marketRoleSamples article > p {
+  min-height: 34px;
+  margin: 8px 0 0;
+  color: #5e5e59;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.marketRoleSamples article > small {
+  display: block;
+  margin-top: 10px;
+  color: #73736d;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.marketRoleSamples > p {
+  margin: 14px 0 0;
+  color: #6c6c66;
+  font-size: 11px;
+}
+
+.marketReportBoundary {
+  padding: 20px;
+  border: 1px solid #deded9;
+  border-radius: 14px;
+  background: #f5f5f2;
+}
+
+.marketRightAnalysis {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.marketReportBoundary h3 {
+  margin: 7px 0 0;
+  font-size: 17px;
+}
+
+.marketReportBoundary ul {
+  display: grid;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marketReportBoundary li {
+  position: relative;
+  padding-left: 16px;
+  color: #555550;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.marketReportBoundary li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #222220;
+  content: "";
+}
+
+@media (max-width: 1080px) {
+  .marketAssessmentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketAssessmentGrid > aside {
+    grid-column: 1 / -1;
+  }
+
+  .marketConditionGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketConditionGrid > article,
+  .marketConditionGrid > article:nth-child(4),
+  .marketConditionGrid > article:nth-child(5) {
+    grid-column: auto;
+  }
+
+  .marketRoleSamples > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .marketStudentAssessment,
+  .marketEmploymentConditions {
+    padding: 20px;
+  }
+
+  .marketStudentAssessment > header,
+  .marketEmploymentConditions > header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .marketAssessmentGrid,
+  .marketConditionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .marketAssessmentGrid > aside {
+    grid-column: auto;
+  }
+
+  .marketRoleSamples {
+    padding: 20px;
+  }
+
+  .marketRoleSamples > header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .marketRoleSamples > div {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Four connected consultation chapters: overview, school, market, advice. */
+.marketReportChapter {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #deded9;
+  border-radius: 22px;
+  background: #f2f2ef;
+}
+
+.marketReportChapterHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 2px 16px;
+}
+
+.marketReportChapterHeader > i {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 11px;
+  background: #1c1c1b;
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 760;
+  letter-spacing: 0.04em;
+}
+
+.marketReportChapterHeader > div {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.marketReportChapterHeader h2 {
+  margin: 0;
+  color: #1c1c1b;
+  font-size: 20px;
+  letter-spacing: -0.035em;
+}
+
+.marketReportChapterHeader span {
+  color: #73736d;
+  font-size: 12px;
+}
+
+.marketReportChapterBody {
+  display: grid;
+  gap: 14px;
+}
+
+.marketReportChapterBody > * {
+  margin-top: 0 !important;
+}
+
+.marketCompetitiveness {
+  display: grid;
+  grid-template-columns: 174px minmax(180px, 0.74fr) minmax(340px, 1.35fr);
+  gap: 20px;
+  padding: 22px;
+  border: 1px solid #dcdcd7;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.marketCompetitivenessGauge {
+  position: relative;
+  min-height: 122px;
+  display: grid;
+  place-items: center;
+}
+
+.marketCompetitivenessGauge svg {
+  width: 166px;
+  height: auto;
+  overflow: visible;
+}
+
+.marketCompetitivenessGaugeTrack,
+.marketCompetitivenessGaugeValue {
+  fill: none;
+  stroke-width: 12px;
+  stroke-linecap: round;
+}
+
+.marketCompetitivenessGaugeTrack {
+  stroke: #e7e7e2;
+}
+
+.marketCompetitivenessGaugeValue {
+  stroke: #1c1c1b;
+}
+
+.marketCompetitivenessGauge > div {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  display: flex;
+  align-items: baseline;
+  transform: translateX(-50%);
+}
+
+.marketCompetitivenessGauge strong {
+  font-size: 45px;
+  letter-spacing: -0.07em;
+  line-height: 1;
+}
+
+.marketCompetitivenessGauge span {
+  margin-left: 5px;
+  color: #777771;
+  font-size: 11px;
+}
+
+.marketCompetitivenessSummary {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.marketCompetitivenessSummary > span {
+  color: #73736d;
+  font-size: 11px;
+  font-weight: 720;
+  letter-spacing: 0.04em;
+}
+
+.marketCompetitivenessSummary h2 {
+  margin: 7px 0 0;
+  font-size: 29px;
+  letter-spacing: -0.05em;
+}
+
+.marketCompetitivenessSummary p {
+  margin: 9px 0 0;
+  color: #565651;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.marketCompetitivenessSummary small {
+  width: fit-content;
+  margin-top: 12px;
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: #efefeb;
+  color: #343431;
+  font-size: 10px;
+  font-weight: 680;
+}
+
+.marketCompetitivenessFactors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  padding-left: 20px;
+  border-left: 1px solid #deded9;
+}
+
+.marketCompetitivenessFactors article {
+  min-width: 0;
+}
+
+.marketCompetitivenessFactors article:last-child {
+  grid-column: 1 / -1;
+}
+
+.marketCompetitivenessFactors header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.marketCompetitivenessFactors header span,
+.marketCompetitivenessFactors header strong {
+  font-size: 11px;
+}
+
+.marketCompetitivenessFactors header strong {
+  font-size: 12px;
+}
+
+.marketCompetitivenessFactors article > i {
+  height: 5px;
+  display: block;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e2e2dd;
+}
+
+.marketCompetitivenessFactors article > i > b {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-origin: left center;
+  border-radius: inherit;
+  background: #1c1c1b;
+}
+
+.marketCompetitivenessFactors small {
+  display: block;
+  margin-top: 6px;
+  overflow: hidden;
+  color: #73736d;
+  font-size: 9px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.marketCompetitivenessStats {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 135px)) 1fr;
+  align-items: center;
+  gap: 0;
+  padding-top: 16px;
+  border-top: 1px solid #deded9;
+}
+
+.marketCompetitivenessStats article {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-right: 18px;
+}
+
+.marketCompetitivenessStats article + article {
+  padding-left: 18px;
+  border-left: 1px solid #deded9;
+}
+
+.marketCompetitivenessStats small {
+  color: #73736d;
+  font-size: 10px;
+}
+
+.marketCompetitivenessStats strong {
+  font-size: 20px;
+  letter-spacing: -0.045em;
+}
+
+.marketCompetitivenessStats p {
+  margin: 0;
+  color: #777771;
+  font-size: 10px;
+  text-align: right;
+}
+
+@media (max-width: 1120px) {
+  .marketCompetitiveness {
+    grid-template-columns: 165px minmax(0, 1fr);
+  }
+
+  .marketCompetitivenessFactors {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: 16px 0 0;
+    border-top: 1px solid #deded9;
+    border-left: 0;
+  }
+
+  .marketCompetitivenessFactors article:last-child {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .marketReportChapter {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .marketReportChapterHeader {
+    padding: 2px 2px 12px;
+  }
+
+  .marketReportChapterHeader > div {
+    display: grid;
+    gap: 2px;
+  }
+
+  .marketReportChapterHeader h2 {
+    font-size: 18px;
+  }
+
+  .marketReportChapterHeader span {
+    font-size: 10px;
+  }
+
+  .marketCompetitiveness {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .marketCompetitivenessGauge {
+    min-height: 100px;
+  }
+
+  .marketCompetitivenessGauge svg {
+    width: 112px;
+  }
+
+  .marketCompetitivenessGauge > div {
+    bottom: 23px;
+  }
+
+  .marketCompetitivenessGauge strong {
+    font-size: 34px;
+  }
+
+  .marketCompetitivenessSummary h2 {
+    font-size: 23px;
+  }
+
+  .marketCompetitivenessSummary p {
+    font-size: 11px;
+  }
+
+  .marketCompetitivenessFactors {
+    grid-template-columns: 1fr;
+  }
+
+  .marketCompetitivenessStats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .marketCompetitivenessStats article {
+    display: grid;
+    gap: 3px;
+    padding: 0 8px;
+  }
+
+  .marketCompetitivenessStats article:first-child {
+    padding-left: 0;
+  }
+
+  .marketCompetitivenessStats p {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+    text-align: left;
+  }
 }

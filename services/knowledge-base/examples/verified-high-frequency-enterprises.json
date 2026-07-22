@@ -1,0 +1,89 @@
+{
+  "notice": "2026-07-18 已逐页核验国家电网、中国石油、中国石化、中国移动、中车长客和中国能建投资集团官方公告。只导入 Mac mini 可重复抓取、正文足以核验事实的静态官方页面；中国联通候选页因抓取失败未纳入。所有来源按 B 级保存正文 hash、版本、OCR 审计和时效状态，旧批次不得解释成当前仍在招聘。",
+  "sources": [
+    {
+      "name": "国家电网2026年第三批高校毕业生招聘公告",
+      "url": "http://www.sasac.gov.cn/n2588035/n2588325/c35416969/content.html",
+      "authority": "official",
+      "source_grade": "B",
+      "source_type": "html",
+      "tags": ["央企", "国家电网", "校园招聘", "2026届", "第三批"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["www.sasac.gov.cn"],
+      "include_paths": ["/n2588035/n2588325/c35416969/"],
+      "exclude_paths": [],
+      "enabled": true
+    },
+    {
+      "name": "中国石油2026年春季高校毕业生招聘公告",
+      "url": "http://www.sasac.gov.cn/n2588035/n2588325/c35413790/content.html",
+      "authority": "official",
+      "source_grade": "B",
+      "source_type": "html",
+      "tags": ["央企", "中国石油", "校园招聘", "2026届", "春季招聘"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["www.sasac.gov.cn"],
+      "include_paths": ["/n2588035/n2588325/c35413790/"],
+      "exclude_paths": [],
+      "enabled": true
+    },
+    {
+      "name": "中国石化2026年度校园招聘启动公告",
+      "url": "http://www.sinopecgroup.com/group/000/000/068/68692.shtml",
+      "authority": "official",
+      "source_grade": "B",
+      "source_type": "html",
+      "tags": ["央企", "中国石化", "校园招聘", "2026届"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["www.sinopecgroup.com"],
+      "include_paths": ["/group/000/000/068/68692.shtml"],
+      "exclude_paths": [],
+      "enabled": true
+    },
+    {
+      "name": "中国移动2026春季校园招聘公告",
+      "url": "http://www.sasac.gov.cn/n2588035/n2588325/n2588350/c35372910/content.html",
+      "authority": "official",
+      "source_grade": "B",
+      "source_type": "html",
+      "tags": ["央企", "中国移动", "校园招聘", "2026届", "春季招聘"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["www.sasac.gov.cn"],
+      "include_paths": ["/n2588035/n2588325/n2588350/c35372910/"],
+      "exclude_paths": [],
+      "enabled": true
+    },
+    {
+      "name": "中车长春轨道客车股份有限公司2026校园招聘公告",
+      "url": "https://www.crrcgc.cc/ckgf/2025-08/28/article_2025082815514945773.html",
+      "authority": "official",
+      "source_grade": "B",
+      "source_type": "html",
+      "tags": ["央企", "中国中车", "中车长客", "校园招聘", "2026届"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["www.crrcgc.cc"],
+      "include_paths": ["/ckgf/2025-08/28/article_2025082815514945773.html"],
+      "exclude_paths": [],
+      "enabled": true
+    },
+    {
+      "name": "中国能建投资集团2026年校园招聘公告",
+      "url": "http://www.ceeic.ceec.net.cn/art/2025/9/30/art_9793_2514532.html",
+      "authority": "official",
+      "source_grade": "B",
+      "source_type": "html",
+      "tags": ["央企", "中国能建", "中国能建投资集团", "校园招聘", "2026届"],
+      "follow_links": false,
+      "max_documents": 1,
+      "allowed_hosts": ["www.ceeic.ceec.net.cn"],
+      "include_paths": ["/art/2025/9/30/art_9793_2514532.html"],
+      "exclude_paths": [],
+      "enabled": true
+    }
+  ]
+}

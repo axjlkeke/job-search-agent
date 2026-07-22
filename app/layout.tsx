@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://agent.zhidasihai.cn"),
   title: {
     default: "求职Agent｜央国企求职规划助手",
     template: "%s｜求职Agent",

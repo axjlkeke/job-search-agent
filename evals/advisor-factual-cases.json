@@ -1,6 +1,6 @@
 {
-  "version": "2026-07-17-v6",
-  "description": "只使用公开官方资料的顾问事实级评测；覆盖校园与社会招聘硬门槛、公告时效、多招聘计划隔离、近名企业双向隔离、多维原文覆盖、OCR 完整正文恢复、实际引用绑定和无依据拒答。",
+  "version": "2026-07-18-v8",
+  "description": "只使用公开官方资料的顾问事实级评测；覆盖校园与社会招聘硬门槛、国家电网/中国石油/中国石化/中国移动/中国中车/中国能建高频企业、公告时效、多招聘计划隔离、近名企业双向隔离、多维原文覆盖、OCR 完整正文恢复、实际引用绑定和无依据拒答。",
   "cases": [
     {
       "id": "tianyi-2027-super-talent",
@@ -319,6 +319,207 @@
         "3年免租人才公寓或住房补贴",
         "2026年7月31日17:00",
         "中国长城-应聘岗位-姓名"
+      ]
+    },
+    {
+      "id": "sgcc-2026-third-batch-unit-choice-and-exam",
+      "message": "国家电网2026年第三批招聘一共如何分批？每人最多能填几个二级单位、每个二级单位能选几个下级单位，笔试初定何时？请只根据官方资料逐项回答。",
+      "profileSummary": "bachelor，计算机科学与技术，2026届",
+      "targetSummary": "国家电网-2026年第三批招聘",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "计算机科学与技术",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["国家电网"],
+        "jobTitles": ["2026年第三批招聘"]
+      },
+      "filters": { "validAt": "2026-07-18", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35416969/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "四批次招聘",
+        "不超过3个",
+        "可选择2个三级单位",
+        "2026年5月17日",
+        "zhaopin.sgcc.com.cn"
+      ]
+    },
+    {
+      "id": "cnpc-2026-spring-age-language-and-unit-limit",
+      "message": "截至2026-07-18，中国石油2026年春季高校毕业生招聘面向哪些人？博士、硕士、本科及职业学院毕业生年龄上限分别是多少？英语四级或六级要求多少分？最多可以应聘几个招聘单位，报名何时截止？请只根据官方资料逐项回答。",
+      "profileSummary": "bachelor，计算机科学与技术，2026届",
+      "targetSummary": "中国石油-2026年春季高校毕业生招聘",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "计算机科学与技术",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["中国石油"],
+        "jobTitles": ["2026年春季高校毕业生招聘"]
+      },
+      "filters": { "validAt": "2026-07-18", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35413790/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "2025届毕业生",
+        "35岁",
+        "30岁",
+        "26岁",
+        "大学英语四级",
+        "大学英语六级",
+        "425分",
+        "最多可应聘2家招聘单位",
+        "2026年5月15日",
+        "已截止"
+      ],
+      "forbiddenAnswerTerms": [
+        "中国石化招聘网站",
+        "job.sinopec.com"
+      ]
+    },
+    {
+      "id": "sinopec-2026-campus-major-portal-and-expiry",
+      "message": "截至2026-07-18，中国石化2026年度校园招聘重点招聘哪些专业方向？唯一投递网站是什么，报名何时截止，统一初选考试何时举行？请只根据官方资料逐项回答。",
+      "profileSummary": "bachelor，人工智能，2026届",
+      "targetSummary": "中国石化-2026年度校园招聘",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "人工智能",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["中国石化"],
+        "jobTitles": ["2026年度校园招聘"]
+      },
+      "filters": { "validAt": "2026-07-18", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/group/000/000/068/68692.shtml"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sinopecgroup.com"],
+      "requiredAnswerTerms": [
+        "石油石化主体专业",
+        "新能源",
+        "新材料",
+        "人工智能",
+        "job.sinopec.com",
+        "2025年11月15日",
+        "2025年11月23日",
+        "已截止"
+      ],
+      "forbiddenAnswerTerms": [
+        "zhaopin.cnpc.com.cn",
+        "最多可应聘2家招聘单位"
+      ]
+    },
+    {
+      "id": "china-mobile-2026-spring-audience-roles-exam-and-portal",
+      "message": "中国移动2026春季校园招聘面向哪些毕业生？主要有哪些岗位类别和专业类别，统一笔试是哪一天，官方招聘网站是什么？请只根据官方资料逐项回答。",
+      "profileSummary": "bachelor，计算机科学与技术，2026届",
+      "targetSummary": "中国移动-2026春季校园招聘",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "计算机科学与技术",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["中国移动"],
+        "jobTitles": ["2026春季校园招聘"]
+      },
+      "filters": { "validAt": "2026-07-18", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": ["/c35372910/content.html"],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.sasac.gov.cn"],
+      "requiredAnswerTerms": [
+        "2026届全球高校毕业生",
+        "2025届普通高校毕业未就业学生",
+        "技术类",
+        "市场类",
+        "综合类",
+        "4月18日",
+        "https://job.10086.cn"
+      ]
+    },
+    {
+      "id": "crrc-changchun-2026-location-major-benefits-and-process",
+      "message": "中车长客2026校园招聘的工作地点、计算机类专业要求、招聘学历、福利、线上应聘流程和网申地址分别是什么？请只根据官方资料逐项回答。",
+      "profileSummary": "bachelor，计算机科学与技术，2026届",
+      "targetSummary": "中车长客-2026校园招聘",
+      "profile": {
+        "degreeLevel": "bachelor",
+        "major": "计算机科学与技术",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["中车长春轨道客车股份有限公司"],
+        "jobTitles": ["2026校园招聘"]
+      },
+      "filters": { "validAt": "2026-07-18", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": [
+        "/ckgf/2025-08/28/article_2025082815514945773.html"
+      ],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.crrcgc.cc"],
+      "requiredAnswerTerms": [
+        "吉林省长春市",
+        "北京市",
+        "计算机科学与技术",
+        "博士、硕士、本科应届毕业生",
+        "七险两金",
+        "人才公寓",
+        "网申—测评—综合面试—签约",
+        "https://crrc-ckgf.hotjob.cn"
+      ]
+    },
+    {
+      "id": "ceec-investment-2026-degree-language-age-and-process",
+      "message": "中国能建投资集团2026校园招聘的最低学历、英语六级要求、硕士和博士年龄上限、境内外毕业时间要求、福利和网申入口分别是什么？请只根据官方资料逐项回答。",
+      "profileSummary": "master，能源与动力工程，2026届",
+      "targetSummary": "中国能建投资集团-2026校园招聘",
+      "profile": {
+        "degreeLevel": "master",
+        "major": "能源与动力工程",
+        "graduationYear": 2026
+      },
+      "target": {
+        "companies": ["中国能建投资集团"],
+        "jobTitles": ["2026校园招聘"]
+      },
+      "filters": { "validAt": "2026-07-18", "status": "unknown" },
+      "expectedStatus": 200,
+      "expectedAvailable": true,
+      "expectedEvidenceRetrieved": true,
+      "requiredCitationUrlIncludes": [
+        "/art/2025/9/30/art_9793_2514532.html"
+      ],
+      "minimumCitationCount": 1,
+      "allowedCitationHosts": ["www.ceeic.ceec.net.cn"],
+      "requiredAnswerTerms": [
+        "全日制硕士研究生及以上学历",
+        "国家英语六级及以上水平",
+        "硕士年龄28岁及以下",
+        "博士年龄32岁及以下",
+        "2026年7月31日",
+        "员工公寓",
+        "https://www.iguopin.com/company?id=10685386430687539"
       ]
     },
     {

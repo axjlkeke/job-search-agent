@@ -11,6 +11,30 @@ _COMPANY_SUFFIX = re.compile(
     r"集团有限公司|集团公司|有限公司|总公司|集团|公司)$"
 )
 _MIN_FUZZY_ENTITY_CHARS = 8
+_CONTROLLED_ENTITY_PATTERNS = (
+    (
+        frozenset(
+            {
+                "中国石油",
+                "中石油",
+                "中国石油天然气",
+                "中石油天然气",
+            }
+        ),
+        re.compile(r"(?:中国石油(?!化工)|中石油(?!化工))"),
+    ),
+    (
+        frozenset(
+            {
+                "中国石化",
+                "中石化",
+                "中国石油化工",
+                "中石油化工",
+            }
+        ),
+        re.compile(r"(?:中国石油化工|中石油化工|中国石化|中石化)"),
+    ),
+)
 
 
 def _normalized_entity_text(value: str) -> str:
@@ -59,7 +83,12 @@ def _has_fuzzy_entity_window(text: str, variant: str) -> bool:
 
 def text_matches_entity(text: str, entity: str) -> bool:
     normalized_text = _normalized_entity_text(text)
-    for variant in entity_variants(entity):
+    variants = entity_variants(entity)
+    variant_set = set(variants)
+    for aliases, pattern in _CONTROLLED_ENTITY_PATTERNS:
+        if aliases & variant_set:
+            return pattern.search(normalized_text) is not None
+    for variant in variants:
         if variant in normalized_text:
             return True
         # Short enterprise cores are too collision-prone for fuzzy matching:

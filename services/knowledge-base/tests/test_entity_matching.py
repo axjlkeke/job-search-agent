@@ -38,6 +38,22 @@ def test_sibling_enterprises_with_a_shared_group_prefix_do_not_match():
         ),
         "中国航天科技集团",
     )
+    assert text_matches_entity(
+        "中国石油天然气集团有限公司发布高校毕业生招聘公告",
+        "中国石油",
+    )
+    assert not text_matches_entity(
+        "中国石油化工集团有限公司启动校园招聘",
+        "中国石油",
+    )
+    assert text_matches_entity(
+        "中国石油化工集团有限公司启动校园招聘",
+        "中国石化",
+    )
+    assert not text_matches_entity(
+        "中国石油天然气集团有限公司发布高校毕业生招聘公告",
+        "中国石化",
+    )
 
 
 def test_company_target_takes_priority_over_a_matching_job_title():

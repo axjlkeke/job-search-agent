@@ -22,7 +22,8 @@ DIFY_CONTEXT_SECTION_LIMIT = 56
 DIFY_MERGED_SNIPPET_LIMIT = 1_200
 DIFY_SEGMENTS_PER_DOCUMENT = 3
 RETRIEVAL_RESULT_SNIPPET_LIMIT = 2_500
-MULTI_FACET_WINDOW_LIMIT = 4
+DIFY_PRIMARY_SNIPPET_BUDGET = 700
+MULTI_FACET_WINDOW_LIMIT = 6
 
 _QUERY_FACETS = (
     (
@@ -32,6 +33,34 @@ _QUERY_FACETS = (
     (
         re.compile(r"学历|学位|本科|硕士|博士|专科|大专"),
         ("学历要求", "最低学历", "本科", "硕士", "博士", "专科", "大专"),
+    ),
+    (
+        re.compile(r"年龄|年龄上限|年龄要求|多少岁|几岁"),
+        (
+            "年龄要求",
+            "博士研究生年龄",
+            "硕士研究生年龄",
+            "本科及职业学院毕业生年龄",
+            "不超过35岁",
+            "不超过30岁",
+            "不超过26岁",
+        ),
+    ),
+    (
+        re.compile(r"外语|英语水平|英语要求|雅思|托福", re.IGNORECASE),
+        (
+            "外语水平要求",
+            "雅思",
+            "托福",
+        ),
+    ),
+    (
+        re.compile(r"四级|CET[\s-]?4", re.IGNORECASE),
+        ("大学英语四级", "四级考试", "CET4", "CET-4"),
+    ),
+    (
+        re.compile(r"六级|CET[\s-]?6", re.IGNORECASE),
+        ("大学英语六级", "六级考试", "CET6", "CET-6"),
     ),
     (
         re.compile(r"专业|学科|技术方向|研发方向"),
@@ -46,11 +75,21 @@ _QUERY_FACETS = (
         ),
     ),
     (
+        re.compile(r"岗位类别|岗位类型|岗位种类|有哪些岗位"),
+        (
+            "岗位类别",
+            "招聘岗位",
+            "技术类",
+            "市场类",
+            "综合类",
+        ),
+    ),
+    (
         re.compile(r"工作城市|工作地点|城市|地点|地区"),
         ("工作地点", "工作城市", "招聘地区", "城市", "地点"),
     ),
     (
-        re.compile(r"报名|申请|投递|简历"),
+        re.compile(r"报名|申请|投递|简历|网申|入口|官网|网站|邮箱"),
         (
             "简历投递",
             "投递简历",
@@ -64,11 +103,67 @@ _QUERY_FACETS = (
     ),
     (
         re.compile(r"薪酬|福利|待遇|补贴|户口|公寓"),
-        ("薪酬福利", "福利保障", "六险两金", "人才补贴", "人才公寓"),
+        (
+            "薪酬福利",
+            "福利待遇",
+            "福利保障",
+            "六险两金",
+            "七险两金",
+            "人才补贴",
+            "人才公寓",
+            "员工公寓",
+        ),
+    ),
+    (
+        re.compile(r"毕业时间|毕业日期|境内外|留学生|学历认证"),
+        (
+            "毕业时间",
+            "毕业证时间",
+            "境内高校",
+            "国（境）内高校",
+            "国（境）外高校",
+            "学历认证",
+        ),
     ),
     (
         re.compile(r"招聘流程|招聘程序|流程|程序|笔试|面试"),
         ("招聘流程", "招聘程序", "笔试", "面试", "资格审查"),
+    ),
+    (
+        re.compile(r"招聘批次|如何分批|分几批|批次"),
+        (
+            "招聘批次",
+            "四批次招聘",
+            "国调网调提前批",
+            "第一批",
+            "第二批",
+            "第三批",
+        ),
+    ),
+    (
+        re.compile(
+            r"单位志愿|二级单位|三级单位|四级单位|"
+            r"(?:几个|多少).{0,6}(?:招聘)?单位|"
+            r"最多.{0,8}(?:招聘)?单位|应聘.{0,6}(?:招聘)?单位"
+        ),
+        (
+            "二级单位志愿",
+            "不超过3个",
+            "三级单位",
+            "四级单位",
+            "可选择2个",
+            "最多可应聘2家招聘单位",
+            "应聘2家招聘单位",
+        ),
+    ),
+    (
+        re.compile(r"笔试时间|考试时间|考试安排|何时笔试|什么时候笔试"),
+        (
+            "统一笔试时间",
+            "笔试时间",
+            "组织招聘笔试",
+            "统一笔试",
+        ),
     ),
     (
         re.compile(r"招聘单位|单位分布|下属单位|所属单位|成员企业"),
@@ -383,6 +478,29 @@ def _missing_facet_snippet(
     return separator.join(windows)[:maximum]
 
 
+def _merge_primary_and_facet_snippets(
+    primary_snippet: str,
+    content: str,
+    request: SearchRequest,
+) -> str:
+    primary = primary_snippet[:DIFY_PRIMARY_SNIPPET_BUDGET]
+    separator = " … "
+    remaining = (
+        RETRIEVAL_RESULT_SNIPPET_LIMIT - len(primary) - len(separator)
+    )
+    supplement = _missing_facet_snippet(
+        content,
+        request,
+        primary,
+        maximum=max(1, remaining),
+    )
+    if not supplement:
+        return primary_snippet[:RETRIEVAL_RESULT_SNIPPET_LIMIT]
+    return f"{primary}{separator}{supplement}"[
+        :RETRIEVAL_RESULT_SNIPPET_LIMIT
+    ]
+
+
 def _dify_endpoint(settings: Settings) -> str:
     assert settings.dify_api_url and settings.dify_dataset_id
     base = settings.dify_api_url.rstrip("/")
@@ -503,15 +621,11 @@ def retrieve_from_dify(
         title = str(local.get("title") or candidate["title"])
         local_content = str(local.get("content") or "")
         snippet = _merge_dify_snippets(document_candidates)
-        supplement = _missing_facet_snippet(
+        snippet = _merge_primary_and_facet_snippets(
+            snippet,
             local_content,
             request,
-            snippet,
         )
-        if supplement:
-            snippet = f"{snippet} … {supplement}".strip(" …")[
-                :RETRIEVAL_RESULT_SNIPPET_LIMIT
-            ]
         if not matches_retrieval_target(
             title=title,
             content=local_content or snippet,
@@ -562,15 +676,11 @@ def retrieve_locally(
         rank = abs(float(candidate.get("rank", 10.0)))
         score = 1.0 / (1.0 + math.log1p(rank))
         snippet = _snippet(candidate["content"], terms)
-        supplement = _missing_facet_snippet(
+        snippet = _merge_primary_and_facet_snippets(
+            snippet,
             candidate["content"],
             request,
-            snippet,
         )
-        if supplement:
-            snippet = f"{snippet} … {supplement}"[
-                :RETRIEVAL_RESULT_SNIPPET_LIMIT
-            ]
         results.append(
             {
                 "id": candidate["id"],

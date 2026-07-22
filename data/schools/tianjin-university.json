@@ -1,0 +1,340 @@
+{
+  "id": "tianjin-university",
+  "status": "available",
+  "schoolName": "天津大学",
+  "aliases": ["天大", "Tianjin University", "TJU"],
+  "majorName": "电气工程及其自动化",
+  "majorAliases": ["电气工程与自动化", "电气工程", "电气类"],
+  "snapshotAt": "2026-07-22",
+  "headline": "院校与专业优势明显",
+  "summary": "国家电网等企业有来校招聘记录，电网、电气设备、自动化是主要岗位方向。",
+  "signals": [
+    {
+      "id": "school-platform",
+      "label": "院校平台",
+      "value": "985 / 211 / 双一流",
+      "detail": "教育部直属工科强校，学校平台能够覆盖大多数央国企校招的院校层次核验。具体岗位仍以公告为准。",
+      "scope": "school",
+      "evidenceIds": ["tju-employment-2021", "moe-double-first-class-2022"]
+    },
+    {
+      "id": "major-construction",
+      "label": "专业建设",
+      "value": "国家级一流本科专业",
+      "detail": "天津大学2023—2024学年本科教学质量报告将电气工程及其自动化列为国家级一流本科专业建设点。",
+      "scope": "major",
+      "evidenceIds": ["tju-teaching-quality-2024"]
+    },
+    {
+      "id": "campus-recruitment-coverage",
+      "label": "近期校招入口",
+      "value": "6 条已核验记录",
+      "detail": "2026届公开记录覆盖国家电网、国家电投、特变电工、航空工业津电等电力与装备雇主，证明这些雇主会进入天津大学开展招聘。",
+      "scope": "school-major",
+      "evidenceIds": ["tju-state-grid-campus-2026", "tju-spic-campus-2026", "tju-tbea-campus-2026", "tju-avic-jindian-2026"]
+    },
+    {
+      "id": "employer-access",
+      "label": "电力雇主入口",
+      "value": "校园招聘已验证",
+      "detail": "国家电网直属单位曾在天津大学开展2026届校园宣讲，招聘专业明确包含电气工程及其自动化。该记录用于证明校招渠道存在，不代表2028届批次已经发布。",
+      "scope": "school-major",
+      "evidenceIds": ["tju-state-grid-campus-2026"]
+    }
+  ],
+  "resources": [
+    {
+      "id": "smart-grid",
+      "label": "智能电网与配电系统",
+      "detail": "学院公开的智能电网教育部重点实验室、配电系统规划及自动化技术推广中心等平台，适合形成电网方向项目证据。",
+      "action": "本学期确认可参与的课题、课程设计或竞赛入口",
+      "evidenceIds": ["tju-ee-units"]
+    },
+    {
+      "id": "power-simulation",
+      "label": "电力系统仿真与控制",
+      "detail": "学院建有电力系统动态模拟和综合仿真实验平台，可对应电网调度、继保、仿真分析等岗位能力。",
+      "action": "选择一个可展示结果的仿真项目并保留报告、代码和指标",
+      "evidenceIds": ["tju-ee-units"]
+    },
+    {
+      "id": "power-electronics",
+      "label": "电力电子与电气传动",
+      "detail": "电气工程系公开方向包含电力电子与电气传动，并设有相应实验平台。",
+      "action": "把课程设计转成一段可核验的工程成果",
+      "evidenceIds": ["tju-ee-units"]
+    },
+    {
+      "id": "campus-recruitment",
+      "label": "校招与就业服务",
+      "detail": "学校就业系统存在国家电网等电力央企的校园宣讲与招聘信息入口。",
+      "action": "从2027年起跟踪学校就业网和企业官方招聘平台",
+      "evidenceIds": ["tju-state-grid-campus-2026"]
+    }
+  ],
+  "trainingProfile": {
+    "curriculumVersion": "2019级培养方案",
+    "professionalEducationCredits": 89,
+    "practicalCredits": 28.5,
+    "internshipCredits": 6,
+    "graduationDesignCredits": 12,
+    "directionTracks": [
+      {
+        "label": "电力系统",
+        "courses": ["电力系统分析", "继电保护", "输配电网", "电力市场与可靠性"],
+        "jobFamilies": ["电网调度", "继电保护", "配网规划", "电力仿真"],
+        "proof": "完成一份含模型、参数、结果和误差分析的仿真或继保项目"
+      },
+      {
+        "label": "电机与电力电子",
+        "courses": ["电机设计", "电机测试", "电力电子", "柔性交流输电"],
+        "jobFamilies": ["电气设备研发", "电力电子研发", "试验测试", "技术服务"],
+        "proof": "保留设计图、测试数据和性能指标，形成可展示的工程成果"
+      },
+      {
+        "label": "高电压",
+        "courses": ["高电压工程", "电气绝缘", "在线检测与诊断"],
+        "jobFamilies": ["高压试验", "绝缘检测", "设备状态评价", "运维检修"],
+        "proof": "整理一次试验或诊断任务，说明标准、步骤、数据和结论"
+      }
+    ],
+    "workloadSignals": [
+      "数学、物理、电路、电机、电磁场和控制理论连续衔接，基础课缺口会传导到高年级专业课",
+      "课程设计、专业综合实验、实习和毕业设计合计占比较高，求职材料应保留报告、代码、图纸和测试指标",
+      "培养方案版本较早，当前学生的实际课程与分流规则仍需向学院教务核验"
+    ],
+    "evidenceIds": ["tju-ee-curriculum-2019"]
+  },
+  "graduateVoice": {
+    "cohort": "2019届毕业生调查",
+    "scopeLabel": "天津大学毕业生整体历史样本",
+    "brandFoundationRate": 67.32,
+    "professionalRelevanceRate": 71.67,
+    "jobSearchGaps": [
+      "沟通表达：把课程和项目讲成岗位听得懂的结果",
+      "分析解决问题：面试中需要说明问题、方法、数据和结论",
+      "外语能力：涉外工程、国际业务和部分研发岗位会直接核验"
+    ],
+    "actions": [
+      "准备一版电网或电气装备方向的岗位化简历",
+      "整理一个可以在5分钟内讲清楚的工程项目",
+      "按目标企业公告核验外语、成绩和证书要求"
+    ],
+    "note": "历史校级调查只用于识别求职优势和常见短板，不能替代电气专业当前届录用数据。",
+    "evidenceIds": ["tju-employment-2019"]
+  },
+  "campusRecruitmentAccess": {
+    "cohort": "2026届公开校招记录",
+    "note": "这些记录证明雇主进入过天津大学并招收电气相关专业，不代表2028届批次已开放，也不代表学生自动具备资格。",
+    "items": [
+      {
+        "employer": "国家电网直属单位",
+        "sector": "电网",
+        "opportunity": "电工类明确包含电气工程及其自动化",
+        "action": "列为核心雇主，后续核验批次、成绩、证书与地域要求",
+        "evidenceIds": ["tju-state-grid-campus-2026"]
+      },
+      {
+        "employer": "国家电投集团",
+        "sector": "发电与新能源",
+        "opportunity": "集团多家二、三级单位参与双选，覆盖电气、能源动力和自动化",
+        "action": "按火电、新能源、核电三个业务方向拆分岗位清单",
+        "evidenceIds": ["tju-spic-campus-2026"]
+      },
+      {
+        "employer": "国电投核电技术服务",
+        "sector": "核电技术服务",
+        "opportunity": "公开招聘电气类、自动化类与仪器类专业",
+        "action": "准备设备可靠性、检修与安全规范相关项目证据",
+        "evidenceIds": ["tju-spic-nuclear-2026"]
+      },
+      {
+        "employer": "特变电工",
+        "sector": "输变电装备",
+        "opportunity": "覆盖研发、设计、工程技术和国际业务等岗位族",
+        "action": "根据研发、工程或国际业务选择一条简历主线",
+        "evidenceIds": ["tju-tbea-campus-2026"]
+      },
+      {
+        "employer": "航空工业津电",
+        "sector": "军工电气",
+        "opportunity": "招聘电气工程、控制、电子与仪器相关专业",
+        "action": "补充航空电源、机电系统或可靠性相关工程表达",
+        "evidenceIds": ["tju-avic-jindian-2026"]
+      },
+      {
+        "employer": "国电众智电力技术",
+        "sector": "电力技术研发",
+        "opportunity": "岗位覆盖仿真建模、软硬件研发和继电保护",
+        "action": "优先准备仿真模型、软件代码或继保项目成果",
+        "evidenceIds": ["tju-guodian-2026"]
+      }
+    ]
+  },
+  "schoolOutcome": {
+    "cohort": "2024届本科生",
+    "scopeLabel": "天津大学本科整体",
+    "destinationRate": 89.48,
+    "domesticFurtherStudyRate": 55.21,
+    "recommendationRate": 34.67,
+    "overseasStudyRate": 7.42,
+    "directEmploymentRate": 26.84,
+    "note": "学校整体口径，不能直接当作电气专业比例。统计截至2024年8月31日。",
+    "evidenceIds": ["tju-teaching-quality-2024"]
+  },
+  "majorOutcome": {
+    "cohort": "2021届本科生",
+    "scopeLabel": "电气工程及其自动化",
+    "total": 157,
+    "domesticFurtherStudy": 73,
+    "overseasStudy": 4,
+    "directEmployment": 72,
+    "pending": 8,
+    "destinationRate": 94.9,
+    "note": "目前已找到的专业专项公开表来自2021届，只作为历史基线，不代表当前届结果。",
+    "evidenceIds": ["tju-employment-2021"]
+  },
+  "employerExamples": [
+    { "name": "国家电网", "count": 30, "note": "2024届本科整体集中就业单位" },
+    { "name": "中国南方电网", "count": 10, "note": "2024届本科整体集中就业单位" },
+    { "name": "特变电工", "count": 10, "note": "2024届本科整体集中就业单位" }
+  ],
+  "studentDecision": {
+    "level": "求职资源强",
+    "whatItMeans": [
+      "电力央国企方向与学校专业资源高度相关",
+      "学校层次通常不会成为首轮硬门槛，逐岗公告仍需核验",
+      "同校竞争基线较高，项目、实习和成绩决定资源能否转成岗位优势"
+    ],
+    "nextActions": [
+      "先选定电网、电气装备或新能源中的一个主方向",
+      "再完成一个与方向对应的实验或项目成果",
+      "从2027年起跟踪学校就业网和目标企业招聘批次"
+    ]
+  },
+  "dataGaps": [
+    "尚未找到2024届电气工程及其自动化专业专项去向表",
+    "尚未取得天津大学电气专业进入各企业的投递、笔试、面试和录用人数，不能计算录取概率",
+    "2026届校招记录只能证明历史入口，2028届招聘时间和条件仍需等待企业公告",
+    "学生个人成绩、实验室参与、项目、竞赛和实习利用情况尚未接入"
+  ],
+  "sources": [
+    {
+      "id": "moe-double-first-class-2022",
+      "title": "教育部等三部委公布第二轮双一流建设高校及建设学科名单",
+      "publisher": "中华人民共和国教育部",
+      "url": "https://www.moe.gov.cn/srcsite/A22/s7065/202202/t20220211_598710.html",
+      "publishedAt": "2022-02-14",
+      "grade": "A",
+      "scope": "school"
+    },
+    {
+      "id": "tju-teaching-quality-2024",
+      "title": "天津大学2023—2024学年本科教学质量报告",
+      "publisher": "天津大学信息公开网",
+      "url": "https://xxgkw.tju.edu.cn/xwgb1/202501/P020250106606247466929.pdf",
+      "publishedAt": "2025-01-06",
+      "grade": "A",
+      "scope": "school-major"
+    },
+    {
+      "id": "tju-employment-2021",
+      "title": "天津大学2021届毕业生就业质量年度报告",
+      "publisher": "天津大学信息公开网",
+      "url": "https://xxgkw.tju.edu.cn/xwgb1/202210/P020221028445708257318.pdf",
+      "publishedAt": "2021-12-01",
+      "grade": "A",
+      "scope": "school-major"
+    },
+    {
+      "id": "tju-ee-overview",
+      "title": "天津大学电气自动化与信息工程学院概况",
+      "publisher": "天津大学电气自动化与信息工程学院",
+      "url": "https://seea.tju.edu.cn/xygk.htm",
+      "publishedAt": null,
+      "grade": "B",
+      "scope": "major"
+    },
+    {
+      "id": "tju-ee-units",
+      "title": "天津大学电气工程系与实验平台介绍",
+      "publisher": "天津大学电气自动化与信息工程学院",
+      "url": "https://seea.tju.edu.cn/xygk/jgsz/xjdw.htm",
+      "publishedAt": null,
+      "grade": "B",
+      "scope": "major-resource"
+    },
+    {
+      "id": "tju-state-grid-campus-2026",
+      "title": "国家电网有限公司直属单位2026年高校毕业生招聘校园宣讲公告",
+      "publisher": "天津大学就业指导中心",
+      "url": "https://job.tju.edu.cn/recruitment/content/type/2/id/5595.html",
+      "publishedAt": null,
+      "grade": "B",
+      "scope": "employer-access"
+    },
+    {
+      "id": "tju-ee-curriculum-2019",
+      "title": "天津大学2019级电气工程及其自动化专业培养方案",
+      "publisher": "天津大学电气自动化与信息工程学院",
+      "url": "https://seea.tju.edu.cn/20192.pdf",
+      "publishedAt": "2019-07-10",
+      "grade": "B",
+      "scope": "major-training"
+    },
+    {
+      "id": "tju-employment-2019",
+      "title": "天津大学2019届毕业生就业质量年度报告",
+      "publisher": "天津大学信息公开网",
+      "url": "https://xxgkw.tju.edu.cn/xxgkml/202010/P020201028412114869328.pdf",
+      "publishedAt": "2019-12-31",
+      "grade": "A",
+      "scope": "school-graduate-survey"
+    },
+    {
+      "id": "tju-spic-campus-2026",
+      "title": "国家电投集团2026届校园招聘宣讲会与双选会",
+      "publisher": "天津大学就业指导中心",
+      "url": "https://job.tju.edu.cn/recruitment/content/type/2/id/5421.html",
+      "publishedAt": null,
+      "grade": "B",
+      "scope": "employer-access"
+    },
+    {
+      "id": "tju-spic-nuclear-2026",
+      "title": "国电投核电技术服务有限公司2026届校园招聘",
+      "publisher": "天津大学就业指导中心",
+      "url": "https://job.tju.edu.cn/recruitment/content/type/2/id/5577.html",
+      "publishedAt": null,
+      "grade": "B",
+      "scope": "employer-access"
+    },
+    {
+      "id": "tju-tbea-campus-2026",
+      "title": "特变电工2026届校园招聘",
+      "publisher": "天津大学就业指导中心",
+      "url": "https://job.tju.edu.cn/recruitment/content/type/2/id/5916.html",
+      "publishedAt": null,
+      "grade": "B",
+      "scope": "employer-access"
+    },
+    {
+      "id": "tju-avic-jindian-2026",
+      "title": "中国航空工业集团津电2026届校园招聘",
+      "publisher": "天津大学就业指导中心",
+      "url": "https://job.tju.edu.cn/recruitment/content/type/2/id/5432.html",
+      "publishedAt": null,
+      "grade": "B",
+      "scope": "employer-access"
+    },
+    {
+      "id": "tju-guodian-2026",
+      "title": "国电众智电力技术有限公司2026届校园招聘",
+      "publisher": "天津大学就业指导中心",
+      "url": "https://job.tju.edu.cn/recruitment/content/type/2/id/5926.html",
+      "publishedAt": null,
+      "grade": "B",
+      "scope": "employer-access"
+    }
+  ]
+}

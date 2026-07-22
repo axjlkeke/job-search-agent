@@ -7,9 +7,10 @@ import type {
 export const ZHIDA_BRIDGE_COOKIE = "job_agent_zhida";
 export const ZHIDA_BRIDGE_FLOW_COOKIE = "job_agent_zhida_flow";
 export const ZHIDA_BRIDGE_SOURCE = "zhida-main-site-readonly";
-export const ZHIDA_BRIDGE_SCHEMA_VERSION = "2026-07-17.2";
+export const ZHIDA_BRIDGE_SCHEMA_VERSION = "2026-07-18.3";
 export const ZHIDA_BRIDGE_SESSION_SECONDS = 7 * 24 * 60 * 60;
 export const ZHIDA_BRIDGE_FLOW_SECONDS = 5 * 60;
+export const ZHIDA_WORKSPACE_SUBJECT_PATTERN = /^ws1_[A-Za-z0-9_-]{43}$/u;
 
 const FORBIDDEN_SNAPSHOT_KEYS = new Set([
   "idCard",
@@ -60,6 +61,7 @@ export type ZhidaBridgeSessionPayload = {
   schemaVersion: typeof ZHIDA_BRIDGE_SCHEMA_VERSION;
   connectedAt: number;
   expiresAt: number;
+  workspaceSubject: string;
   profile: ZhidaBridgeProfile | null;
   entitlements: ZhidaCapabilityEntitlement[];
   membership: {
@@ -280,6 +282,25 @@ function membership(access: JsonRecord): ZhidaBridgeSessionPayload["membership"]
   };
 }
 
+function workspaceSubject(value: unknown): string | null {
+  const workspace = asRecord(value);
+  if (!workspace) return null;
+  const keys = Object.keys(workspace).sort();
+  if (
+    keys.length !== 3 ||
+    keys[0] !== "persistence" ||
+    keys[1] !== "purpose" ||
+    keys[2] !== "subject" ||
+    workspace.persistence !== "agent-owned" ||
+    workspace.purpose !== "career-path-state" ||
+    typeof workspace.subject !== "string" ||
+    !ZHIDA_WORKSPACE_SUBJECT_PATTERN.test(workspace.subject)
+  ) {
+    return null;
+  }
+  return workspace.subject;
+}
+
 export class ZhidaBridgeValidationError extends Error {
   constructor(message: string) {
     super(message);
@@ -312,12 +333,17 @@ export function buildZhidaBridgeSession(
   }
   const access = asRecord(root.access);
   if (!access) throw new ZhidaBridgeValidationError("主站权益快照缺失");
+  const subject = workspaceSubject(root.workspace);
+  if (!subject) {
+    throw new ZhidaBridgeValidationError("主站匿名工作区合同不匹配");
+  }
   return {
     version: 1,
     source: ZHIDA_BRIDGE_SOURCE,
     schemaVersion: ZHIDA_BRIDGE_SCHEMA_VERSION,
     connectedAt: now,
     expiresAt: now + ZHIDA_BRIDGE_SESSION_SECONDS * 1_000,
+    workspaceSubject: subject,
     profile: normalizedProfile(asRecord(root.profile)),
     entitlements: normalizedEntitlements(access),
     membership: membership(access),
@@ -493,6 +519,8 @@ export function isZhidaBridgeSessionPayload(
       session.expiresAt >= now &&
       session.expiresAt - session.connectedAt <=
         ZHIDA_BRIDGE_SESSION_SECONDS * 1_000 &&
+      typeof session.workspaceSubject === "string" &&
+      ZHIDA_WORKSPACE_SUBJECT_PATTERN.test(session.workspaceSubject) &&
       (session.profile === null || asRecord(session.profile)) &&
       Array.isArray(session.entitlements) &&
       asRecord(session.membership),

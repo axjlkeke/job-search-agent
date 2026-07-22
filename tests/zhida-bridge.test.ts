@@ -33,6 +33,11 @@ function snapshot(): Record<string, unknown> {
   return {
     schemaVersion: ZHIDA_BRIDGE_SCHEMA_VERSION,
     source: ZHIDA_BRIDGE_SOURCE,
+    workspace: {
+      subject: `ws1_${"A".repeat(43)}`,
+      persistence: "agent-owned",
+      purpose: "career-path-state",
+    },
     profile: {
       education: {
         educationLevel: "本科",
@@ -103,6 +108,7 @@ test("只保留规划需要的脱敏档案和已允许权益", () => {
     ],
   );
   assert.equal(session.membership.effectiveTier, "basic");
+  assert.equal(session.workspaceSubject, `ws1_${"A".repeat(43)}`);
   assert.equal(isZhidaBridgeSessionPayload(session, now), true);
 });
 
@@ -112,6 +118,12 @@ test("拒绝错误来源、版本、隐私合同和任意层级的敏感字段",
     (value: Record<string, unknown>) => { value.schemaVersion = "older"; },
     (value: Record<string, unknown>) => {
       (value.privacy as Record<string, unknown>).persistence = "database";
+    },
+    (value: Record<string, unknown>) => {
+      (value.workspace as Record<string, unknown>).subject = "1001";
+    },
+    (value: Record<string, unknown>) => {
+      (value.workspace as Record<string, unknown>).internalUserId = 1001;
     },
     (value: Record<string, unknown>) => {
       const profile = value.profile as Record<string, unknown>;

@@ -27,12 +27,18 @@ const suite = JSON.parse(
 ) as { version: string; cases: FactualCase[] };
 
 test("factual advisor suite covers hard thresholds, source isolation, timeliness, recovered evidence, and rejection", () => {
-  assert.equal(suite.version, "2026-07-17-v6");
-  assert.ok(suite.cases.length >= 11);
+  assert.equal(suite.version, "2026-07-18-v8");
+  assert.ok(suite.cases.length >= 17);
   assert.equal(new Set(suite.cases.map((item) => item.id)).size, suite.cases.length);
 
   const positives = suite.cases.filter((item) => item.expectedStatus === 200);
-  assert.ok(positives.length >= 5);
+  assert.ok(positives.length >= 8);
+  const allowedOfficialHosts = new Set([
+    "www.sasac.gov.cn",
+    "www.sinopecgroup.com",
+    "www.crrcgc.cc",
+    "www.ceeic.ceec.net.cn",
+  ]);
   for (const item of positives) {
     assert.equal(item.expectedAvailable, true);
     const citationUrls = [
@@ -43,10 +49,20 @@ test("factual advisor suite covers hard thresholds, source isolation, timeliness
     ];
     assert.ok(citationUrls.length >= 1);
     assert.ok(
-      citationUrls.every((value) => /^\/c\d+\/content\.html$/u.test(value)),
+      citationUrls.every(
+        (value) =>
+          /^\/c\d+\/content\.html$/u.test(value) ||
+          value === "/group/000/000/068/68692.shtml" ||
+          value ===
+            "/ckgf/2025-08/28/article_2025082815514945773.html" ||
+          value === "/art/2025/9/30/art_9793_2514532.html",
+      ),
     );
     assert.ok((item.minimumCitationCount ?? 0) >= 1);
-    assert.deepEqual(item.allowedCitationHosts, ["www.sasac.gov.cn"]);
+    assert.ok((item.allowedCitationHosts?.length ?? 0) >= 1);
+    assert.ok(
+      item.allowedCitationHosts?.every((host) => allowedOfficialHosts.has(host)),
+    );
     assert.ok((item.requiredAnswerTerms?.length ?? 0) >= 3);
     assert.ok((item.target?.companies?.length ?? 0) >= 1);
   }
@@ -136,4 +152,61 @@ test("factual advisor suite covers hard thresholds, source isolation, timeliness
       "2026年7月31日17:00",
     ),
   );
+
+  const stateGrid = suite.cases.find(
+    (item) => item.id === "sgcc-2026-third-batch-unit-choice-and-exam",
+  );
+  assert.ok(stateGrid);
+  assert.deepEqual(stateGrid.target?.companies, ["国家电网"]);
+  assert.ok(stateGrid.requiredAnswerTerms?.includes("不超过3个"));
+  assert.ok(stateGrid.requiredAnswerTerms?.includes("2026年5月17日"));
+
+  const cnpc = suite.cases.find(
+    (item) => item.id === "cnpc-2026-spring-age-language-and-unit-limit",
+  );
+  assert.ok(cnpc);
+  assert.deepEqual(cnpc.target?.companies, ["中国石油"]);
+  assert.ok(cnpc.requiredAnswerTerms?.includes("425分"));
+  assert.ok(cnpc.requiredAnswerTerms?.includes("最多可应聘2家招聘单位"));
+  assert.ok(cnpc.forbiddenAnswerTerms?.includes("job.sinopec.com"));
+
+  const sinopec = suite.cases.find(
+    (item) => item.id === "sinopec-2026-campus-major-portal-and-expiry",
+  );
+  assert.ok(sinopec);
+  assert.deepEqual(sinopec.target?.companies, ["中国石化"]);
+  assert.deepEqual(sinopec.allowedCitationHosts, ["www.sinopecgroup.com"]);
+  assert.ok(sinopec.requiredAnswerTerms?.includes("job.sinopec.com"));
+  assert.ok(sinopec.forbiddenAnswerTerms?.includes("zhaopin.cnpc.com.cn"));
+
+  const chinaMobile = suite.cases.find(
+    (item) =>
+      item.id === "china-mobile-2026-spring-audience-roles-exam-and-portal",
+  );
+  assert.ok(chinaMobile);
+  assert.deepEqual(chinaMobile.target?.companies, ["中国移动"]);
+  assert.ok(chinaMobile.requiredAnswerTerms?.includes("4月18日"));
+  assert.ok(
+    chinaMobile.requiredAnswerTerms?.includes("https://job.10086.cn"),
+  );
+
+  const crrc = suite.cases.find(
+    (item) =>
+      item.id === "crrc-changchun-2026-location-major-benefits-and-process",
+  );
+  assert.ok(crrc);
+  assert.deepEqual(crrc.allowedCitationHosts, ["www.crrcgc.cc"]);
+  assert.ok(crrc.requiredAnswerTerms?.includes("七险两金"));
+  assert.ok(
+    crrc.requiredAnswerTerms?.includes("https://crrc-ckgf.hotjob.cn"),
+  );
+
+  const ceec = suite.cases.find(
+    (item) =>
+      item.id === "ceec-investment-2026-degree-language-age-and-process",
+  );
+  assert.ok(ceec);
+  assert.deepEqual(ceec.target?.companies, ["中国能建投资集团"]);
+  assert.ok(ceec.requiredAnswerTerms?.includes("国家英语六级及以上水平"));
+  assert.ok(ceec.requiredAnswerTerms?.includes("博士年龄32岁及以下"));
 });

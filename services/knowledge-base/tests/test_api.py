@@ -299,6 +299,291 @@ def test_dify_uses_current_local_content_for_multi_facet_snippet_and_rejects_nea
     assert snippet.count("需求学科") == 1
 
 
+def test_dify_supplements_batch_unit_choices_and_written_test_time(
+    monkeypatch, tmp_path
+):
+    class FakeResponse:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {
+                "records": [
+                    {
+                        "score": 0.98,
+                        "segment": {
+                            "id": "segment-sgcc",
+                            "content": (
+                                "国家电网有限公司2026年招聘高校毕业生工作已启动。"
+                                "二、招聘批次：统一组织实施四批次招聘。"
+                            ),
+                            "document": {
+                                "id": "remote-sgcc",
+                                "name": "国家电网有限公司2026年第三批招聘高校毕业生公告",
+                            },
+                        },
+                    }
+                ]
+            }
+
+    monkeypatch.setattr(
+        "app.retrieval.httpx.post", lambda *args, **kwargs: FakeResponse()
+    )
+    app = create_app(make_settings(tmp_path, dify=True))
+    with TestClient(app) as client:
+        database = app.state.database
+        source = database.register_source(
+            name="国家电网第三批招聘",
+            url="https://official.example.test/sgcc-third-batch",
+        )
+        content = " ".join(
+            [
+                "国家电网有限公司2026年第三批招聘高校毕业生公告。",
+                "二、招聘批次：2026年公司统一组织实施四批次招聘，"
+                "分别为国调网调提前批、第一批、第二批、第三批。",
+                "公司简介和各单位情况。" * 80,
+                "每人每批次招聘可填报公司二级单位志愿数量不超过3个，"
+                "每个二级单位志愿下可选择2个三级单位或四级单位。",
+                "简历填写和资格审查说明。" * 80,
+                "（三）组织招聘笔试：公司第三批统一笔试时间"
+                "初定为2026年5月17日。",
+            ]
+        )
+        document = database.upsert_document(
+            source=source,
+            canonical_url="https://official.example.test/sgcc-third-batch/notice",
+            title="国家电网有限公司2026年第三批招聘高校毕业生公告",
+            content=content,
+            content_hash="sgcc-v1",
+            mime_type="text/html",
+            published_at="2026-04-29",
+        )
+        database.save_dify_mapping(
+            local_document_id=document["document_id"],
+            remote_document_id="remote-sgcc",
+            last_content_hash="sgcc-v1",
+            status="synced",
+        )
+        response = client.post(
+            "/search",
+            json={
+                "query": (
+                    "国家电网2026年第三批招聘如何分批？每人最多能填几个"
+                    "二级单位、每个二级单位能选几个下级单位，何时笔试？"
+                ),
+                "topK": 6,
+                "target": {"companies": ["国家电网"]},
+            },
+        )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["engine"] == "dify"
+    assert payload["fallbackUsed"] is False
+    assert len(payload["results"]) == 1
+    snippet = payload["results"][0]["snippet"]
+    assert len(snippet) <= 2_500
+    assert "四批次招聘" in snippet
+    assert "二级单位志愿数量不超过3个" in snippet
+    assert "可选择2个三级单位或四级单位" in snippet
+    assert "2026年5月17日" in snippet
+
+
+def test_dify_supplements_age_language_unit_limit_and_deadline(
+    monkeypatch, tmp_path
+):
+    class FakeResponse:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {
+                "records": [
+                    {
+                        "score": 0.98,
+                        "segment": {
+                            "id": "segment-cnpc",
+                            "content": (
+                                "中国石油2026年春季高校毕业生招聘主要面向"
+                                "2026届高校毕业生和符合条件的留学回国人员。"
+                                "博士研究生年龄不超过35岁、硕士研究生年龄"
+                                "不超过30岁、本科及职业学院毕业生年龄不超过"
+                                "26岁。国内应届本科毕业生大学英语四级不少于"
+                                "425分。"
+                            ),
+                            "document": {
+                                "id": "remote-cnpc",
+                                "name": "中国石油2026年春季高校毕业生招聘公告",
+                            },
+                        },
+                    }
+                ]
+            }
+
+    monkeypatch.setattr(
+        "app.retrieval.httpx.post", lambda *args, **kwargs: FakeResponse()
+    )
+    app = create_app(make_settings(tmp_path, dify=True))
+    with TestClient(app) as client:
+        database = app.state.database
+        source = database.register_source(
+            name="中国石油春季招聘",
+            url="https://official.example.test/cnpc-spring",
+        )
+        content = " ".join(
+            [
+                "中国石油2026年春季高校毕业生招聘主要面向2026届高校毕业生。",
+                "企业介绍和招聘原则。" * 70,
+                "年龄要求：博士研究生年龄不超过35岁、硕士研究生年龄"
+                "不超过30岁、本科及职业学院毕业生年龄不超过26岁。",
+                "招聘程序和考试说明。" * 70,
+                "外语水平要求：国内应届本科毕业生大学英语四级不少于"
+                "425分，研究生大学英语六级不少于425分。",
+                "资格审查和注意事项。" * 70,
+                "每名毕业生最多可应聘2家招聘单位。"
+                "报名时间2026年4月22日至5月15日。",
+            ]
+        )
+        document = database.upsert_document(
+            source=source,
+            canonical_url="https://official.example.test/cnpc-spring/notice",
+            title="中国石油2026年春季高校毕业生招聘公告",
+            content=content,
+            content_hash="cnpc-spring-v1",
+            mime_type="text/html",
+            published_at="2026-04-24",
+        )
+        database.save_dify_mapping(
+            local_document_id=document["document_id"],
+            remote_document_id="remote-cnpc",
+            last_content_hash="cnpc-spring-v1",
+            status="synced",
+        )
+        response = client.post(
+            "/search",
+            json={
+                "query": (
+                    "中国石油春招面向哪些人？博士、硕士、本科及职业学院"
+                    "毕业生年龄上限分别是多少？英语四级或六级要求多少分？"
+                    "最多可以应聘几个招聘单位，报名何时截止？"
+                ),
+                "topK": 6,
+                "target": {"companies": ["中国石油"]},
+            },
+        )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["engine"] == "dify"
+    assert payload["fallbackUsed"] is False
+    assert len(payload["results"]) == 1
+    snippet = payload["results"][0]["snippet"]
+    assert len(snippet) <= 2_500
+    assert "不超过35岁" in snippet
+    assert "不超过30岁" in snippet
+    assert "不超过26岁" in snippet
+    assert "大学英语四级不少于425分" in snippet
+    assert "大学英语六级不少于425分" in snippet
+    assert "最多可应聘2家招聘单位" in snippet
+    assert "2026年4月22日至5月15日" in snippet
+
+
+def test_dify_prioritizes_all_requested_facets_over_a_long_company_intro(
+    monkeypatch, tmp_path
+):
+    class FakeResponse:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {
+                "records": [
+                    {
+                        "score": 0.98,
+                        "segment": {
+                            "id": "segment-ceec",
+                            "content": (
+                                "中国能建投资集团2026年校园招聘公告。"
+                                + "投资集团是中国能建投资业务旗舰和核心平台。"
+                                * 45
+                                + "全日制硕士研究生及以上学历，"
+                                "国家英语六级及以上水平。"
+                            ),
+                            "document": {
+                                "id": "remote-ceec",
+                                "name": "中国能建投资集团2026年校园招聘公告",
+                            },
+                        },
+                    }
+                ]
+            }
+
+    monkeypatch.setattr(
+        "app.retrieval.httpx.post", lambda *args, **kwargs: FakeResponse()
+    )
+    app = create_app(make_settings(tmp_path, dify=True))
+    with TestClient(app) as client:
+        database = app.state.database
+        source = database.register_source(
+            name="中国能建投资集团校园招聘",
+            url="https://official.example.test/ceec-investment",
+        )
+        content = " ".join(
+            [
+                "中国能建投资集团2026年校园招聘公告。",
+                "企业发展、业务布局和人才战略介绍。" * 120,
+                "福利待遇包括通讯补助、交通补助、员工公寓和员工食堂。",
+                "应聘基本条件：全日制硕士研究生及以上学历，"
+                "国家英语六级及以上水平。",
+                "硕士年龄28岁及以下，博士年龄32岁及以下。",
+                "国（境）内高校毕业生须在2026年7月31日前取得证书；"
+                "国（境）外高校毕业证时间为2025年7月1日至"
+                "2026年6月30日，并在2026年7月31日前取得学历认证。",
+                "网申入口：https://www.iguopin.com/company?id=10685386430687539。",
+            ]
+        )
+        document = database.upsert_document(
+            source=source,
+            canonical_url="https://official.example.test/ceec-investment/notice",
+            title="中国能建投资集团2026年校园招聘公告",
+            content=content,
+            content_hash="ceec-v1",
+            mime_type="text/html",
+            published_at="2025-09-30",
+        )
+        database.save_dify_mapping(
+            local_document_id=document["document_id"],
+            remote_document_id="remote-ceec",
+            last_content_hash="ceec-v1",
+            status="synced",
+        )
+        response = client.post(
+            "/search",
+            json={
+                "query": (
+                    "最低学历、英语六级要求、硕士和博士年龄上限、"
+                    "境内外毕业时间、福利和网申入口分别是什么？"
+                ),
+                "topK": 6,
+                "target": {"companies": ["中国能建投资集团"]},
+            },
+        )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["engine"] == "dify"
+    assert payload["fallbackUsed"] is False
+    snippet = payload["results"][0]["snippet"]
+    assert len(snippet) <= 2_500
+    assert "全日制硕士研究生及以上学历" in snippet
+    assert "国家英语六级及以上水平" in snippet
+    assert "硕士年龄28岁及以下" in snippet
+    assert "博士年龄32岁及以下" in snippet
+    assert "2026年7月31日" in snippet
+    assert "员工公寓" in snippet
+    assert "https://www.iguopin.com/company?id=10685386430687539" in snippet
+
+
 def test_selected_company_rejects_unrelated_mapped_dify_and_local_results(
     monkeypatch, tmp_path
 ):

@@ -160,6 +160,8 @@ export interface StrategyTask {
   description: string;
   completionCriteria: string;
   priority: "high" | "medium" | "low";
+  /** Deterministic planning estimate, not a promise of actual completion time. */
+  estimatedMinutes: number;
   recommendedDay: 1 | 2 | 3 | 4 | 5 | 6 | 7;
   dueDate: string;
 }
@@ -208,6 +210,18 @@ export interface ProductTrigger {
   triggerAtTaskIds: string[];
 }
 
+export interface StrategyCostSummary {
+  totalEstimatedMinutes: number;
+  weeklyCapacityMinutes: number | null;
+  utilizationPercent: number | null;
+  overflowMinutes: number;
+  capabilityGapCount: number;
+  targetSpecificTaskCount: number;
+  optionalProductCount: number;
+  ownedServiceCount: number;
+  cashCostStatus: "not_estimated";
+}
+
 export interface StrategyNetwork {
   id: string;
   profileId: string;
@@ -217,6 +231,7 @@ export interface StrategyNetwork {
   branches: StrategyBranch[];
   sevenDayPlan: DailyActionPlan[];
   productTriggers: ProductTrigger[];
+  costSummary: StrategyCostSummary;
 }
 
 export interface BuildStrategyNetworkInput {

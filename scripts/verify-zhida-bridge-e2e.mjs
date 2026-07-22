@@ -58,6 +58,54 @@ assert.deepEqual(
   ["ai_resume_optimize", "job_push"],
 );
 assert.equal(JSON.stringify(session).includes("13800000000"), false);
+assert.equal(JSON.stringify(session).includes("ws1_"), false);
+
+const emptyWorkspace = await fetch(`${baseUrl}/api/workspace`, {
+  headers: { Cookie: sessionCookie },
+});
+assert.equal(emptyWorkspace.status, 200);
+assert.equal((await emptyWorkspace.clone().json()).revision, 0);
+assert.equal((await emptyWorkspace.text()).includes("ws1_"), false);
+
+const workspaceState = {
+  selectedJobs: [
+    {
+      id: "simulator-job-1",
+      companyName: "国家电网",
+      companyType: "央企",
+      jobTitle: "信息技术岗",
+      jobType: "校招",
+      educationLevel: "本科及以上",
+      graduateYear: "2027届",
+      workLocation: "武汉",
+      majorRequirements: "计算机类",
+      majorCategoryIds: ["0809"],
+      applyStartDate: null,
+      applyEndDate: null,
+      announcementUrl: "https://example.com/simulator-job-1",
+      applyUrl: null,
+      source: "本地模拟器",
+      updatedAt: "2026-07-18T00:00:00.000Z",
+    },
+  ],
+  completedTaskIds: ["task:simulator-job-1:research"],
+};
+const savedWorkspace = await fetch(`${baseUrl}/api/workspace`, {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+    Cookie: sessionCookie,
+  },
+  body: JSON.stringify({
+    expectedRevision: 0,
+    state: workspaceState,
+  }),
+});
+assert.equal(savedWorkspace.status, 200);
+const savedWorkspacePayload = await savedWorkspace.json();
+assert.equal(savedWorkspacePayload.revision, 1);
+assert.deepEqual(savedWorkspacePayload.state, workspaceState);
+assert.equal(JSON.stringify(savedWorkspacePayload).includes("武汉大学"), false);
 
 const disconnected = await fetch(`${baseUrl}/api/zhida-connect/session`, {
   method: "DELETE",
@@ -71,5 +119,7 @@ process.stdout.write(`${JSON.stringify({
   callbackOrigin: callback.origin,
   school: session.profile.school,
   entitlementCodes: session.entitlements.map((item) => item.code),
+  workspaceRevision: savedWorkspacePayload.revision,
+  workspaceContainsProfile: false,
   disconnected: true,
 }, null, 2)}\n`);

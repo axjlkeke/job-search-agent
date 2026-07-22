@@ -48,12 +48,14 @@ fi
 mkdir -p \
   "$APP_REPO_DIR" \
   "$KB_DATA_DIR" \
+  "$JOB_AGENT_WORKSPACE_DIR" \
   "$LOG_DIR" \
   "$BACKUP_DIR" \
   "$HOME/.cloudflared" \
   "$HOME/Library/LaunchAgents"
 
 chmod 700 "$HOME/.cloudflared"
+chmod 700 "$JOB_AGENT_WORKSPACE_DIR"
 
 if is_true "${PREPARE_KB_OCR:-true}"; then
   DEPLOY_ENV_FILE="$DEPLOY_ENV_FILE" "$SCRIPT_DIR/prepare-kb-ocr.sh"

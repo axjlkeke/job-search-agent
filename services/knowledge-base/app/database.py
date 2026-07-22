@@ -2399,6 +2399,47 @@ class KnowledgeDatabase:
             ).fetchall()
         return [dict(row) for row in rows]
 
+    def get_dify_retry_document(
+        self,
+        local_document_id: str,
+    ) -> dict[str, Any] | None:
+        with self.connect() as connection:
+            row = connection.execute(
+                """
+                SELECT d.id, d.source_id, d.canonical_url, d.title,
+                       d.content_hash, d.status, d.metadata_json,
+                       v.content_text, s.enabled AS source_enabled,
+                       CASE WHEN EXISTS (
+                           SELECT 1
+                           FROM cross_document_reviews AS review
+                           JOIN cross_document_review_targets AS target
+                             ON target.review_id = review.id
+                           WHERE review.status = 'pending'
+                             AND target.blocked = 1
+                             AND target.target_document_id = d.id
+                       ) THEN 1 ELSE 0 END AS cross_blocked
+                FROM documents AS d
+                JOIN versions AS v ON v.id = d.current_version_id
+                JOIN sources AS s ON s.id = d.source_id
+                WHERE d.id = ?
+                """,
+                (local_document_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return {
+            "document_id": row["id"],
+            "source_id": row["source_id"],
+            "canonical_url": row["canonical_url"],
+            "title": row["title"],
+            "content_hash": row["content_hash"],
+            "status": row["status"],
+            "metadata": _load_json(row["metadata_json"], {}),
+            "content": row["content_text"],
+            "source_enabled": bool(row["source_enabled"]),
+            "cross_blocked": bool(row["cross_blocked"]),
+        }
+
     def get_local_documents_by_remote_ids(
         self, remote_document_ids: Sequence[str]
     ) -> dict[str, dict[str, Any]]:

@@ -6,6 +6,7 @@ import {
   eligibilityFromIntelligenceDecision,
   intelligenceProfileForDecision,
   isIntelligenceDecisionResponse,
+  officialVerificationSummaryFromIntelligenceDecision,
   verifiedOfficialEvidenceFromIntelligenceDecision,
   type IntelligenceDecisionResponse,
   type JobOpening,
@@ -107,6 +108,70 @@ test("A/B 级已核验官方证据可以形成可投结论", () => {
   );
 });
 
+test("旧服务证据被明确识别为历史快照而不是实时核验", () => {
+  const legacy = decision();
+  assert.equal(isIntelligenceDecisionResponse(legacy), true);
+  assert.deepEqual(
+    officialVerificationSummaryFromIntelligenceDecision(legacy),
+    {
+      status: "stored-snapshot",
+      checkedAt: null,
+    },
+  );
+});
+
+test("Stage M 实时核验状态和隐私字段通过契约校验", () => {
+  const live = decision();
+  live.context.decisionBoundary = {
+    evidenceFreshnessStatus: "live",
+    liveVerificationStatus: "verified",
+    liveVerifiedAt: "2026-07-18T12:30:00.000Z",
+  };
+  live.privacy.profileSentToOfficialRecruitmentSite = false;
+
+  assert.equal(isIntelligenceDecisionResponse(live), true);
+  assert.deepEqual(
+    officialVerificationSummaryFromIntelligenceDecision(live),
+    {
+      status: "live-verified",
+      checkedAt: "2026-07-18T12:30:00.000Z",
+    },
+  );
+});
+
+test("Stage M 实时失败必须清除旧证据并保持安全降级", () => {
+  const failed = decision({
+    routeState: "prepare-and-verify",
+    routeLabel: "补充资料后判断",
+    gates: [
+      { code: "education", status: "unknown", statement: "官网本次无法核验学历", rawValue: null },
+      { code: "major", status: "unknown", statement: "官网本次无法核验专业", rawValue: null },
+      { code: "graduation-year", status: "unknown", statement: "官网本次无法核验届别", rawValue: null },
+      { code: "application-deadline", status: "unknown", statement: "官网本次无法核验投递状态", rawValue: null },
+    ],
+    evidence: [],
+  });
+  failed.context.officialEvidence = null;
+  failed.context.decisionBoundary = {
+    evidenceFreshnessStatus: "live-check-failed",
+    liveVerificationStatus: "failed",
+    liveVerifiedAt: "2026-07-18T12:31:00.000Z",
+  };
+  failed.privacy.profileSentToOfficialRecruitmentSite = false;
+
+  assert.equal(isIntelligenceDecisionResponse(failed), true);
+  assert.deepEqual(
+    officialVerificationSummaryFromIntelligenceDecision(failed),
+    {
+      status: "live-failed",
+      checkedAt: "2026-07-18T12:31:00.000Z",
+    },
+  );
+  const eligibility = eligibilityFromIntelligenceDecision(failed);
+  assert.equal(eligibility.status, "unknown");
+  assert.equal(eligibility.canApplyCurrentBatch, false);
+});
+
 test("非 A/B 或未核验证据不能把门槛包装成通过", () => {
   const untrusted = decision({
     evidence: [{
@@ -157,6 +222,39 @@ test("隐私契约不安全或响应结构不完整时拒绝接纳", () => {
   };
   delete incomplete.evaluation.actions;
   assert.equal(isIntelligenceDecisionResponse(incomplete), false);
+
+  const leakedToOfficialSite = structuredClone(decision()) as unknown as {
+    privacy: Record<string, unknown>;
+  };
+  leakedToOfficialSite.privacy.profileSentToOfficialRecruitmentSite = true;
+  assert.equal(isIntelligenceDecisionResponse(leakedToOfficialSite), false);
+
+  const inconsistentLiveFailure = structuredClone(decision());
+  inconsistentLiveFailure.context.decisionBoundary = {
+    evidenceFreshnessStatus: "live-check-failed",
+    liveVerificationStatus: "failed",
+    liveVerifiedAt: "2026-07-18T12:31:00.000Z",
+  };
+  assert.equal(isIntelligenceDecisionResponse(inconsistentLiveFailure), false);
+
+  const liveWithoutPrivacyProof = structuredClone(decision());
+  liveWithoutPrivacyProof.context.decisionBoundary = {
+    evidenceFreshnessStatus: "live",
+    liveVerificationStatus: "verified",
+    liveVerifiedAt: "2026-07-18T12:31:00.000Z",
+  };
+  assert.equal(isIntelligenceDecisionResponse(liveWithoutPrivacyProof), false);
+
+  const liveWithoutTrustedEvidence = structuredClone(decision({
+    evidence: [],
+  }));
+  liveWithoutTrustedEvidence.context.decisionBoundary = {
+    evidenceFreshnessStatus: "live",
+    liveVerificationStatus: "verified",
+    liveVerifiedAt: "2026-07-18T12:31:00.000Z",
+  };
+  liveWithoutTrustedEvidence.privacy.profileSentToOfficialRecruitmentSite = false;
+  assert.equal(isIntelligenceDecisionResponse(liveWithoutTrustedEvidence), false);
 });
 
 test("策略网络优先使用官方决策并停止向不可投目标营销", () => {

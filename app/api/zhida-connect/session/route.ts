@@ -1,11 +1,8 @@
-import { getZhidaBridgeIntegrationConfig } from "../../../../lib/server/config.ts";
 import {
   clearBridgeCookie,
-  isZhidaBridgeSessionPayload,
-  openZhidaBridgeValue,
-  readCookieValue,
   ZHIDA_BRIDGE_COOKIE,
 } from "../../../../lib/server/zhida-bridge.ts";
+import { readServerZhidaSession } from "../../../../lib/server/zhida-session.ts";
 
 export const dynamic = "force-dynamic";
 
@@ -15,25 +12,15 @@ const HEADERS = {
 };
 
 export async function GET(request: Request): Promise<Response> {
-  const config = getZhidaBridgeIntegrationConfig();
-  if (!config.configured || !config.sessionSecret) {
+  const { configured, sealedSession, session } =
+    await readServerZhidaSession(request);
+  if (!configured) {
     return Response.json(
       { configured: false, connected: false },
       { headers: HEADERS },
     );
   }
-  const sealedSession = readCookieValue(
-    request.headers.get("cookie"),
-    ZHIDA_BRIDGE_COOKIE,
-  );
-  const session = sealedSession
-    ? await openZhidaBridgeValue(
-        sealedSession,
-        config.sessionSecret,
-        "session",
-      )
-    : null;
-  if (!isZhidaBridgeSessionPayload(session)) {
+  if (!session) {
     const headers = new Headers(HEADERS);
     if (sealedSession) {
       headers.set(
@@ -66,8 +53,9 @@ export async function DELETE(request: Request): Promise<Response> {
     "Set-Cookie",
     clearBridgeCookie(ZHIDA_BRIDGE_COOKIE, request.url),
   );
+  const { configured } = await readServerZhidaSession(request);
   return Response.json(
-    { configured: getZhidaBridgeIntegrationConfig().configured, connected: false },
+    { configured, connected: false },
     { headers },
   );
 }

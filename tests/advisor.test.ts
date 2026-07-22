@@ -4,6 +4,7 @@ import {
   appendVerifiedEvidenceAppendix,
   buildEvidenceOnlyAdvisorAnswer,
   buildDifyRetrievalContext,
+  buildDeepSeekMessages,
   buildRagRetrievalRequest,
   extractEvidenceDeadline,
   filterGroundingSourcesByTarget,
@@ -11,6 +12,7 @@ import {
   normalizeRagSources,
   parseDifySseText,
   retrieveGroundingSources,
+  requestGroundedAdvisorAnswer,
   validateAdvisorCitations,
 } from "../lib/server/advisor.ts";
 
@@ -125,6 +127,33 @@ test("does not confuse sibling enterprises that share a group prefix", () => {
     }).map((source) => source.id),
     ["casic"],
   );
+
+  const petroleumSources = [
+    {
+      ...OFFICIAL_SOURCES[0],
+      id: "cnpc",
+      title: "中国石油天然气集团有限公司高校毕业生招聘",
+      snippet: "中国石油发布春季招聘安排。",
+    },
+    {
+      ...OFFICIAL_SOURCES[1],
+      id: "sinopec",
+      title: "中国石油化工集团有限公司校园招聘",
+      snippet: "中国石化发布校园招聘安排。",
+    },
+  ];
+  assert.deepEqual(
+    filterGroundingSourcesByTarget(petroleumSources, {
+      target: { companies: ["中国石油"] },
+    }).map((source) => source.id),
+    ["cnpc"],
+  );
+  assert.deepEqual(
+    filterGroundingSourcesByTarget(petroleumSources, {
+      target: { companies: ["中国石化"] },
+    }).map((source) => source.id),
+    ["sinopec"],
+  );
 });
 
 test("keeps Dify retrieval context within the configured input limit", () => {
@@ -151,6 +180,96 @@ test("keeps Dify retrieval context within the configured input limit", () => {
   );
   assert.ok(parsed.every((item) => item.snippet.length >= 80));
   assert.ok(parsed[0].snippet.length > parsed[parsed.length - 1].snippet.length);
+});
+
+test("builds a bounded DeepSeek prompt with only recent conversation turns", () => {
+  const messages = buildDeepSeekMessages(
+    "我现在先准备什么？",
+    OFFICIAL_SOURCES,
+    {
+      profileSummary: "bachelor，电气工程及其自动化，2028届",
+      targetSummary: "国家电网-电气岗位",
+      history: [
+        { role: "user", content: "旧问题" },
+        { role: "assistant", content: "旧回答" },
+        { role: "user", content: "问题一" },
+        { role: "assistant", content: "回答一" },
+        { role: "user", content: "问题二" },
+        { role: "assistant", content: "回答二" },
+      ],
+      filters: { validAt: "2026-07-22" },
+    },
+  );
+  assert.equal(messages.length, 6);
+  assert.equal(messages[0]?.role, "system");
+  assert.match(messages[0]?.content ?? "", /retrieval_context/u);
+  assert.doesNotMatch(messages.map((item) => item.content).join("\n"), /旧问题|旧回答/u);
+  assert.equal(messages.at(-1)?.content, "我现在先准备什么？");
+});
+
+test("uses one non-thinking DeepSeek request and preserves citation validation", async () => {
+  const names = [
+    "DEEPSEEK_API_URL",
+    "DEEPSEEK_API_KEY",
+    "DEEPSEEK_MODEL",
+    "DEEPSEEK_THINKING_ENABLED",
+    "DEEPSEEK_MAX_OUTPUT_TOKENS",
+  ] as const;
+  const before = Object.fromEntries(names.map((name) => [name, process.env[name]]));
+  const beforeFetch = globalThis.fetch;
+  const requests: Array<{ url: string; init?: RequestInit }> = [];
+  try {
+    process.env.DEEPSEEK_API_URL = "https://deepseek.example.test";
+    process.env.DEEPSEEK_API_KEY = "server-only-test-key";
+    process.env.DEEPSEEK_MODEL = "deepseek-v4-flash";
+    process.env.DEEPSEEK_THINKING_ENABLED = "false";
+    process.env.DEEPSEEK_MAX_OUTPUT_TOKENS = "700";
+    globalThis.fetch = (async (input, init) => {
+      requests.push({ url: String(input), init });
+      return Response.json({
+        id: "deepseek-message-1",
+        choices: [{
+          message: {
+            content: "天翼云岗位覆盖北京和上海。[资料1]",
+          },
+        }],
+        usage: {
+          prompt_tokens: 320,
+          completion_tokens: 24,
+          total_tokens: 344,
+        },
+      });
+    }) as typeof fetch;
+
+    const answer = await requestGroundedAdvisorAnswer({
+      query: "天翼云岗位在哪些城市？",
+      clientId: "job-agent-test-client",
+      sources: [OFFICIAL_SOURCES[0]],
+      context: { filters: { validAt: "2026-07-22" } },
+    });
+
+    assert.equal(requests.length, 1);
+    assert.equal(requests[0]?.url, "https://deepseek.example.test/chat/completions");
+    const body = JSON.parse(String(requests[0]?.init?.body)) as {
+      model: string;
+      thinking: { type: string };
+      max_tokens: number;
+      stream: boolean;
+    };
+    assert.equal(body.model, "deepseek-v4-flash");
+    assert.deepEqual(body.thinking, { type: "disabled" });
+    assert.equal(body.max_tokens, 700);
+    assert.equal(body.stream, false);
+    assert.deepEqual(answer.citedSourceIndexes, [1]);
+    assert.match(answer.answer, /\[资料1\]/u);
+  } finally {
+    globalThis.fetch = beforeFetch;
+    for (const name of names) {
+      const value = before[name];
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+    }
+  }
 });
 
 test("normalizes heterogeneous RAG results into bounded citations", () => {
@@ -550,6 +669,7 @@ test("requires at least one valid source marker in the final answer", () => {
       },
     ],
   );
+  assert.match(casicBenefitsFallback.answer, /湖北/);
   assert.match(casicBenefitsFallback.answer, /北京户口/);
   assert.match(casicBenefitsFallback.answer, /六险两金/);
   assert.match(casicBenefitsFallback.answer, /人才公寓/);
@@ -582,6 +702,30 @@ test("requires at least one valid source marker in the final answer", () => {
   assert.match(csgApplicationFallback.answer, /zhaopin\.csg\.cn/);
   assert.match(csgApplicationFallback.answer, /仅限申报1个岗位/);
   assert.match(csgApplicationFallback.answer, /已截止/);
+
+  const sgccBatchFallback = buildEvidenceOnlyAdvisorAnswer(
+    "国家电网2026年第三批招聘如何分批？每人最多能填几个二级单位、每个二级单位能选几个下级单位，何时笔试？",
+    [
+      {
+        id: "sgcc-third-batch",
+        title: "国家电网有限公司2026年第三批招聘高校毕业生公告",
+        snippet: [
+          "二、招聘批次：2026年公司统一组织实施四批次招聘，分别为国调网调提前批、第一批、第二批、第三批。",
+          `公司简介和各单位情况。${"业务介绍和发展历程。".repeat(60)}`,
+          "每人每批次招聘可填报公司二级单位志愿数量不超过3个，每个二级单位志愿下可选择2个三级单位或四级单位。",
+          `简历填写和资格审查说明。${"应聘提醒和注意事项。".repeat(60)}`,
+          "组织招聘笔试：公司第三批统一笔试时间初定为2026年5月17日。",
+        ].join(" … "),
+        url: "https://example.com/sgcc-third-batch",
+        publishedAt: "2026-04-29",
+        score: 0.98,
+      },
+    ],
+  );
+  assert.match(sgccBatchFallback.answer, /四批次招聘/);
+  assert.match(sgccBatchFallback.answer, /二级单位志愿数量不超过3个/);
+  assert.match(sgccBatchFallback.answer, /可选择2个三级单位或四级单位/);
+  assert.match(sgccBatchFallback.answer, /2026年5月17日/);
 });
 
 test("always appends query-relevant official wording after a grounded model answer", () => {
@@ -608,6 +752,96 @@ test("always appends query-relevant official wording after a grounded model answ
   assert.deepEqual(verified.citedSourceIndexes, [1]);
 });
 
+test("keeps age, language, unit-count, and deadline facts in one CNPC answer", () => {
+  const fallback = buildEvidenceOnlyAdvisorAnswer(
+    "中国石油春招面向哪些人？博士、硕士、本科及职业学院毕业生年龄上限分别是多少？英语四级或六级要求多少分？最多可以应聘几个招聘单位，报名何时截止？",
+    [
+      {
+        id: "cnpc-spring",
+        title: "中国石油2026年春季高校毕业生招聘公告",
+        snippet: [
+          "本次招聘主要面向2026届高校毕业生，符合条件的留学回国人员和未落实工作单位的2025届毕业生也可报名。",
+          `企业介绍和招聘原则。${"业务发展和人才培养。".repeat(50)}`,
+          "年龄要求：博士研究生年龄不超过35岁、硕士研究生年龄不超过30岁、本科及职业学院毕业生年龄不超过26岁。",
+          `招聘程序和考试说明。${"测评流程和材料要求。".repeat(50)}`,
+          "外语水平要求：国内应届本科毕业生大学英语四级不少于425分，研究生大学英语六级不少于425分。",
+          `资格审查和注意事项。${"报名真实性说明。".repeat(50)}`,
+          "每名毕业生最多可应聘2家招聘单位。报名时间2026年4月22日至5月15日。",
+        ].join(" … "),
+        url: "https://example.com/cnpc-spring",
+        publishedAt: "2026-04-24",
+        score: 0.98,
+      },
+    ],
+    { filters: { validAt: "2026-07-18" } },
+  );
+
+  assert.match(fallback.answer, /不超过35岁/);
+  assert.match(fallback.answer, /不超过30岁/);
+  assert.match(fallback.answer, /不超过26岁/);
+  assert.match(fallback.answer, /2025届毕业生/);
+  assert.match(fallback.answer, /英语四级不少于425分/);
+  assert.match(fallback.answer, /英语六级不少于425分/);
+  assert.match(fallback.answer, /最多可应聘2家招聘单位/);
+  assert.match(fallback.answer, /2026年4月22日至5月15日/);
+  assert.match(fallback.answer, /已截止/);
+});
+
+test("keeps degree, language, age, graduation, benefits, and portal facets in one answer", () => {
+  const fallback = buildEvidenceOnlyAdvisorAnswer(
+    "最低学历、英语六级要求、硕士和博士年龄上限、境内外毕业时间、福利和网申入口分别是什么？",
+    [
+      {
+        id: "ceec-investment",
+        title: "中国能建投资集团2026年校园招聘公告",
+        snippet: [
+          `企业发展介绍。${"能源投资业务布局。".repeat(80)}`,
+          "福利待遇包括通讯补助、交通补助、员工公寓和员工食堂。",
+          "应聘基本条件：全日制硕士研究生及以上学历，国家英语六级及以上水平。",
+          "硕士年龄28岁及以下，博士年龄32岁及以下。",
+          "国（境）内高校毕业生须在2026年7月31日前取得证书；国（境）外高校毕业证时间为2025年7月1日至2026年6月30日，并在2026年7月31日前取得学历认证。",
+          "网申入口：https://www.iguopin.com/company?id=10685386430687539。",
+        ].join(" … "),
+        url: "https://official.example.test/ceec-investment",
+        publishedAt: "2025-09-30",
+        score: 0.98,
+      },
+    ],
+  );
+
+  assert.match(fallback.answer, /全日制硕士研究生及以上学历/);
+  assert.match(fallback.answer, /国家英语六级及以上水平/);
+  assert.match(fallback.answer, /硕士年龄28岁及以下/);
+  assert.match(fallback.answer, /博士年龄32岁及以下/);
+  assert.match(fallback.answer, /2026年7月31日/);
+  assert.match(fallback.answer, /员工公寓/);
+  assert.match(
+    fallback.answer,
+    /https:\/\/www\.iguopin\.com\/company\?id=10685386430687539/,
+  );
+});
+
+test("keeps verified facet supplements that follow an earlier page footer", () => {
+  const fallback = buildEvidenceOnlyAdvisorAnswer(
+    "招聘学历和福利分别是什么？",
+    [
+      {
+        id: "crrc-footer",
+        title: "中车长客2026校园招聘",
+        snippet:
+          "网站导航和企业介绍。 版权所有：中车长客 … 应聘要求：博士、硕士、本科应届毕业生。福利待遇：七险两金，另有人才公寓。",
+        url: "https://official.example.test/crrc",
+        publishedAt: "2025-08-28",
+        score: 0.98,
+      },
+    ],
+  );
+
+  assert.match(fallback.answer, /博士、硕士、本科应届毕业生/);
+  assert.match(fallback.answer, /七险两金/);
+  assert.match(fallback.answer, /人才公寓/);
+});
+
 test("extracts an explicit application deadline and marks expired evidence", () => {
   assert.deepEqual(
     extractEvidenceDeadline(
@@ -616,6 +850,15 @@ test("extracts an explicit application deadline and marks expired evidence", () 
     {
       day: "2026-05-29",
       display: "2026年5月29日17:00",
+    },
+  );
+  assert.deepEqual(
+    extractEvidenceDeadline(
+      "每名毕业生最多可应聘2家招聘单位。报名时间2026年4月22日至5月15日。",
+    ),
+    {
+      day: "2026-05-15",
+      display: "2026年5月15日",
     },
   );
 

@@ -6,9 +6,9 @@ export const metadata: Metadata = {
     absolute: "求职Agent｜央国企求职规划助手",
   },
   description:
-    "面向学生的央国企求职规划工作台，用真实依据拆解目标、计划与下一步行动。",
+    "填写个人资料，与基于真实岗位和知识库的央国企求职顾问直接对话。",
 };
 
 export default function Home() {
-  return <AgentWorkspace />;
+  return <AgentWorkspace variant="studio" />;
 }

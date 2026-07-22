@@ -13,6 +13,7 @@ const profile: StudentProfile = {
   degreeLevel: "bachelor",
   major: "计算机科学与技术",
   graduationYear: 2027,
+  availableHoursPerWeek: 10,
   capabilityLevels: {
     resume: "missing",
     application: "missing",
@@ -162,12 +163,38 @@ test("多目标网络合并共同能力，保留目标分支并生成7天计划"
   assert.ok(network.branches.every((branch) => branch.tasks.some((task) => task.capability === "application")));
   assert.equal(network.sevenDayPlan.length, 7);
   assert.deepEqual(network.sevenDayPlan.map((day) => day.day), [1, 2, 3, 4, 5, 6, 7]);
+  assert.equal(sharedResume.estimatedMinutes, 120);
+  assert.deepEqual(network.costSummary, {
+    totalEstimatedMinutes: 795,
+    weeklyCapacityMinutes: 600,
+    utilizationPercent: 133,
+    overflowMinutes: 195,
+    capabilityGapCount: 7,
+    targetSpecificTaskCount: 8,
+    optionalProductCount: 2,
+    ownedServiceCount: 1,
+    cashCostStatus: "not_estimated",
+  });
 
   const resumeTrigger = network.productTriggers.find((trigger) => trigger.category === "resume");
   const applicationTrigger = network.productTriggers.find((trigger) => trigger.category === "application");
   assert.equal(resumeTrigger?.status, "owned_available");
   assert.equal(applicationTrigger?.status, "optional_offer");
   assert.equal(network.productTriggers.filter((trigger) => trigger.category === "resume").length, 1);
+});
+
+test("没有可用时间数据时保留工作量估算，但不编造容量结论", () => {
+  const network = buildStrategyNetwork({
+    profile: { ...profile, availableHoursPerWeek: undefined },
+    jobs: [job("capacity-unknown")],
+    now: "2026-07-13",
+  });
+
+  assert.ok(network.costSummary.totalEstimatedMinutes > 0);
+  assert.equal(network.costSummary.weeklyCapacityMinutes, null);
+  assert.equal(network.costSummary.utilizationPercent, null);
+  assert.equal(network.costSummary.overflowMinutes, 0);
+  assert.equal(network.costSummary.cashCostStatus, "not_estimated");
 });
 
 test("全部目标本批次不可投时不进行可选产品营销，但已购能力仍可调用", () => {

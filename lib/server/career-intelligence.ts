@@ -1,5 +1,8 @@
+import type { MarketReportJob } from "../career/market-report.ts";
+
 const DEFAULT_CAREER_INTELLIGENCE_URL = "http://127.0.0.1:18080";
 const HEALTH_TIMEOUT_MS = 5_000;
+const MARKET_REPORT_TIMEOUT_MS = 12_000;
 
 const PUBLIC_COUNT_KEYS = [
   "enterprises",
@@ -102,5 +105,126 @@ export async function probeCareerIntelligenceHealth(
     };
   } catch {
     return { live: false, counts: null };
+  }
+}
+
+export type CareerIntelligenceMarketPool = {
+  jobs: MarketReportJob[];
+  relevantTotal: number;
+  broadTotal: number;
+  fetchedAt: string;
+  sampleLimit: number;
+};
+
+export class CareerIntelligenceUnavailableError extends Error {
+  readonly code = "CAREER_INTELLIGENCE_UNAVAILABLE";
+
+  constructor() {
+    super("职业情报库暂时不可用，请稍后重试。");
+    this.name = "CareerIntelligenceUnavailableError";
+  }
+}
+
+function boundedText(value: unknown, maxLength: number): string | null {
+  if (typeof value !== "string" && typeof value !== "number") return null;
+  const text = String(value)
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/gu, "")
+    .trim();
+  return text ? text.slice(0, maxLength) : null;
+}
+
+function normalizeMarketJob(value: unknown): MarketReportJob | null {
+  const job = asRecord(value);
+  if (!job) return null;
+  const id = boundedText(job.externalJobId, 64);
+  const companyName = boundedText(job.companyName, 200);
+  const jobTitle = boundedText(job.jobTitle, 200);
+  if (!id || !companyName || !jobTitle) return null;
+
+  return {
+    id,
+    companyName,
+    jobTitle,
+    workLocation: boundedText(job.workLocation, 240),
+    applyEndDate: boundedText(job.applicationEndAt, 80),
+    source: boundedText(job.sourceName, 160),
+    companyType: boundedText(job.companyType, 30),
+    jobType: boundedText(job.jobType, 30),
+    educationLevel: boundedText(job.educationLevelRaw, 80),
+    graduationYear: boundedText(job.graduationYearRaw, 120),
+    majorRequirements: boundedText(job.majorRequirementsRaw, 2_000),
+  };
+}
+
+function safeCount(value: unknown): number | null {
+  const number = typeof value === "number" ? value : Number(value);
+  return Number.isSafeInteger(number) && number >= 0 ? number : null;
+}
+
+export async function fetchCareerIntelligenceMarketPool(
+  input: {
+    keywords: string[];
+    educationLevel?: string;
+    graduationYear: number;
+    limit?: number;
+  },
+  options: HealthProbeOptions = {},
+): Promise<CareerIntelligenceMarketPool> {
+  const baseUrl = readApiUrl(options.apiUrl);
+  if (!baseUrl) throw new CareerIntelligenceUnavailableError();
+
+  try {
+    const endpoint = new URL("/v1/reports/market", baseUrl);
+    const response = await (options.fetchImpl ?? fetch)(endpoint, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        keywords: input.keywords,
+        educationLevel: input.educationLevel ?? null,
+        graduationYear: input.graduationYear,
+        limit: Math.max(1, Math.min(50, input.limit ?? 50)),
+      }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(MARKET_REPORT_TIMEOUT_MS),
+    });
+    if (!response.ok) throw new CareerIntelligenceUnavailableError();
+
+    const payload = asRecord(await response.json());
+    const meta = asRecord(payload?.meta);
+    if (
+      !payload
+      || !meta
+      || !Array.isArray(payload.items)
+      || meta.accessMode !== "read-only"
+      || meta.containsStudentPii !== false
+      || meta.sourceFieldsVerifiedAsHardGates !== false
+    ) {
+      throw new CareerIntelligenceUnavailableError();
+    }
+
+    const relevantTotal = safeCount(meta.relevantTotal);
+    const broadTotal = safeCount(meta.broadTotal);
+    const sampleLimit = safeCount(meta.sampleLimit);
+    if (relevantTotal === null || broadTotal === null || sampleLimit === null) {
+      throw new CareerIntelligenceUnavailableError();
+    }
+
+    const jobs = payload.items
+      .map(normalizeMarketJob)
+      .filter((job): job is MarketReportJob => job !== null)
+      .slice(0, 50);
+    return {
+      jobs,
+      relevantTotal,
+      broadTotal,
+      fetchedAt: boundedText(meta.checkedAt, 80) ?? new Date().toISOString(),
+      sampleLimit,
+    };
+  } catch (error) {
+    if (error instanceof CareerIntelligenceUnavailableError) throw error;
+    throw new CareerIntelligenceUnavailableError();
   }
 }

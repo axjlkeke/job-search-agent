@@ -3,10 +3,10 @@ import { AgentWorkspace } from "../AgentWorkspace";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "求职Agent新版｜央国企求职策略工作台",
+    absolute: "求职Agent｜对话式央国企求职顾问",
   },
   description:
-    "从学生建档、在招岗位到策略网络和七日行动的央国企求职策略工作台。",
+    "填写个人资料，与基于真实岗位和知识库的央国企求职顾问直接对话。",
 };
 
 export default function CareerAgentStudioPage() {

@@ -25,6 +25,8 @@ KB_WORKDIR="${KB_WORKDIR:-$APP_REPO_DIR/services/knowledge-base}"
 KB_APP_MODULE="${KB_APP_MODULE:-app.main:app}"
 KB_DATA_DIR="${KB_DATA_DIR:-$HOME/.local/share/tokensoff/kb}"
 KB_DB_PATH="${KB_DB_PATH:-$KB_DATA_DIR/knowledge.db}"
+JOB_AGENT_WORKSPACE_DIR="${JOB_AGENT_WORKSPACE_DIR:-$HOME/.local/share/tokensoff/workspaces}"
+export JOB_AGENT_WORKSPACE_DIR
 KB_VISION_OCR_PATH="${KB_VISION_OCR_PATH:-$HOME/.local/bin/tokensoff-vision-ocr}"
 OLLAMA_HOST="${OLLAMA_HOST:-127.0.0.1:11434}"
 OLLAMA_MODEL="${OLLAMA_MODEL:-qwen3-embedding:0.6b}"

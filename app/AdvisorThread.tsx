@@ -21,6 +21,7 @@ import {
   Sparkle,
   UserCircle,
 } from "@phosphor-icons/react";
+import type { ReactNode } from "react";
 
 export type Citation = {
   id: string;
@@ -54,6 +55,7 @@ export type AdvisorThreadProps = {
   emptyTitle?: string;
   emptyDescription?: string;
   ariaLabel?: string;
+  contextualActions?: ReactNode;
 };
 
 type VisualRole = Message["role"];
@@ -288,6 +290,7 @@ export function AdvisorThread({
   emptyDescription =
     "顾问会结合学生档案、已选岗位和知识库给出下一步建议。",
   ariaLabel = "AI 求职顾问对话",
+  contextualActions,
 }: AdvisorThreadProps) {
   const runtime = useExternalStoreRuntime<Message>({
     messages,
@@ -349,6 +352,8 @@ export function AdvisorThread({
               >
                 <ArrowDown aria-hidden="true" size={17} />
               </ThreadPrimitive.ScrollToBottom>
+
+              {contextualActions}
 
               {messages.length === 0 && suggestions.length > 0 && (
                 <div className={styles.advisorSuggestions}>

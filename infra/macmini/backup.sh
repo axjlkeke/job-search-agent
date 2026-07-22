@@ -14,7 +14,7 @@ archive="$BACKUP_DIR/tokensoff-$timestamp.tar.gz"
 staging="$(mktemp -d "${TMPDIR:-/tmp}/tokensoff-backup.XXXXXX")"
 trap 'rm -rf "$staging"' EXIT
 
-mkdir -p "$BACKUP_DIR" "$staging/kb" "$staging/dify"
+mkdir -p "$BACKUP_DIR" "$staging/kb" "$staging/dify" "$staging/workspaces"
 
 if [[ -d "$KB_DATA_DIR" ]]; then
   rsync -a \
@@ -22,6 +22,10 @@ if [[ -d "$KB_DATA_DIR" ]]; then
     --exclude "$(basename "$KB_DB_PATH")-wal" \
     --exclude "$(basename "$KB_DB_PATH")-shm" \
     "$KB_DATA_DIR/" "$staging/kb/"
+fi
+
+if [[ -d "$JOB_AGENT_WORKSPACE_DIR" ]]; then
+  rsync -a "$JOB_AGENT_WORKSPACE_DIR/" "$staging/workspaces/"
 fi
 
 if [[ -f "$KB_DB_PATH" ]]; then
@@ -51,7 +55,8 @@ if [[ -d "$DIFY_DOCKER_DIR" ]] && docker info >/dev/null 2>&1; then
 fi
 
 cat >"$staging/README.txt" <<'EOF'
-这份备份包含知识库业务数据和可用时的 Dify PostgreSQL 导出。
+这份备份包含知识库业务数据、Agent 匿名路径状态和可用时的 Dify PostgreSQL 导出。
+匿名路径状态只包含公开岗位快照与任务勾选，不包含姓名、学校、专业或主站账号标识。
 Qdrant 只是可重建的检索索引，默认不打包。
 env.local、Cloudflare 凭据和其他密钥默认不进入备份。
 EOF

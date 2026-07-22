@@ -38,32 +38,31 @@ test("server-renders the 求职Agent product workspace", async () => {
   assert.match(html, /<html lang="zh-CN">/i);
   assert.match(html, /<title>求职Agent｜央国企求职规划助手<\/title>/i);
   assert.match(html, /求职Agent/);
-  assert.match(html, /先把真实情况填清楚/);
-  assert.match(html, /学生档案/);
-  assert.match(html, /在招岗位/);
-  assert.match(html, /策略网络/);
-  assert.match(html, /七日行动/);
-  assert.match(html, /AI 顾问/);
-  assert.match(html, /档案只保存在这台电脑的浏览器中/);
+  assert.match(html, /先让顾问了解你/);
+  assert.match(html, /个人资料/);
+  assert.match(html, /对话/);
+  assert.match(html, /保存资料，生成报告/);
+  assert.match(html, /资料只保存在当前浏览器/);
   assert.match(html, /最多保留 30 天/);
+  assert.doesNotMatch(html, /策略总览|策略网络|七日行动/);
 
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
   assert.doesNotMatch(html, /Your site is taking shape|Starter Project|Codex is working/i);
   assert.doesNotMatch(html, /演示数据|原型模式 · API 待接入|匹配率|录取概率/i);
 });
 
-test("server-renders the v2 strategy studio without fabricated outcomes", async () => {
+test("server-renders the v2 conversational workspace without fabricated outcomes", async () => {
   const response = await render("/v2");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>求职Agent新版｜央国企求职策略工作台<\/title>/i);
+  assert.match(html, /<title>求职Agent｜对话式央国企求职顾问<\/title>/i);
   assert.match(html, /求职Agent/);
-  assert.match(html, /总览/);
-  assert.match(html, /在招岗位/);
-  assert.match(html, /策略网络/);
-  assert.match(html, /七日行动/);
+  assert.match(html, /个人资料/);
+  assert.match(html, /对话/);
+  assert.match(html, /保存资料，生成报告/);
+  assert.doesNotMatch(html, /策略总览|策略网络|七日行动/);
 
   assert.doesNotMatch(html, /录取概率|保录|稳进|虚构数据|演示数据|匹配率/i);
 });
@@ -79,10 +78,12 @@ test("server-renders the main-site connection callback without exposing profile 
 });
 
 test("ships without disposable Sites preview artifacts", async () => {
-  const [page, layout, workspace, packageJson] = await Promise.all([
+  const [page, layout, workspace, routePlanner, marketReport, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/AgentWorkspace.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/RoutePlannerView.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../lib/career/market-report.ts", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
@@ -100,6 +101,21 @@ test("ships without disposable Sites preview artifacts", async () => {
   assert.match(workspace, /未确认的不会声称已购买/);
   assert.match(workspace, /主站资料接力/);
   assert.match(workspace, /填入表单并核对/);
+  assert.match(workspace, /\/api\/workspace/);
+  assert.match(workspace, /路径进度可跨设备保存/);
+  assert.match(workspace, /pathSavedAt/);
+  assert.match(workspace, /localPathSavedAt/);
+  assert.match(workspace, /个人求职市场报告/);
+  assert.match(workspace, /\/api\/market-report/);
+  assert.match(workspace, /真实在招岗位/);
+  assert.match(workspace, /岗位条件仍需查看企业公告/);
+  assert.match(workspace, /优势与短板/);
+  assert.doesNotMatch(workspace, /只读连接正常|当前资料能判断什么|目标确认后纳入行动计划|本次报告依据/);
+  assert.match(marketReport, /同类定位暂不可计算/);
+  assert.doesNotMatch(workspace, /REPORT_HEATMAP|REPORT_LEVERS|REPORT_ACTIONS/);
+  assert.match(workspace, /咨询这份报告/);
+  assert.match(routePlanner, /开始第一项行动/);
+  assert.doesNotMatch(workspace, /workspaceSubject/);
   assert.match(packageJson, /"name": "job-search-agent"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.doesNotMatch(

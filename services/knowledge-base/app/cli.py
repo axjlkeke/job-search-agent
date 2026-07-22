@@ -8,7 +8,10 @@ from typing import Any, Sequence
 from .config import Settings
 from .database import KnowledgeDatabase
 from .ingestion import SyncError, sync_enabled_sources, sync_source
-from .reconciliation import reconcile_dify_documents
+from .reconciliation import (
+    reconcile_dify_documents,
+    retry_failed_dify_documents,
+)
 
 
 def _print(value: Any) -> None:
@@ -102,6 +105,8 @@ def build_parser() -> argparse.ArgumentParser:
     coverage.add_argument("--stale-after-days", type=int, default=14)
     reconcile = commands.add_parser("dify-reconcile", help="对账 Dify 异步索引状态")
     reconcile.add_argument("--limit", type=int, default=200)
+    retry = commands.add_parser("dify-retry", help="重提安全可用的 Dify 错误映射")
+    retry.add_argument("--limit", type=int, default=100)
     _fact_review_commands(commands)
     _cross_review_commands(commands)
     return parser
@@ -151,6 +156,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = reconcile_dify_documents(database, settings, limit=args.limit)
         _print(result)
         return 0 if result["status"] in {"success", "noop", "not-configured"} else 1
+    if args.command == "dify-retry":
+        result = retry_failed_dify_documents(database, settings, limit=args.limit)
+        _print(result)
+        return (
+            0
+            if result["status"]
+            in {"success", "noop", "not-configured", "completed-with-skips"}
+            else 1
+        )
     if args.command == "sync":
         if args.all == bool(args.source):
             _print(

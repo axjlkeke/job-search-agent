@@ -1,6 +1,6 @@
 {
-  "version": "2026-07-17-v3",
-  "capturedAt": "2026-07-17",
+  "version": "2026-07-18-v5",
+  "capturedAt": "2026-07-18",
   "description": "公开官方招聘公告的真实变更样本。正文仅保留关系判定所需片段，运行时仍须重新核验原网页。",
   "cases": [
     {
@@ -164,6 +164,89 @@
         "targetBlocked": true,
         "targetScore": 0.842,
         "evidence": ["title_similarity", "shared_recruitment_year", "same_registered_source"],
+        "crossRegisteredSource": false
+      }
+    },
+    {
+      "id": "daye-2026-cancel-and-reduce-position-plans",
+      "candidate": {
+        "sourceId": "daye-recruitment",
+        "title": "大冶市国有企事业单位2026年人才引进部分岗位计划调整公告",
+        "url": "https://www.hbdaye.gov.cn/zfxxgk/fdgknr/qtzdgknr/rsxx1/202603/t20260312_1313804.html",
+        "content": "根据《大冶市国有企事业单位2026年人才引进公告》规定，结合报名资格审查情况，经研究决定，调整部分岗位计划。本次招聘共有8个岗位开考比例未达到3:1，决定对1个岗位核减1个招聘计划，取消7个岗位。湖北光谷东控股集团有限公司矿业技术岗取消，湖北荆楚投资发展有限公司融资岗核减1个，核减后招聘1人。",
+        "links": []
+      },
+      "existing": {
+        "documentId": "daye-original-2026",
+        "sourceId": "daye-recruitment",
+        "title": "大冶市国有企事业单位2026年人才引进公告",
+        "url": "https://www.hbdaye.gov.cn/zfxxgk/fdgknr/qtzdgknr/rsxx1/202603/t20260302_1310932.html"
+      },
+      "expected": {
+        "relationType": "withdrawn",
+        "changeScope": "partial",
+        "resolutionMode": "reconcile",
+        "unresolved": false,
+        "targetExpected": true,
+        "targetBlocked": true,
+        "targetScore": 0.96,
+        "evidence": ["explicit_title"],
+        "crossRegisteredSource": false
+      }
+    },
+    {
+      "id": "daye-2026-later-position-cancellation",
+      "candidate": {
+        "sourceId": "daye-recruitment",
+        "title": "大冶市国有企事业单位2026年人才引进面试公告",
+        "url": "https://www.hbdaye.gov.cn/zfxxgk/fdgknr/qtzdgknr/rsxx1/202604/t20260413_1320578.html",
+        "content": "根据《大冶市国有企事业单位2026年人才引进公告》规定，经笔试、资格复审等程序，现将面试有关事项公告如下。1039岗位（湖北光谷东控股集团有限公司融资岗）招聘计划人数1人，通过资格复审人数0人，决定取消该岗位的招聘计划。",
+        "links": []
+      },
+      "existing": {
+        "documentId": "daye-original-2026",
+        "sourceId": "daye-recruitment",
+        "title": "大冶市国有企事业单位2026年人才引进公告",
+        "url": "https://www.hbdaye.gov.cn/zfxxgk/fdgknr/qtzdgknr/rsxx1/202603/t20260302_1310932.html"
+      },
+      "expected": {
+        "relationType": "withdrawn",
+        "changeScope": "partial",
+        "resolutionMode": "reconcile",
+        "unresolved": false,
+        "targetExpected": true,
+        "targetBlocked": true,
+        "targetScore": 0.96,
+        "evidence": ["explicit_title"],
+        "crossRegisteredSource": false
+      }
+    },
+    {
+      "id": "huaian-2026-cancel-and-reallocate-position",
+      "candidate": {
+        "sourceId": "huaian-sasac-recruitment",
+        "title": "关于淮安市市属国有企业2026年第一批公开招聘延长报名时间及调整招聘相关条件的补充公告",
+        "url": "https://gzw.huaian.gov.cn/col/14916_612632/art/17749728/1776326470343GhXCB3y5.html",
+        "content": "根据淮安市市属国有企业2026年第一批公开招聘网上报名情况，经研究，决定延长招聘报名时间、调整招聘相关条件。报名时间延长至2026年4月19日16:00止。招聘岗位：取消“投资总监”岗位（招聘计划1人），该招聘计划人数增加至“投资经理”岗位。其他事项均按《淮安市市属国有企业2026年第一批公开招聘公告》规定执行。",
+        "links": [
+          "https://gzw.huaian.gov.cn/col/14916_612632/art/17749728/1775009624045CgZdiNWQ.html"
+        ]
+      },
+      "existing": {
+        "documentId": "huaian-original-2026",
+        "sourceId": "huaian-sasac-recruitment",
+        "title": "淮安市市属国有企业2026年第一批公开招聘公告",
+        "url": "https://gzw.huaian.gov.cn/col/14916_612632/art/17749728/1775009624045CgZdiNWQ.html"
+      },
+      "expected": {
+        "relationType": "withdrawn",
+        "changeScope": "partial",
+        "resolutionMode": "reconcile",
+        "unresolved": false,
+        "targetExpected": true,
+        "targetBlocked": true,
+        "targetScore": 1.0,
+        "evidence": ["explicit_link"],
         "crossRegisteredSource": false
       }
     }
