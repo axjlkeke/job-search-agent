@@ -3,7 +3,7 @@
 > 文档名称：`PROJECT_DOCUMENTATION-AGENT.md`  
 > 产品名称：求职Agent  
 > 产品定位：面向学生的央国企职业规划、岗位决策与求职行动平台  
-> 文档版本：v3.63
+> 文档版本：v3.64
 > 最后盘点：2026-07-23（Asia/Shanghai）
 > 维护原则：先确认事实边界，再修改代码、数据库或部署
 
@@ -36,6 +36,8 @@
 **2026-07-23 独立公网部署决策：求职Agent 的正式入口固定为 `https://agent.zhidasihai.cn`，代码仓库为私有 GitHub 项目 `axjlkeke/job-search-agent`，Vercel 使用独立项目和独立环境变量。主站 `zhidasihai.cn` 不增加页面入口、不复用主站构建产物、不修改主站路由或数据库；主站只在 `PROJECT_DOCUMENTATION.md` 保存本项目维护索引。项目完整事实、架构、数据边界、环境变量、测试、部署和回滚以本文件为唯一总入口；具体模块再按本文链接进入 `docs/`、`infra/`、`services/knowledge-base/` 和测试目录。**
 
 **2026-07-23 全站视觉系统升级：在不改变功能、接口、数据、算法和导航结构的前提下，完成个人资料、求职报告、对话、三级方向、真实岗位、时间线版和招聘线版的统一界面升级。视觉基线为蓝紫主色、白色章节卡、清晰章节编号、数据可视化和克制的 3D 场景素材。7 张独立素材同时保存在项目 `public/visuals/report-2026/` 和桌面 `/Users/mr.zze/Desktop/求职Agent-UI素材/`；仪表盘、进度条、热力图、表格、标签、按钮、切换器与标准图标继续由代码生成。桌面 1440×1000 与手机 390×844 完整链路通过，报告、对话、方向选择和双路线视图控制台无 error/warn。类型、ESLint、Vercel 生产构建通过，报告与路线专项 18/18；全量单测 120/124，4 项既有工作区存储测试继续因 `corrupt_state` / 503 失败，本轮未修改相关文件。完整视觉验收见 `design-qa.md` 和 `docs/design-qa/ui-refresh-comparison.png`。本轮仅本地修改，未提交、未推送、未部署，未连接数据库、未执行 SQL、未修改主站数据。**
+
+**2026-07-23 视觉升级正式发布：应用提交 `57f625a` 已同时推送至 `codex/rapid-beta-mvp` 与 `main`；Vercel 生产部署 `dpl_3LuqgBdK5tsq9TH7CEkeKguHTpTP` 状态为 Ready，并绑定 `https://agent.zhidasihai.cn`。正式域名首页、`/v2`、`/api/system/status` 以及新增学校素材 `08`、`12` 均返回 200，线上页面可见检查正常且浏览器无 error/warning。此次发布不含数据库迁移、SQL、岗位数据写入、AI/RAG 开关或主站改动。**
 
 > 历史状态说明：下一个长段汇总了 2026-07-18 的知识库和主 Beta 发布状态，其中“79/49”和“18080 尚未上线”只代表当时；数据库/API 当前状态一律以上面的 2026-07-21 切换结论和第 9.4.3 节为准。
 
@@ -1680,6 +1682,7 @@ npm test
 | v3.61 | 2026-07-23 | 完成独立公网发布：GitHub 私有仓库为 `axjlkeke/job-search-agent`，本次生产应用代码基线为 `e4f83eecf3d06c8d8e4a3f4808b51397004c756a`；Vercel 独立项目 `job-search-agent` 的生产部署为 `dpl_EJhXXHB3DtYQHBx5JjdR3V753ig2`。阿里云 DNS 仅新增 `agent` 的 A 记录 `76.76.21.21`，TTL 10 分钟，未修改根域名、`www` 或其他记录；Vercel 域名验证通过并签发自动续期 HTTPS 证书，`https://agent.zhidasihai.cn/` 与 `/api/system/status` 均返回 200。正式环境保持安全关闭：未配置 AI、RAG、Dify、顾问访问许可和主站资料接力；未连接数据库、未执行 SQL、未修改主站数据或主站页面。 |
 | v3.62 | 2026-07-23 | 完成全站 2026 视觉系统升级：7 张独立图片素材用于报告、学校、建议、档案、对话与双路线背景；仪表盘、图表、表格、标签、按钮和图标保持代码生成。未改变功能、接口、数据、算法和导航。1440×1000 与 390×844 完整视觉链路通过，浏览器控制台无 error/warn；类型、ESLint、Vercel 生产构建及报告/路线专项18/18通过。全量单测120/124，4项既有工作区存储测试继续因 `corrupt_state` / 503失败。本轮仅本地修改，未提交、未推送、未部署，未连接数据库、未执行SQL、未修改主站数据。 |
 | v3.63 | 2026-07-23 | 学校情况章节完成视觉与内容深化：页面固定为校招资源、三条就业路径、重点雇主、专业平台、毕业去向和综合判断六段；新增 `08-school-employer-network.png` 至 `12-school-career-impact.png` 五张独立视觉素材，并同时保存在 `public/visuals/report-2026/` 与桌面素材库。删除旧届满意度、泛化短板、重复行动和无求职决策价值的原始学分展示；历史招聘与去向继续保留年份、样本口径和非当前资格说明。桌面采用文字/素材分栏，390px 改为单列；对照证据与验收记录见 `design-qa.md` 和 `docs/design-qa/school-refresh-*`。本轮只修改前端展示与文档，未改变接口、算法、数据库、岗位数据、学校档案原始来源或后续决策流程；未提交、未推送、未部署。 |
+| v3.64 | 2026-07-23 | 全站视觉升级与学校情况深化已正式发布。应用提交 `57f625a` 同时进入 GitHub `codex/rapid-beta-mvp` 与 `main`；Vercel 生产部署 `dpl_3LuqgBdK5tsq9TH7CEkeKguHTpTP` 为 Ready，别名包含 `agent.zhidasihai.cn`。正式域名首页、`/v2`、系统状态接口和新增学校素材均返回 200，线上页面可见检查正常，浏览器无 error/warning。发布未包含数据库迁移、SQL、岗位数据写入、AI/RAG 开关、主站路由或主站页面改动。 |
 
 ---
 
