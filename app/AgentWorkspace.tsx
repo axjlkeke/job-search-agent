@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import {
   ArrowRight,
   Buildings,
@@ -1358,13 +1359,25 @@ function FocusedProfileView({
 
   return (
     <div className={styles.focusedProfilePage}>
-      <header className={styles.focusedProfileHeading}>
-        <span>个人资料</span>
-        <h1>{profile ? "更新你的求职信息" : "先让顾问了解你"}</h1>
-        <p>
-          这些资料会成为每次对话的背景，帮助系统结合真实岗位给出更具体的判断。
-        </p>
-      </header>
+      <div className={styles.focusedProfileHero}>
+        <header className={styles.focusedProfileHeading}>
+          <span>个人资料</span>
+          <h1>{profile ? "更新你的求职信息" : "先让顾问了解你"}</h1>
+          <p>
+            这些资料会成为每次对话的背景，帮助系统结合真实岗位给出更具体的判断。
+          </p>
+        </header>
+        <Image
+          alt=""
+          aria-hidden="true"
+          className={styles.focusedProfileIllustration}
+          height={1086}
+          priority
+          src="/visuals/report-2026/04-profile-dossier.png"
+          unoptimized
+          width={1448}
+        />
+      </div>
 
       {bridgeVisible ? (
         <section
@@ -1837,6 +1850,15 @@ function FocusedMarketReport({
                   <p>{report.schoolIntelligence.summary}</p>
                 </div>
                 <div>
+                  <Image
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.schoolResourceIllustration}
+                    height={1086}
+                    src="/visuals/report-2026/02-school-resource-folders.png"
+                    unoptimized
+                    width={1448}
+                  />
                   <strong>{report.schoolIntelligence.studentDecision.level}</strong>
                   <span>{report.schoolIntelligence.campusRecruitmentAccess.items.length} 条来校招聘记录</span>
                   <small>更新 {report.schoolIntelligence.snapshotAt}</small>
@@ -1852,45 +1874,52 @@ function FocusedMarketReport({
                 ))}
               </div>
 
-              <section className={styles.schoolRecruitmentWatch} aria-label="历史来校招聘记录">
-                <header>
-                  <div>
-                    <span>招聘记录</span>
-                    <h3>历史来校企业</h3>
+              <section className={styles.schoolRecruitmentWatch} aria-label="校招资源概览">
+                <div className={styles.schoolRecruitmentWatchCopy}>
+                  <span>校招资源</span>
+                  <h3>电力行业重点雇主会来校招聘</h3>
+                  <p>已核验国家电网、国家电投、特变电工等公开校招记录，可作为后续筛选目标企业的参考。</p>
+                  <div className={styles.schoolRecruitmentWatchTags}>
+                    {report.schoolIntelligence.campusRecruitmentAccess.items.slice(0, 4).map((item) => (
+                      <span key={item.sector}>{item.sector}</span>
+                    ))}
                   </div>
-                  <small>仅代表历史记录</small>
-                </header>
-                <div>
-                  {report.schoolIntelligence.campusRecruitmentAccess.items.slice(0, 4).map((item) => (
-                    <article key={item.employer}>
-                      <i />
-                      <span>{item.sector}</span>
-                      <strong>{item.employer}</strong>
-                      <small>{report.schoolIntelligence.status === "available" ? report.schoolIntelligence.campusRecruitmentAccess.cohort : "历史记录"}</small>
-                      <em>历史公开记录</em>
-                    </article>
-                  ))}
+                  <small>{report.schoolIntelligence.campusRecruitmentAccess.cohort} · 仅作历史参考</small>
                 </div>
+                <Image
+                  alt=""
+                  aria-hidden="true"
+                  className={styles.schoolEmployerNetworkIllustration}
+                  height={941}
+                  src="/visuals/report-2026/08-school-employer-network.png"
+                  unoptimized
+                  width={1672}
+                />
               </section>
 
               <details className={styles.schoolDeepDetails}>
                 <summary>
-                  <span>学校资源与历史去向</span>
-                  <small>展开查看</small>
+                  <span>查看学校求职资源</span>
+                  <small>专业方向 · 重点雇主 · 历史去向</small>
                 </summary>
                 <div className={styles.schoolDeepContent}>
-              <section className={styles.schoolTrainingProfile} aria-label="专业培养强度">
-                <header>
+              <section className={styles.schoolTrainingProfile} aria-label="专业就业方向">
+                <div className={styles.schoolTrainingHero}>
                   <div>
-                    <span>专业方向 → 岗位</span>
-                    <h3>学过什么，最后要转成哪类求职证据</h3>
+                    <span>专业方向</span>
+                    <h3>三条主要就业路径</h3>
+                    <p>课程与实践基础可覆盖电网运行、电气装备和高压检测，具体方向取决于后续项目与实习经历。</p>
+                    <small>{report.schoolIntelligence.trainingProfile.curriculumVersion} · 历史培养方案</small>
                   </div>
-                  <small>{report.schoolIntelligence.trainingProfile.curriculumVersion}</small>
-                </header>
-                <div className={styles.schoolTrainingMetrics}>
-                  <div><strong>{report.schoolIntelligence.trainingProfile.practicalCredits}</strong><span>实践教学学分</span></div>
-                  <div><strong>{report.schoolIntelligence.trainingProfile.internshipCredits}</strong><span>实习学分</span></div>
-                  <div><strong>{report.schoolIntelligence.trainingProfile.graduationDesignCredits}</strong><span>毕业设计学分</span></div>
+                  <Image
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.schoolCareerPathIllustration}
+                    height={1003}
+                    src="/visuals/report-2026/09-school-career-pathways.png"
+                    unoptimized
+                    width={1568}
+                  />
                 </div>
                 <div className={styles.schoolDirectionTracks}>
                   {report.schoolIntelligence.trainingProfile.directionTracks.map((track, index) => (
@@ -1898,24 +1927,33 @@ function FocusedMarketReport({
                       <i>{index + 1}</i>
                       <div>
                         <strong>{track.label}</strong>
-                        <span>对应岗位：{track.jobFamilies.join(" · ")}</span>
-                        <small>课程基础：{track.courses.join(" · ")}</small>
-                        <em>{track.proof}</em>
+                        <span>{track.jobFamilies.slice(0, 3).join(" · ")}</span>
+                        <small>{track.courses.slice(0, 3).join(" · ")}</small>
+                        <em>可形成：{track.proof}</em>
                       </div>
                     </article>
                   ))}
                 </div>
-                <p className={styles.schoolTrainingNote}>{report.schoolIntelligence.trainingProfile.workloadSignals[1]}</p>
               </section>
 
               <section className={styles.schoolRecruitmentAccess} aria-labelledby="school-recruitment-access-title">
-                <header className={styles.schoolSectionHeader}>
+                <div className={styles.schoolRecruitmentAccessHero}>
                   <div>
-                    <span>真实校招入口</span>
-                    <h3 id="school-recruitment-access-title">这些雇主确实进入过天津大学招聘</h3>
+                    <span>重点雇主</span>
+                    <h3 id="school-recruitment-access-title">学校可接触的电力行业雇主</h3>
+                    <p>以下企业均有公开来校记录，用于判断校招资源覆盖范围。</p>
+                    <small>{report.schoolIntelligence.campusRecruitmentAccess.cohort}</small>
                   </div>
-                  <small>{report.schoolIntelligence.campusRecruitmentAccess.cohort}</small>
-                </header>
+                  <Image
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.schoolRecruitmentGatewayIllustration}
+                    height={1003}
+                    src="/visuals/report-2026/10-school-recruitment-gateway.png"
+                    unoptimized
+                    width={1568}
+                  />
+                </div>
                 <div className={styles.schoolRecruitmentGrid}>
                   {report.schoolIntelligence.campusRecruitmentAccess.items.map((item, index) => (
                     <article key={item.employer}>
@@ -1924,7 +1962,7 @@ function FocusedMarketReport({
                         <span>{item.sector}</span>
                         <strong>{item.employer}</strong>
                         <p>{item.opportunity}</p>
-                        <em>{item.action}</em>
+                        <em>历史校招记录</em>
                       </div>
                     </article>
                   ))}
@@ -1932,58 +1970,30 @@ function FocusedMarketReport({
                 <p className={styles.schoolRecruitmentNote}>{report.schoolIntelligence.campusRecruitmentAccess.note}</p>
               </section>
 
-              <section className={styles.schoolCareerEvidence} aria-labelledby="school-career-evidence-title">
-                <header className={styles.schoolSectionHeader}>
-                  <div>
-                    <span>求职价值与短板</span>
-                    <h3 id="school-career-evidence-title">学校能给你起点，录用仍然看个人证据</h3>
-                  </div>
-                  <small>{report.schoolIntelligence.graduateVoice.cohort} · 历史校级调查</small>
-                </header>
-                <div className={styles.schoolCareerEvidenceGrid}>
-                  <article className={styles.schoolCareerValueCard}>
-                    <div>
-                      <strong>{report.schoolIntelligence.graduateVoice.brandFoundationRate.toFixed(2)}%</strong>
-                      <span>毕业生认为学校品牌是发展基础</span>
-                    </div>
-                    <div>
-                      <strong>{report.schoolIntelligence.graduateVoice.professionalRelevanceRate.toFixed(2)}%</strong>
-                      <span>就业行业与专业较相关</span>
-                    </div>
-                  </article>
-                  <article className={styles.schoolCareerGapCard}>
-                    <strong>毕业生求职中暴露的三项短板</strong>
-                    <ol>
-                      {report.schoolIntelligence.graduateVoice.jobSearchGaps.map((gap, index) => (
-                        <li key={gap}><i>{index + 1}</i><span>{gap}</span></li>
-                      ))}
-                    </ol>
-                  </article>
-                </div>
-                <div className={styles.schoolCareerActions}>
-                  {report.schoolIntelligence.graduateVoice.actions.map((action, index) => (
-                    <span key={action}><i>{index === 0 ? "优先" : index === 1 ? "其次" : "再"}</i>{action}</span>
-                  ))}
-                </div>
-                <p className={styles.schoolCareerEvidenceNote}>{report.schoolIntelligence.graduateVoice.note}</p>
-              </section>
-
               <div className={styles.schoolIntelligenceBody}>
                 <article className={styles.schoolResourceCard}>
-                  <header>
+                  <div className={styles.schoolResourceCardHero}>
                     <div>
-                      <span>可转化资源</span>
-                      <h3>把学校资源变成求职证据</h3>
+                      <span>校内资源</span>
+                      <h3>专业平台能提供什么</h3>
+                      <p>实验平台、课程项目和就业服务，是天津大学电气专业最直接的求职资源。</p>
                     </div>
-                    <small>{report.schoolIntelligence.resources.length} 条已核验</small>
-                  </header>
+                    <Image
+                      alt=""
+                      aria-hidden="true"
+                      className={styles.schoolEvidenceKitIllustration}
+                      height={1254}
+                      src="/visuals/report-2026/11-school-evidence-kit.png"
+                      unoptimized
+                      width={1254}
+                    />
+                  </div>
                   <ol>
                     {report.schoolIntelligence.resources.map((resource, index) => (
                       <li key={resource.id}>
                         <i>{index + 1}</i>
                         <div>
                           <strong>{resource.label}</strong>
-                          <span>{resource.detail}</span>
                           <em>{resource.action}</em>
                         </div>
                       </li>
@@ -1995,9 +2005,9 @@ function FocusedMarketReport({
                   <header>
                     <div>
                       <span>历史去向</span>
-                      <h3>{report.schoolIntelligence.schoolOutcome.cohort}</h3>
+                      <h3>毕业生主要去向</h3>
                     </div>
-                    <small>{report.schoolIntelligence.schoolOutcome.scopeLabel}</small>
+                    <small>{report.schoolIntelligence.schoolOutcome.cohort} · {report.schoolIntelligence.schoolOutcome.scopeLabel}</small>
                   </header>
                   <div className={styles.schoolOutcomeRows}>
                     {[
@@ -2014,7 +2024,7 @@ function FocusedMarketReport({
                   </div>
                   <p>{report.schoolIntelligence.schoolOutcome.note}</p>
                   <div className={styles.schoolMajorOutcome}>
-                    <span>{report.schoolIntelligence.majorOutcome.cohort} · 专业历史样本</span>
+                    <span>电气专业历史样本 · {report.schoolIntelligence.majorOutcome.cohort}</span>
                     <strong>{report.schoolIntelligence.majorOutcome.total} 人</strong>
                     <dl>
                       <div><dt>国内升学</dt><dd>{report.schoolIntelligence.majorOutcome.domesticFurtherStudy}</dd></div>
@@ -2033,18 +2043,26 @@ function FocusedMarketReport({
                 </article>
 
                 <article className={styles.schoolDecisionCard}>
-                  <span>对你的直接影响</span>
-                  <h3>{report.schoolIntelligence.studentDecision.whatItMeans[0]}</h3>
-                  <ul>
-                    {report.schoolIntelligence.studentDecision.whatItMeans.slice(1).map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                  <ol>
-                    {report.schoolIntelligence.studentDecision.nextActions.map((item, index) => (
-                      <li key={item}><i>{index + 1}</i><span>{item}</span></li>
-                    ))}
-                  </ol>
+                  <div>
+                    <span>综合判断</span>
+                    <strong>{report.schoolIntelligence.studentDecision.level}</strong>
+                    <h3>院校优势明显，竞争看个人准备</h3>
+                    <p>{report.schoolIntelligence.studentDecision.whatItMeans[0]}</p>
+                    <ul>
+                      {report.schoolIntelligence.studentDecision.whatItMeans.slice(1).map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <Image
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.schoolCareerImpactIllustration}
+                    height={1086}
+                    src="/visuals/report-2026/12-school-career-impact.png"
+                    unoptimized
+                    width={1448}
+                  />
                 </article>
               </div>
 
@@ -2296,6 +2314,15 @@ function FocusedMarketReport({
                 <aside>
                   <span>综合建议</span>
                   <strong>{report.studentAssessment.advice}</strong>
+                  <Image
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.marketAssessmentIllustration}
+                    height={1254}
+                    src="/visuals/report-2026/03-advice-target-path.png"
+                    unoptimized
+                    width={1254}
+                  />
                 </aside>
               </div>
             </section>
@@ -3398,9 +3425,16 @@ function AdvisorView({
 
         {!profile ? (
           <div className={styles.focusedAdvisorEmpty}>
-            <span className={styles.focusedAdvisorMark}>
-              <UserFocus size={26} weight="duotone" />
-            </span>
+            <Image
+              alt=""
+              aria-hidden="true"
+              className={styles.focusedAdvisorIllustration}
+              height={1254}
+              priority
+              src="/visuals/report-2026/05-chat-guidance.png"
+              unoptimized
+              width={1254}
+            />
             <h1>先填写一份个人资料</h1>
             <p>只需填写学校、专业、届别和求职偏好，顾问才能结合你的真实情况回答。</p>
             <button type="button" onClick={onEditProfile}>
@@ -3414,6 +3448,18 @@ function AdvisorView({
             disabled={!ready}
             emptyDescription={`${profile.major} · ${profile.graduationYear} 届。你可以直接问目标岗位、准备成本或下一步行动。`}
             emptyTitle={emptyTitle}
+            emptyVisual={(
+              <Image
+                alt=""
+                aria-hidden="true"
+                className={styles.focusedAdvisorIllustration}
+                height={1254}
+                priority
+                src="/visuals/report-2026/05-chat-guidance.png"
+                unoptimized
+                width={1254}
+              />
+            )}
             isRunning={sending}
             messages={messages}
             onSend={sendMessage}
@@ -3445,9 +3491,15 @@ function AdvisorView({
           />
         ) : (
           <div className={styles.focusedAdvisorOffline}>
-            <span className={styles.focusedAdvisorMark}>
-              <ChatsCircle size={27} weight="duotone" />
-            </span>
+            <Image
+              alt=""
+              aria-hidden="true"
+              className={styles.focusedAdvisorIllustration}
+              height={1254}
+              src="/visuals/report-2026/05-chat-guidance.png"
+              unoptimized
+              width={1254}
+            />
             <h1>对话功能正在连接</h1>
             <p>
               为避免给出没有依据的答案，知识库、AI 服务和访问许可全部就绪后才会开放提问。

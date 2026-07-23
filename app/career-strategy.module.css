@@ -10819,6 +10819,639 @@
   }
 }
 
+/* Keep the expandable school-resource control inside the report visual system. */
+.schoolDeepDetails > summary:focus-visible {
+  outline: 2px solid var(--ui-primary);
+  outline-offset: -2px;
+}
+
+/* School report refinement: visual-first, decision-useful, no duplicated evidence walls. */
+.schoolRecruitmentWatch {
+  min-height: 318px;
+  display: grid;
+  grid-template-columns: minmax(290px, 0.68fr) minmax(0, 1.32fr);
+  align-items: stretch;
+  gap: 18px;
+  overflow: hidden;
+  padding: 22px;
+  border-top: 1px solid var(--ui-line);
+  background:
+    radial-gradient(circle at 8% 15%, rgba(91, 85, 240, 0.11), transparent 36%),
+    linear-gradient(135deg, #f7f8ff 0%, #fff 54%, #f1f5ff 100%);
+}
+
+.schoolRecruitmentWatch > .schoolRecruitmentWatchCopy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  grid-template-columns: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  margin: 0;
+  padding: 24px 8px 24px 16px;
+}
+
+.schoolRecruitmentWatch > .schoolRecruitmentWatchCopy::before {
+  display: none;
+}
+
+.schoolRecruitmentWatchCopy > span,
+.schoolTrainingHero > div > span,
+.schoolRecruitmentAccessHero > div > span,
+.schoolResourceCardHero > div > span,
+.schoolDecisionCard > div > span {
+  color: var(--ui-primary);
+  font-size: 12px !important;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+}
+
+.schoolRecruitmentWatchCopy h3 {
+  max-width: 390px;
+  margin: 10px 0 0;
+  color: var(--ui-text);
+  font-size: clamp(26px, 2.8vw, 38px);
+  font-weight: 760;
+  letter-spacing: -0.055em;
+  line-height: 1.12;
+}
+
+.schoolRecruitmentWatchCopy > p {
+  max-width: 420px;
+  margin: 14px 0 0;
+  color: var(--ui-muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.schoolRecruitmentWatchTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 20px;
+}
+
+.schoolRecruitmentWatchTags span {
+  padding: 7px 10px;
+  border: 1px solid rgba(75, 72, 221, 0.15);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  color: #4f51a9;
+  font-size: 11px !important;
+  font-weight: 650;
+}
+
+.schoolRecruitmentWatchCopy > small {
+  margin-top: 15px;
+  color: #777a90;
+  font-size: 11px !important;
+}
+
+.schoolEmployerNetworkIllustration {
+  width: 100%;
+  height: 274px;
+  align-self: center;
+  border: 1px solid rgba(138, 146, 194, 0.15);
+  border-radius: 22px;
+  object-fit: cover;
+  object-position: 62% center;
+  box-shadow: 0 18px 40px rgba(68, 76, 150, 0.13);
+}
+
+.schoolDeepDetails {
+  border-top-color: var(--ui-line);
+}
+
+.schoolDeepDetails > summary {
+  min-height: 70px;
+  padding-inline: 28px;
+  background: #fff;
+  color: var(--ui-text);
+  font-size: 14px;
+}
+
+.schoolDeepDetails > summary small {
+  color: var(--ui-muted);
+}
+
+.schoolDeepDetails[open] > summary {
+  border-bottom-color: var(--ui-line);
+  background: #f8f9fe;
+}
+
+.schoolDeepContent {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+  background: #f4f6fb;
+}
+
+.schoolTrainingProfile,
+.schoolRecruitmentAccess {
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid var(--ui-line);
+  border-radius: 20px;
+  background: #fff;
+  color: var(--ui-text);
+}
+
+.schoolTrainingHero,
+.schoolRecruitmentAccessHero {
+  min-height: 260px;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  align-items: center;
+  gap: 24px;
+  overflow: hidden;
+  padding: 12px 12px 12px 20px;
+  border: 1px solid #e0e5f4;
+  border-radius: 18px;
+  background:
+    linear-gradient(120deg, #f7f8ff 0%, #fff 58%, #eef2ff 100%);
+}
+
+.schoolTrainingHero h3,
+.schoolRecruitmentAccessHero h3 {
+  max-width: 420px;
+  margin: 9px 0 0;
+  color: var(--ui-text);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 760;
+  letter-spacing: -0.055em;
+  line-height: 1.12;
+}
+
+.schoolTrainingHero p,
+.schoolRecruitmentAccessHero p,
+.schoolResourceCardHero p {
+  max-width: 440px;
+  margin: 14px 0 0;
+  color: var(--ui-muted);
+  font-size: 13px;
+  line-height: 1.72;
+}
+
+.schoolTrainingHero small,
+.schoolRecruitmentAccessHero small {
+  display: block;
+  margin-top: 17px;
+  color: #777a90;
+  font-size: 11px !important;
+}
+
+.schoolCareerPathIllustration,
+.schoolRecruitmentGatewayIllustration {
+  width: 100%;
+  height: 232px;
+  border-radius: 16px;
+  object-fit: cover;
+  object-position: 58% center;
+  mix-blend-mode: multiply;
+}
+
+.schoolDirectionTracks {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.schoolDirectionTracks article {
+  min-height: 218px;
+  display: flex;
+  grid-template-columns: none;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid #e1e5f0;
+  border-radius: 16px;
+  background: #fafbff;
+}
+
+.schoolDirectionTracks i {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--ui-primary);
+  color: #fff;
+  font-size: 11px !important;
+}
+
+.schoolDirectionTracks article > div {
+  gap: 8px;
+}
+
+.schoolDirectionTracks strong {
+  color: var(--ui-text);
+  font-size: 16px;
+}
+
+.schoolDirectionTracks span {
+  color: #3e4665;
+  font-size: 12px !important;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.schoolDirectionTracks small {
+  color: var(--ui-muted);
+  font-size: 11px !important;
+  line-height: 1.55;
+}
+
+.schoolDirectionTracks em {
+  margin-top: 2px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e5ef;
+  color: #3f4388;
+  font-size: 11px !important;
+  font-style: normal;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.schoolRecruitmentAccessHero {
+  grid-template-columns: minmax(250px, 0.66fr) minmax(0, 1.34fr);
+}
+
+.schoolRecruitmentGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.schoolRecruitmentGrid article {
+  min-height: 170px;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 14px;
+  padding: 18px;
+  border-color: #e1e5f0;
+  border-radius: 16px;
+  background: #fafbff;
+}
+
+.schoolRecruitmentGrid article > i {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #edf0ff;
+  color: var(--ui-primary);
+  font-size: 11px !important;
+}
+
+.schoolRecruitmentGrid article > div {
+  align-content: start;
+  gap: 6px;
+}
+
+.schoolRecruitmentGrid span {
+  color: #72768a;
+  font-size: 11px !important;
+}
+
+.schoolRecruitmentGrid strong {
+  color: var(--ui-text);
+  font-size: 15px;
+}
+
+.schoolRecruitmentGrid p {
+  color: var(--ui-muted);
+  font-size: 12px !important;
+  line-height: 1.62;
+}
+
+.schoolRecruitmentGrid em {
+  width: fit-content;
+  margin-top: 5px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: #edf0ff;
+  color: var(--ui-primary);
+  font-size: 10px !important;
+}
+
+.schoolRecruitmentNote {
+  margin: 14px 4px 0;
+  color: #72768a;
+  font-size: 11px !important;
+}
+
+.schoolIntelligenceBody {
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  gap: 14px;
+  padding: 0;
+  background: transparent;
+}
+
+.schoolIntelligenceBody > article {
+  padding: 22px;
+  border-color: var(--ui-line);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(55, 64, 120, 0.06);
+}
+
+.schoolResourceCardHero {
+  min-height: 190px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 168px;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e4e7f0;
+}
+
+.schoolResourceCardHero h3,
+.schoolOutcomeCard h3 {
+  margin: 8px 0 0;
+  color: var(--ui-text);
+  font-size: 24px;
+  letter-spacing: -0.045em;
+}
+
+.schoolEvidenceKitIllustration {
+  width: 160px;
+  height: 160px;
+  border-radius: 18px;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+.schoolResourceCard ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.schoolResourceCard li {
+  min-height: 132px;
+  align-content: start;
+  padding: 14px;
+  border: 1px solid #e4e7f0;
+  border-radius: 14px;
+  background: #fafbff;
+}
+
+.schoolResourceCard li:last-child {
+  border-bottom: 1px solid #e4e7f0;
+}
+
+.schoolResourceCard li > i {
+  background: #edf0ff;
+  color: var(--ui-primary);
+}
+
+.schoolResourceCard li strong {
+  color: var(--ui-text);
+  font-size: 13px;
+}
+
+.schoolResourceCard li span,
+.schoolResourceCard li em {
+  font-size: 11px !important;
+}
+
+.schoolResourceCard li em {
+  color: #3f4388;
+}
+
+.schoolOutcomeCard header {
+  padding-bottom: 18px;
+  border-bottom-color: #e4e7f0;
+}
+
+.schoolOutcomeRows {
+  gap: 15px;
+  margin-top: 22px;
+}
+
+.schoolOutcomeRows > div {
+  grid-template-columns: 70px minmax(90px, 1fr) 54px;
+}
+
+.schoolOutcomeRows span,
+.schoolOutcomeRows strong {
+  font-size: 11px !important;
+}
+
+.schoolOutcomeRows i {
+  height: 9px;
+  background: #e8eaf2;
+}
+
+.schoolOutcomeRows b {
+  background: linear-gradient(90deg, var(--ui-primary), #7b76ff);
+}
+
+.schoolMajorOutcome {
+  margin-top: 20px;
+  background: #f1f3fb;
+}
+
+.schoolEmployerExamples > span {
+  background: #fafbff;
+}
+
+.schoolDecisionCard {
+  grid-column: 1 / -1;
+  min-height: 330px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  align-items: center;
+  gap: 18px;
+  overflow: hidden;
+  padding: 28px !important;
+  border-color: #dbe0f2 !important;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(105, 92, 255, 0.11), transparent 34%),
+    linear-gradient(135deg, #f8f9ff 0%, #fff 51%, #edf3ff 100%) !important;
+  color: var(--ui-text) !important;
+}
+
+.schoolDecisionCard > div {
+  position: relative;
+  z-index: 1;
+  padding: 8px 0 8px 10px;
+}
+
+.schoolDecisionCard > div > strong {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--ui-primary);
+  color: #fff;
+  font-size: 12px;
+}
+
+.schoolDecisionCard h3 {
+  max-width: 520px;
+  margin: 14px 0 0;
+  color: var(--ui-text) !important;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 770;
+  letter-spacing: -0.055em;
+  line-height: 1.12;
+}
+
+.schoolDecisionCard p {
+  max-width: 520px;
+  margin: 15px 0 0;
+  color: #434b69;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.65;
+}
+
+.schoolDecisionCard ul {
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.schoolDecisionCard ul li {
+  padding-left: 14px;
+  border-left: 3px solid #aeb7e3;
+  color: var(--ui-muted);
+  font-size: 12px !important;
+  line-height: 1.6;
+}
+
+.schoolCareerImpactIllustration {
+  width: 100%;
+  height: 276px;
+  border-radius: 20px;
+  object-fit: cover;
+  object-position: 62% center;
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 1080px) {
+  .schoolRecruitmentWatch {
+    grid-template-columns: minmax(250px, 0.78fr) minmax(0, 1.22fr);
+  }
+
+  .schoolTrainingHero,
+  .schoolRecruitmentAccessHero {
+    grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .schoolIntelligenceBody {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolDecisionCard {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .schoolRecruitmentWatch,
+  .schoolTrainingHero,
+  .schoolRecruitmentAccessHero,
+  .schoolDecisionCard {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolRecruitmentWatch {
+    padding: 16px;
+  }
+
+  .schoolRecruitmentWatch > .schoolRecruitmentWatchCopy {
+    padding: 18px 10px 2px;
+  }
+
+  .schoolEmployerNetworkIllustration {
+    height: 220px;
+  }
+
+  .schoolDeepContent {
+    padding: 12px;
+  }
+
+  .schoolTrainingProfile,
+  .schoolRecruitmentAccess {
+    padding: 14px;
+  }
+
+  .schoolTrainingHero,
+  .schoolRecruitmentAccessHero {
+    padding: 20px 16px 8px;
+  }
+
+  .schoolCareerPathIllustration,
+  .schoolRecruitmentGatewayIllustration {
+    height: 210px;
+  }
+
+  .schoolDirectionTracks,
+  .schoolRecruitmentGrid,
+  .schoolResourceCard ol {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolDirectionTracks article,
+  .schoolRecruitmentGrid article,
+  .schoolResourceCard li {
+    min-height: 0;
+  }
+
+  .schoolResourceCardHero {
+    grid-template-columns: minmax(0, 1fr) 110px;
+  }
+
+  .schoolEvidenceKitIllustration {
+    width: 104px;
+    height: 104px;
+  }
+
+  .schoolDecisionCard {
+    min-height: 0;
+    padding: 22px !important;
+  }
+
+  .schoolCareerImpactIllustration {
+    height: 228px;
+  }
+}
+
+@media (max-width: 480px) {
+  .schoolDeepDetails > summary {
+    min-height: 78px;
+    padding-inline: 18px;
+  }
+
+  .schoolRecruitmentWatchCopy h3,
+  .schoolTrainingHero h3,
+  .schoolRecruitmentAccessHero h3 {
+    font-size: 27px;
+  }
+
+  .schoolResourceCardHero {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolEvidenceKitIllustration {
+    width: 100%;
+    height: 166px;
+  }
+
+  .schoolOutcomeCard header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .schoolOutcomeCard header small {
+    text-align: left;
+  }
+
+  .schoolDecisionCard h3 {
+    font-size: 30px;
+  }
+}
+
 /* Route planner: timeline and recruitment-line views */
 .routePlanner {
   min-height: 100dvh;
@@ -13617,5 +14250,1163 @@
     grid-column: 1 / -1;
     margin-top: 12px;
     text-align: left;
+  }
+}
+
+/* 2026 visual system refresh — UI only, all data and interaction logic unchanged. */
+.focusedShell {
+  --ui-primary: #465cff;
+  --ui-primary-deep: #2838c7;
+  --ui-primary-soft: #eef1ff;
+  --ui-lavender: #f2efff;
+  --ui-mint: #e8fbf6;
+  --ui-amber: #fff7df;
+  --ui-rose: #fff0f5;
+  --ui-bg: #f6f8ff;
+  --ui-surface: #ffffff;
+  --ui-text: #15182a;
+  --ui-muted: #69708a;
+  --ui-line: #e4e8f3;
+  --ui-shadow: 0 18px 55px rgba(48, 65, 145, 0.09);
+  grid-template-columns: 228px minmax(0, 1fr);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+}
+
+.focusedSidebar {
+  padding: 22px 16px;
+  border-right: 1px solid var(--ui-line);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 10px 0 34px rgba(58, 72, 139, 0.04);
+  backdrop-filter: blur(18px);
+}
+
+.focusedBrand {
+  min-height: 58px;
+  padding: 8px;
+  border-radius: 16px;
+}
+
+.focusedBrand:hover {
+  background: var(--ui-primary-soft);
+}
+
+.focusedBrand > span,
+.focusedMobileBrand > span {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+  border-radius: 13px;
+  background: var(--ui-primary);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(70, 92, 255, 0.24);
+}
+
+.focusedBrand strong {
+  color: var(--ui-text);
+  font-size: 16px;
+  font-weight: 760;
+}
+
+.focusedBrand small {
+  color: var(--ui-muted);
+}
+
+.focusedNav {
+  gap: 7px;
+  margin-top: 26px;
+}
+
+.focusedNav button {
+  min-height: 48px;
+  border-radius: 13px;
+  color: #68708a;
+  font-size: 14px;
+}
+
+.focusedNav button:hover {
+  background: #f3f5ff;
+  color: var(--ui-primary-deep);
+}
+
+.focusedNav button.focusedNavActive {
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary);
+  font-weight: 720;
+  box-shadow: inset 3px 0 0 var(--ui-primary);
+}
+
+.focusedDataStatus {
+  border-bottom-color: var(--ui-line);
+}
+
+.focusedDataStatus > i[data-ready="true"] {
+  background: #32c99b;
+  box-shadow: 0 0 0 4px rgba(50, 201, 155, 0.12);
+}
+
+.focusedDataStatus strong,
+.focusedProfileSummary strong {
+  color: #34394f;
+}
+
+.focusedDataStatus small,
+.focusedProfileSummary small {
+  color: #8a90a5;
+}
+
+.focusedProfileSummary {
+  border: 1px solid var(--ui-line);
+  border-radius: 14px;
+  background: #f8f9ff;
+}
+
+.focusedProfileSummary > span {
+  border-color: #dfe4f3;
+  background: #fff;
+  color: var(--ui-primary);
+}
+
+.focusedWorkspace,
+.focusedMain,
+.focusedPane {
+  background: var(--ui-bg);
+}
+
+.focusedProfilePage {
+  width: min(1040px, calc(100% - 72px));
+  padding: 44px 0 96px;
+}
+
+.focusedProfileHero {
+  position: relative;
+  min-height: 300px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.86fr);
+  align-items: center;
+  overflow: hidden;
+  padding: 42px 34px 42px 44px;
+  border: 1px solid var(--ui-line);
+  border-radius: 26px;
+  background: #fff;
+  box-shadow: var(--ui-shadow);
+}
+
+.focusedProfileHeading {
+  position: relative;
+  z-index: 2;
+  max-width: 570px;
+}
+
+.focusedProfileHeading > span {
+  width: fit-content;
+  display: inline-flex;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary);
+  font-size: 11px;
+}
+
+.focusedProfileHeading h1 {
+  color: var(--ui-text);
+  font-size: clamp(35px, 4.3vw, 54px);
+  font-weight: 760;
+}
+
+.focusedProfileHeading p {
+  max-width: 520px;
+  color: var(--ui-muted);
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+.focusedProfileIllustration {
+  width: 100%;
+  height: 260px;
+  display: block;
+  object-fit: cover;
+  object-position: 64% center;
+  mix-blend-mode: multiply;
+}
+
+.focusedBridge {
+  margin-top: 20px;
+  border-color: var(--ui-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(48, 65, 145, 0.05);
+}
+
+.focusedBridge button {
+  border-color: var(--ui-primary);
+  background: var(--ui-primary);
+}
+
+.focusedProfileForm {
+  margin-top: 20px;
+  padding: 10px 34px 30px;
+  border: 1px solid var(--ui-line);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: var(--ui-shadow);
+}
+
+.focusedFormSection {
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 34px;
+  padding: 32px 0;
+  border-top-color: var(--ui-line);
+}
+
+.focusedFormSection:first-child {
+  border-top: 0;
+}
+
+.focusedFormSection > header > span {
+  background: var(--ui-primary);
+  box-shadow: 0 7px 16px rgba(70, 92, 255, 0.2);
+}
+
+.focusedFormSection h2 {
+  color: var(--ui-text);
+}
+
+.focusedFormSection p {
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+
+.focusedFormGrid label,
+.focusedCapabilityGrid label {
+  color: #4d536b;
+  font-size: 13px;
+}
+
+.focusedFormGrid input,
+.focusedFormGrid select,
+.focusedCapabilityGrid select {
+  min-height: 50px;
+  border-color: #dfe4f0;
+  border-radius: 12px;
+  background: #fbfcff;
+  color: var(--ui-text);
+}
+
+.focusedFormGrid input:focus,
+.focusedFormGrid select:focus,
+.focusedCapabilityGrid select:focus {
+  border-color: var(--ui-primary);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(70, 92, 255, 0.1);
+}
+
+.focusedCapabilityDetails {
+  border-color: var(--ui-line);
+}
+
+.focusedSaveButton,
+.focusedReportButton {
+  border-color: var(--ui-primary) !important;
+  background: var(--ui-primary) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 22px rgba(70, 92, 255, 0.2);
+}
+
+.focusedClearButton {
+  border-color: var(--ui-line) !important;
+  background: #fff !important;
+  color: #626980 !important;
+}
+
+.marketReport {
+  width: min(1500px, 100%);
+  margin: 0 auto;
+  padding: 28px 32px 48px;
+  background: var(--ui-bg);
+}
+
+.marketReportHeader {
+  min-height: 224px;
+  align-items: center;
+  padding: 34px 38px;
+  border-radius: 24px;
+  background-color: #162974;
+  background-image: url("/visuals/report-2026/01-report-hero-background.png");
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 24px 60px rgba(36, 55, 154, 0.22);
+}
+
+.marketReportHeader::after {
+  display: none;
+}
+
+.marketReportIdentity {
+  max-width: 760px;
+}
+
+.marketReportIdentity > span {
+  margin-bottom: 16px;
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.marketReportHeader h1 {
+  font-size: clamp(38px, 4vw, 58px);
+  font-weight: 760;
+}
+
+.marketReportHeader p {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 15px;
+}
+
+.marketReportMeta {
+  width: min(330px, 34%);
+  margin-left: auto;
+}
+
+.marketReportMeta > span,
+.marketReportMeta > strong {
+  min-height: 42px;
+  border-color: rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.13);
+  color: #fff;
+  backdrop-filter: blur(12px);
+}
+
+.marketReportChapter {
+  margin-top: 20px;
+  padding: 24px;
+  border-color: var(--ui-line);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: var(--ui-shadow);
+}
+
+.marketReportChapterHeader {
+  gap: 13px;
+  padding: 0 0 20px;
+}
+
+.marketReportChapterHeader > i {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--ui-primary);
+  box-shadow: 0 8px 18px rgba(70, 92, 255, 0.22);
+}
+
+.marketReportChapterHeader h2 {
+  color: var(--ui-text);
+  font-size: 22px;
+  font-weight: 760;
+}
+
+.marketReportChapterHeader span {
+  color: var(--ui-muted);
+  font-size: 13px;
+}
+
+.marketCompetitiveness {
+  grid-template-columns: 190px minmax(190px, 0.75fr) minmax(360px, 1.35fr);
+  gap: 24px;
+  padding: 28px;
+  border-color: #e1e6f2;
+  border-radius: 20px;
+  background: #fbfcff;
+}
+
+.marketCompetitivenessGaugeTrack {
+  stroke: #e7eafd;
+}
+
+.marketCompetitivenessGaugeValue {
+  stroke: var(--ui-primary);
+}
+
+.marketCompetitivenessGauge strong {
+  color: var(--ui-text);
+}
+
+.marketCompetitivenessSummary > span,
+.marketCompetitivenessSummary p,
+.marketCompetitivenessFactors small,
+.marketCompetitivenessStats small,
+.marketCompetitivenessStats p {
+  color: var(--ui-muted);
+}
+
+.marketCompetitivenessSummary small {
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary-deep);
+}
+
+.marketCompetitivenessFactors {
+  border-left-color: var(--ui-line);
+}
+
+.marketCompetitivenessFactors article > i {
+  background: #e9ecf7;
+}
+
+.marketCompetitivenessFactors article > i > b {
+  background: var(--ui-primary);
+}
+
+.marketCompetitivenessStats {
+  border-top-color: var(--ui-line);
+}
+
+.marketCompetitivenessStats article + article {
+  border-left-color: var(--ui-line);
+}
+
+.schoolIntelligence,
+.schoolIntelligenceUnavailable {
+  margin-top: 0;
+  border-color: var(--ui-line);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.schoolIntelligenceHeader {
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.38fr);
+  padding: 30px;
+  border-bottom-color: var(--ui-line);
+  background: #fbfcff;
+}
+
+.schoolIntelligenceHeader > div:first-child > span {
+  color: var(--ui-primary);
+}
+
+.schoolIntelligenceHeader h2 {
+  color: var(--ui-text);
+}
+
+.schoolIntelligenceHeader p {
+  color: var(--ui-muted);
+  font-size: 13px;
+}
+
+.schoolIntelligenceHeader > div:last-child {
+  position: relative;
+  min-height: 154px;
+  justify-content: end;
+  overflow: hidden;
+  padding: 18px 18px 17px 132px;
+  border-color: #e0e5f2;
+  border-radius: 18px;
+  background: var(--ui-primary-soft);
+}
+
+.schoolResourceIllustration {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 8px;
+  width: 128px;
+  height: 134px;
+  object-fit: cover;
+  object-position: 69% center;
+  mix-blend-mode: multiply;
+}
+
+.schoolIntelligenceHeader > div:last-child strong {
+  color: var(--ui-text);
+}
+
+.schoolSignalGrid {
+  gap: 10px;
+  padding: 12px;
+  border-bottom-color: var(--ui-line);
+  background: #fff;
+}
+
+.schoolSignalGrid article,
+.schoolSignalGrid article:nth-child(2),
+.schoolSignalGrid article:nth-child(3) {
+  min-height: 102px;
+  padding: 20px;
+  border: 1px solid var(--ui-line);
+  border-radius: 14px;
+  background: #f9faff;
+}
+
+.schoolSignalGrid article + article {
+  border-left: 1px solid var(--ui-line);
+}
+
+.schoolRecruitmentWatch,
+.schoolDeepDetails,
+.schoolIntelligenceBody,
+.schoolEvidenceDetails {
+  border-color: var(--ui-line);
+}
+
+.schoolRecruitmentWatch > header h3,
+.schoolResourceCard h3,
+.schoolOutcomeCard h3,
+.schoolDecisionCard h3 {
+  color: var(--ui-text);
+}
+
+.schoolRecruitmentWatch > div article i {
+  border-color: var(--ui-primary);
+  background: var(--ui-primary-soft);
+}
+
+.schoolRecruitmentWatch > div article em {
+  color: var(--ui-primary);
+}
+
+.marketEmploymentConditions,
+.marketDirectionDecision,
+.marketRoleSamples,
+.marketStudentAssessment {
+  border-color: var(--ui-line);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.marketConditionGrid {
+  gap: 12px;
+}
+
+.marketConditionGrid > article {
+  min-height: 240px;
+  border-color: #e3e7f1;
+  border-radius: 16px;
+  background: var(--ui-primary-soft);
+}
+
+.marketConditionGrid > article:nth-child(2) {
+  background: var(--ui-mint);
+}
+
+.marketConditionGrid > article:nth-child(3) {
+  background: #eef7ff;
+}
+
+.marketConditionGrid > article:nth-child(4) {
+  background: var(--ui-amber);
+}
+
+.marketConditionGrid > article:nth-child(5) {
+  background: var(--ui-rose);
+}
+
+.marketConditionGrid article > header > i {
+  background: #fff;
+  color: var(--ui-primary);
+  box-shadow: 0 5px 14px rgba(48, 65, 145, 0.1);
+}
+
+.marketConditionGrid article > strong {
+  color: var(--ui-text);
+}
+
+.marketConditionSignals span {
+  border-color: rgba(72, 83, 128, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.marketConditionBoundary {
+  border-left-color: var(--ui-primary);
+  background: var(--ui-primary-soft);
+  color: var(--ui-muted);
+}
+
+.marketDirectionDecision > div article,
+.marketRoleSamples article {
+  border-color: var(--ui-line);
+  border-radius: 14px;
+  background: #fbfcff;
+}
+
+.marketDirectionDecision > div article > i {
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary);
+}
+
+.marketHeatmap {
+  border-color: var(--ui-line);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.marketHeatmapSwitch {
+  border-color: var(--ui-line);
+  background: #f3f5fb;
+}
+
+.marketHeatmapSwitch button[aria-pressed="true"] {
+  background: var(--ui-primary);
+  color: #fff;
+}
+
+.marketHeatmap td[data-level="2"] {
+  background: #eef1ff;
+}
+
+.marketHeatmap td[data-level="3"] {
+  background: #dfe5ff;
+}
+
+.marketHeatmap td[data-level="4"] {
+  background: #aebcff;
+}
+
+.marketHeatmap td[data-level="5"] {
+  background: var(--ui-primary);
+  color: #fff;
+}
+
+.marketAssessmentGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(270px, 0.82fr);
+}
+
+.marketAssessmentGrid > article,
+.marketAssessmentGrid > aside {
+  border-color: var(--ui-line);
+  border-radius: 16px;
+  background: #fbfcff;
+}
+
+.marketAssessmentGrid > article[data-kind="strength"] {
+  background: var(--ui-mint);
+}
+
+.marketAssessmentGrid > article[data-kind="constraint"] {
+  background: var(--ui-rose);
+}
+
+.marketAssessmentGrid li > i {
+  background: var(--ui-primary);
+}
+
+.marketAssessmentGrid > article[data-kind="constraint"] li > i {
+  border-color: #e2a9bc;
+  background: #fff;
+  color: #a23e63;
+}
+
+.marketAssessmentGrid > aside {
+  position: relative;
+  min-height: 310px;
+  overflow: hidden;
+  padding: 22px;
+  border: 0;
+  background: var(--ui-primary);
+  color: #fff;
+}
+
+.marketAssessmentGrid > aside span,
+.marketAssessmentGrid > aside small {
+  position: relative;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.marketAssessmentGrid > aside strong {
+  position: relative;
+  z-index: 2;
+  max-width: 90%;
+  margin-bottom: 150px;
+}
+
+.marketAssessmentIllustration {
+  position: absolute;
+  right: -28px;
+  bottom: -30px;
+  width: 230px;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  opacity: 0.92;
+}
+
+.marketReportFooter button {
+  min-height: 48px;
+  border-color: var(--ui-line);
+  border-radius: 12px;
+  color: #535a72;
+  font-size: 13px;
+}
+
+.marketReportFooter button:last-child {
+  border-color: var(--ui-primary);
+  background: var(--ui-primary);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(70, 92, 255, 0.22);
+}
+
+.focusedAdvisor {
+  background: #fff;
+}
+
+.focusedAdvisorHeader {
+  border-bottom-color: var(--ui-line);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(18px);
+}
+
+.focusedAdvisorHeader strong {
+  color: var(--ui-text);
+}
+
+.focusedAdvisorHeader span[data-ready="true"] i {
+  background: #32c99b;
+  box-shadow: 0 0 0 4px rgba(50, 201, 155, 0.12);
+}
+
+.focusedAdvisorHeader button {
+  border-color: var(--ui-line);
+  border-radius: 11px;
+  background: #fff;
+  color: #565d75;
+}
+
+.focusedAdvisorHeader button:hover:not(:disabled) {
+  border-color: #cfd6ec;
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary);
+}
+
+.focusedAdvisorEmpty,
+.focusedAdvisorOffline {
+  width: min(660px, calc(100% - 40px));
+  padding-top: 38px;
+}
+
+.focusedAdvisorIllustration {
+  width: min(340px, 70vw);
+  height: min(290px, 58vw);
+  display: block;
+  margin: 0 auto 12px;
+  object-fit: cover;
+  border-radius: 34px;
+  mix-blend-mode: multiply;
+}
+
+.focusedAdvisorEmpty h1,
+.focusedAdvisorOffline h1,
+.focusedAdvisor .advisorEmptyTitle {
+  color: var(--ui-text);
+  font-weight: 740;
+}
+
+.focusedAdvisorEmpty p,
+.focusedAdvisorOffline p,
+.focusedAdvisor .advisorEmptyDescription {
+  color: var(--ui-muted);
+}
+
+.focusedAdvisorEmpty > button {
+  border-radius: 12px;
+  background: var(--ui-primary);
+  box-shadow: 0 12px 24px rgba(70, 92, 255, 0.22);
+}
+
+.focusedAdvisor .advisorEmpty {
+  width: min(760px, calc(100% - 40px));
+  padding-top: 24px;
+}
+
+.focusedAdvisor .advisorEmpty .focusedAdvisorIllustration {
+  width: 260px;
+  height: 220px;
+}
+
+.focusedAdvisor .advisorMessageAvatar {
+  border-color: #e1e6f2;
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary);
+}
+
+.focusedAdvisor .advisorMessageUser .advisorMessageAvatar,
+.focusedAdvisor .advisorSendButton {
+  border-color: var(--ui-primary);
+  background: var(--ui-primary);
+}
+
+.focusedAdvisor .advisorMessageText {
+  background: #f5f7ff;
+  color: var(--ui-text);
+}
+
+.focusedAdvisor .advisorMessageUser .advisorMessageText {
+  background: var(--ui-primary-soft);
+}
+
+.focusedAdvisor .advisorFooter {
+  border-top-color: rgba(228, 232, 243, 0.8);
+}
+
+.focusedAdvisor .advisorComposer {
+  border-color: #dce2f1;
+  box-shadow: 0 12px 38px rgba(48, 65, 145, 0.12);
+}
+
+.focusedAdvisor .advisorComposer:focus-within {
+  border-color: var(--ui-primary);
+  box-shadow: 0 0 0 4px rgba(70, 92, 255, 0.08), 0 14px 40px rgba(48, 65, 145, 0.12);
+}
+
+.focusedAdvisor .advisorSuggestion,
+.focusedAdvisorTriggers {
+  border-color: var(--ui-line);
+  background: #f8f9ff;
+}
+
+.directionPicker {
+  background: var(--ui-bg);
+}
+
+.directionPickerHeader,
+.directionStepBody,
+.directionPickerState,
+.directionPickerFooter {
+  border-color: var(--ui-line);
+  background: #fff;
+  box-shadow: var(--ui-shadow);
+}
+
+.directionPickerHeader {
+  border-radius: 22px;
+}
+
+.directionPickerHeader > button,
+.directionPickerFooter > button,
+.directionPickerState button {
+  border-radius: 11px;
+}
+
+.directionTrackCard,
+.directionSubtrackCard,
+.directionJobCard,
+.directionCard {
+  border-color: var(--ui-line);
+  border-radius: 16px;
+  background: #fbfcff;
+}
+
+.directionTrackCard:hover,
+.directionSubtrackCard:hover,
+.directionJobCard:hover,
+.directionCard:hover {
+  border-color: #bfc9ff;
+  box-shadow: 0 14px 30px rgba(70, 92, 255, 0.1);
+}
+
+.directionTrackCard[data-selected="true"],
+.directionSubtrackCard[data-selected="true"],
+.directionJobCard[data-selected="true"],
+.directionCard[data-selected="true"] {
+  border-color: var(--ui-primary);
+  background: var(--ui-primary-soft);
+  box-shadow: 0 0 0 3px rgba(70, 92, 255, 0.09);
+}
+
+.routePlanner {
+  min-height: 100dvh;
+  background-color: var(--ui-bg);
+}
+
+.routePlannerHeader,
+.routePlannerNotice,
+.routeDecisionSystem,
+.routeCalendarBoard,
+.routeScrollTrack,
+.routeCampaignOverview {
+  border-color: var(--ui-line);
+}
+
+.routePlannerHeader {
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: var(--ui-shadow);
+}
+
+.routePlannerHeading > span,
+.routeModeSwitch button[data-active="true"] {
+  color: var(--ui-primary);
+}
+
+.routeModeSwitch {
+  border-color: var(--ui-line);
+  background: #f3f5fb;
+}
+
+.routeModeSwitch button[data-active="true"] {
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(48, 65, 145, 0.1);
+}
+
+.routePlannerNotice {
+  background: var(--ui-primary-soft);
+  color: #4d5573;
+}
+
+.routeDecisionSystem > header,
+.routeCurrentAction {
+  background: var(--ui-primary-deep);
+}
+
+.routeDecisionSystem article[data-status="pending"],
+.routeDecisionSystem article[data-status="provisional"],
+.routeDecisionSystem article[data-status="structure-only"] {
+  background: #fafbff;
+}
+
+.routeTimelineVersion {
+  position: relative;
+}
+
+.routeTimelineVersion::before {
+  position: absolute;
+  z-index: 0;
+  inset: -8px;
+  border-radius: 24px;
+  background: url("/visuals/report-2026/06-roadmap-timeline-background.png") center / cover no-repeat;
+  opacity: 0.33;
+  content: "";
+  pointer-events: none;
+}
+
+.routeTimelineVersion > * {
+  position: relative;
+  z-index: 1;
+}
+
+.routeCalendarBoard {
+  background-color: rgba(255, 255, 255, 0.9);
+  background-image: none;
+  box-shadow: var(--ui-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.routeLaneTrack::before,
+.routeScrollTrack::before,
+.routeMilestoneStrip::before,
+.routeDecisionStrip::before,
+.routeOpportunityLine::before {
+  background: var(--ui-primary);
+}
+
+.routeLaneTrack article,
+.routeOpportunityLine button,
+.routeStrategyCard {
+  border-color: #bfc9ff;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.routeCalendarPhoto {
+  background: url("/visuals/report-2026/06-roadmap-timeline-background.png") center / cover no-repeat;
+  filter: none;
+}
+
+.routeRecruitmentVersion {
+  position: relative;
+}
+
+.routeRecruitmentVersion::before {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: url("/visuals/report-2026/07-recruitment-network-background.png") center top / 100% auto no-repeat;
+  opacity: 0.34;
+  content: "";
+  pointer-events: none;
+}
+
+.routeRecruitmentVersion > * {
+  position: relative;
+  z-index: 1;
+}
+
+.routeScrollTrack {
+  background: rgba(255, 255, 255, 0.87);
+  box-shadow: var(--ui-shadow);
+  backdrop-filter: blur(16px);
+}
+
+.routeChapter,
+.routeChapter[data-chapter="1"],
+.routeChapter[data-chapter="3"] {
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.routeMilestoneStrip i,
+.routeDecisionStrip i {
+  border-color: var(--ui-primary);
+  background: #fff;
+  color: var(--ui-primary);
+}
+
+.routeStrategyCard > button {
+  background: var(--ui-primary);
+}
+
+.focusedMobileHeader {
+  border-bottom-color: var(--ui-line);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.focusedMobileHeader nav {
+  background: #f0f2fa;
+}
+
+.focusedMobileHeader nav button[aria-current="page"] {
+  color: var(--ui-primary);
+}
+
+@media (max-width: 1080px) {
+  .focusedShell {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .focusedProfileHero {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+  }
+
+  .schoolIntelligenceHeader > div:last-child {
+    padding-left: 116px;
+  }
+
+  .schoolResourceIllustration {
+    width: 112px;
+  }
+
+  .marketCompetitiveness {
+    grid-template-columns: 165px minmax(0, 1fr);
+  }
+
+  .marketAssessmentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketAssessmentGrid > aside {
+    grid-column: 1 / -1;
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 760px) {
+  .focusedProfilePage {
+    width: calc(100% - 28px);
+    padding-top: 20px;
+  }
+
+  .focusedProfileHero {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    padding: 28px 24px 12px;
+    border-radius: 20px;
+  }
+
+  .focusedProfileIllustration {
+    height: 190px;
+    margin-top: 8px;
+    object-position: 63% center;
+  }
+
+  .focusedProfileForm {
+    padding: 6px 20px 24px;
+    border-radius: 20px;
+  }
+
+  .focusedFormSection {
+    grid-template-columns: 1fr;
+  }
+
+  .marketReport {
+    padding: 14px 12px 92px;
+  }
+
+  .marketReportHeader {
+    min-height: 300px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 26px 22px;
+    border-radius: 20px;
+    background-position: 62% center;
+  }
+
+  .marketReportHeader h1 {
+    font-size: 36px;
+  }
+
+  .marketReportMeta {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .marketReportChapter {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .marketCompetitiveness {
+    grid-template-columns: 110px minmax(0, 1fr);
+    padding: 16px;
+  }
+
+  .schoolIntelligenceHeader {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .schoolIntelligenceHeader > div:last-child {
+    min-height: 132px;
+  }
+
+  .schoolSignalGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolSignalGrid article + article {
+    border-left: 1px solid var(--ui-line);
+  }
+
+  .marketConditionGrid,
+  .marketAssessmentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .marketAssessmentGrid > aside {
+    grid-column: auto;
+  }
+
+  .focusedAdvisorIllustration {
+    width: 250px;
+    height: 210px;
+  }
+
+  .focusedAdvisor .advisorEmpty .focusedAdvisorIllustration {
+    width: 210px;
+    height: 176px;
+  }
+
+  .routeTimelineVersion::before,
+  .routeRecruitmentVersion::before {
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focusedNav button,
+  .focusedAdvisorHeader button,
+  .focusedFormGrid input,
+  .focusedFormGrid select,
+  .directionTrackCard,
+  .directionSubtrackCard,
+  .directionJobCard,
+  .directionCard {
+    transition: none;
   }
 }

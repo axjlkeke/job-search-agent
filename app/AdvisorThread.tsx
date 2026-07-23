@@ -54,6 +54,7 @@ export type AdvisorThreadProps = {
   className?: string;
   emptyTitle?: string;
   emptyDescription?: string;
+  emptyVisual?: ReactNode;
   ariaLabel?: string;
   contextualActions?: ReactNode;
 };
@@ -289,6 +290,7 @@ export function AdvisorThread({
   emptyTitle = "从当前目标开始规划",
   emptyDescription =
     "顾问会结合学生档案、已选岗位和知识库给出下一步建议。",
+  emptyVisual,
   ariaLabel = "AI 求职顾问对话",
   contextualActions,
 }: AdvisorThreadProps) {
@@ -316,6 +318,7 @@ export function AdvisorThread({
           <div className={styles.advisorThreadContent}>
             {messages.length === 0 && (
               <div className={styles.advisorEmpty}>
+                {emptyVisual}
                 <h3 className={styles.advisorEmptyTitle}>{emptyTitle}</h3>
                 <p className={styles.advisorEmptyDescription}>
                   {emptyDescription}
